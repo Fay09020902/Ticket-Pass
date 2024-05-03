@@ -6,4 +6,3 @@
 
 [db-schema]: ./images/example.png
 
-## API Documentation
