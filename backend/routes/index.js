@@ -7,13 +7,13 @@ router.use('/api', apiRouter);
 
 
 
-// router.post('/api/test', function(req, res) {
-//     const csrfToken = req.csrfToken();
-//     res.cookie("XSRF-TOKEN", csrfToken);
-//     const { credential, password } = req.body; // Extract credential and password from the request body
-//     // console.log('Request Body:', req.body); // Log the request body to the terminal
-//     res.json({ credential, password }); // Send the extracted data back as a JSON response
-// });
+router.post('/api/test', function(req, res) {
+    const csrfToken = req.csrfToken();
+    res.cookie("XSRF-TOKEN", csrfToken);
+    const { credential, password } = req.body; // Extract credential and password from the request body
+    // console.log('Request Body:', req.body); // Log the request body to the terminal
+    res.json({ credential, password }); // Send the extracted data back as a JSON response
+});
 
 
 // router.get("/api/csrf/restore", (req, res) => {
