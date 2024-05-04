@@ -1,0 +1,14 @@
+.profile-dropdown {
+    top: 40px; /* Adjust this value as needed */
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    list-style-type: none;
+    z-index: 1;
+  }
+
+  .profile-dropdown.hidden {
+    display: none;
+  }
