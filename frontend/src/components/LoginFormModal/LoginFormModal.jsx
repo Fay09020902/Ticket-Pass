@@ -12,6 +12,10 @@ function LoginFormModal() {
   const { closeModal } = useModal();
 
   // if (sessionUser) return <Navigate to="/" replace={true} />;
+  const demoLogin = () => {
+    dispatch(sessionActions.login({credential: "demo@user.io", password: "password" }));
+    closeModal();
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -53,6 +57,7 @@ function LoginFormModal() {
         {{errors} && <p className="error-message">{Object.values(errors)}</p>}
         <button type="submit">Log In</button>
       </form>
+      <button onClick={demoLogin}>Log In As Demo User</button>
     </>
   );
 }
