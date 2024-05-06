@@ -1,25 +1,29 @@
 import { useState } from 'react';
 import * as sessionActions from '../../store/session';
-import { useDispatch, useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
-import './LoginFormPage.css';
+import { useDispatch } from 'react-redux';
+import { useModal } from '../../context/Modal';
+import './LoginFormModal.css';
 
-function LoginFormPage() {
+function LoginFormModal() {
   const dispatch = useDispatch();
-  const sessionUser = useSelector((state) => state.session.user);
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const { closeModal } = useModal();
 
-  if (sessionUser) return <Navigate to="/" replace={true} />;
+  // if (sessionUser) return <Navigate to="/" replace={true} />;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
-    return dispatch(sessionActions.login({ credential, password })).catch(
+    return dispatch(sessionActions.login({ credential, password }))
+    .then(closeModal)
+    .catch(
       async (res) => {
         const data = await res.json();
-        if (data?.errors) setErrors(data.errors);
+        if (data && data.message) {
+          setErrors(data.message);
+        }
       }
     );
   };
@@ -46,11 +50,11 @@ function LoginFormPage() {
             required
           />
         </label>
-        {errors.credential && <p>{errors.credential}</p>}
+        {{errors} && <p className="error-message">{Object.values(errors)}</p>}
         <button type="submit">Log In</button>
       </form>
     </>
   );
 }
 
-export default LoginFormPage;
+export default LoginFormModal;
