@@ -25,19 +25,19 @@ Stories are defined as bellow:
 
 
 
-## MVP
+# MVP
 
-# User Registration:
+## User Registration:
 1. Sign up page with fields for username, email, and password.
 2. Login page with fields for email and password.
 3. Authentication system to create and authenticate user accounts.
 
-# Event Discovery:
+## Event Discovery:
 1. Homepage displaying a list of events with basic information such as name, date, and location.
 2. Filters and sorting options to browse events by type, location, and date.
 3. Search functionality to find events by name or keyword.
 
-# Ticket Booking:
+## Ticket Booking:
 1. Event details page displaying information about the selected event, including ticket availability and pricing.
 2. Ticket selection interface allowing users to choose the number of tickets they want to purchase.
 3. Checkout process where users can review their selected tickets and the total cost before proceeding to payment.
