@@ -7,22 +7,22 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Event extends Model {
     static associate(models) {
-      // Event.hasMany(
-      //   models.Ticket,
-      //   {
-      //     foreignKey:"eventId",
-      //     onDelete: 'CASCADE',
-      //     hooks: true
-      //   }
-      // );
-      // Event.hasMany(
-      //   models.Comment,
-      //   {
-      //     foreignKey:"eventId",
-      //     onDelete: 'CASCADE',
-      //     hooks: true
-      //   }
-      // );
+      Event.hasMany(
+        models.Ticket,
+        {
+          foreignKey:"eventId",
+          onDelete: 'CASCADE',
+          hooks: true
+        }
+      );
+      Event.hasMany(
+        models.Comment,
+        {
+          foreignKey:"eventId",
+          onDelete: 'CASCADE',
+          hooks: true
+        }
+      );
     }
   }
   Event.init({

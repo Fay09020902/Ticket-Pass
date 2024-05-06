@@ -4,7 +4,22 @@ const { Model, Validator } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      // define association here
+      User.hasMany(
+        models.Ticket,
+        {
+          foreignKey:"userId",
+          onDelete: 'CASCADE',
+          hooks: true
+        }
+      );
+      User.hasMany(
+        models.Comment,
+        {
+          foreignKey:"userId",
+          onDelete: 'CASCADE',
+          hooks: true
+        }
+      );
     }
   };
 
