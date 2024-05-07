@@ -5,6 +5,7 @@ const { Event } = require('../models')
 const concertEvents = [
   {
     name: "Rock Concert",
+    userId: 1,
     artist: "Foo Fighters",
     type: "Concert",
     address: "123 Main Street",
@@ -18,6 +19,7 @@ const concertEvents = [
   },
   {
     name: "Pop Concert",
+    userId: 2,
     artist: "Taylor Swift",
     type: "Concert",
     address: "456 Broadway",

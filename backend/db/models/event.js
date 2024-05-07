@@ -23,6 +23,12 @@ module.exports = (sequelize, DataTypes) => {
           hooks: true
         }
       );
+      Event.belongsTo(
+        models.User,
+        {
+          foreignKey:"userId"
+        }
+      );
     }
   }
   Event.init({
@@ -43,6 +49,10 @@ module.exports = (sequelize, DataTypes) => {
           msg: "Name cannot be null"
         }
       }
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
     artist: {
       type: DataTypes.STRING,
