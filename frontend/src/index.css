@@ -1,1 +1,26 @@
 /* TODO: Add sitewide styles */
+/* :root {
+	--main-bg-color: rgb(243, 243, 243);
+	--white: #FFFFFF;
+	--accent: lightcoral;
+	--light-blue: #00aaff;
+	--dark-blue: #0088cc;
+	--grey: grey;
+	--dark-grey: #555555;
+} */
+
+html {
+	scroll-behavior: smooth;
+	font-family: sans-serif;
+}
+
+body {
+	margin: 0;
+	background-color: var(--main-bg-color);
+    font-family: Averta, helvetica, arial, sans-serif;
+}
+
+.bold {
+    font-weight: bold;
+    font-size: 1.2rem;
+}

@@ -23,6 +23,12 @@ module.exports = (sequelize, DataTypes) => {
           hooks: true
         }
       );
+      Event.belongsTo(
+        models.User,
+        {
+          foreignKey:"userId"
+        }
+      );
     }
   }
   Event.init({
@@ -44,6 +50,10 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     artist: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -53,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         isIn: {
-          args: [['Concert', 'Theater']],
+          args: [['R&B','Rock', 'Pop', 'Blues', 'Jazz']],
           msg: "Type must be either Concert or Theater"
         },
         notNull: {

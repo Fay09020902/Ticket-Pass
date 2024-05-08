@@ -12,3 +12,18 @@
   .profile-dropdown.hidden {
     display: none;
   }
+
+  .nav {
+    background-image: url('https://uk.tmconst.com/production-10-67-0-7709933/images/categories/10002.jpg?auto=webp');
+    background-size: cover; /* Adjust as needed */
+    background-repeat: no-repeat; /* Adjust as needed */
+    line-height: 60px;
+  }
+
+  .nav h2 {
+    font-size: 36px;
+    color: rgb(255, 255, 255);
+  }
+
+
+  font-family: Averta, helvetica, arial, sans-serif;

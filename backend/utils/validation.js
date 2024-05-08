@@ -36,34 +36,6 @@ const validateQuery = [
       max: 20,
     })
     .withMessage("Size must be greater than or equal to 1"),
-  check("minLat")
-    .optional()
-    .isFloat({
-      min: -90,
-      max: 90,
-    })
-    .withMessage("Minimum latitude is invalid"),
-  check("maxLat")
-    .optional()
-    .isFloat({
-      min: -90,
-      max: 90,
-    })
-    .withMessage("Maximum latitude is invalid"),
-  check("minLng")
-    .optional()
-    .isFloat({
-      min: -180,
-      max: 180,
-    })
-    .withMessage("Minimum longitude is invalid"),
-  check("maxLng")
-    .optional()
-    .isFloat({
-      min: -180,
-      max: 180,
-    })
-    .withMessage("Maximum longitude is invalid"),
   check("minPrice")
     .optional()
     .isFloat({
