@@ -245,30 +245,30 @@ router.put(
         return res.json(updatedEvent)
     });
 
-// //delete a spot
-// router.delete(
-//     "/:spotId",
-//     requireAuth,
-//     async (req, res, next) => {
-//         const {spotId} = req.params
-//         const {user} = req
-//         const spot = await Spot.findByPk(spotId)
-//         if (!spot) {
-//             const err = new Error("Spot couldn't be found");
-//             err.status = 404;
-//             return next(err);
-//         }
-//         //Only the owner of the spot is authorized to delete
-//         if (spot.ownerId !== user.id) {
-//             const err = new Error("Forbidden");
-//             err.status = 403;
-//             return next(err);
-//           }
-//         await spot.destroy();
-//         return res.json({
-//             "message": "Successfully deleted"
-//           })
-//     })
+//delete a event
+router.delete(
+    "/:eventId",
+    requireAuth,
+    async (req, res, next) => {
+        const {eventId} = req.params
+        const {user} = req
+        const event = await Event.findByPk(eventId)
+        if (!event) {
+            const err = new Error("Event couldn't be found");
+            err.status = 404;
+            return next(err);
+        }
+        //Only the owner of the event is authorized to delete
+        if (event.userId !== user.id) {
+            const err = new Error("Forbidden");
+            err.status = 403;
+            return next(err);
+          }
+        await event.destroy();
+        return res.json({
+            "message": "Successfully deleted"
+          })
+    })
 
 // //create a Review for a Spot based on the Spot's id
 //   router.post(
@@ -461,7 +461,7 @@ router.get("/", async (req, res, next) => {
 
     // Fetch all events from the database
     const events = await Event.findAll();
-
+    
     // Respond with the list of events
     return res.status(200).json(events);
 

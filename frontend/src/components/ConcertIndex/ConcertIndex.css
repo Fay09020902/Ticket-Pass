@@ -1,8 +1,8 @@
 
   .concert-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 40px;
   }
 
   .concert-card {
@@ -35,7 +35,7 @@
     background-color: #007bff;
     color: #fff;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 10px;
     transition: background-color 0.3s;
   }
 
@@ -46,4 +46,10 @@
   .sold-out {
     color: red;
     font-weight: bold;
+  }
+
+  .concert-filters {
+    display: flex; /* This will align the buttons on the same line */
+    gap: 10px;
+    margin: 20px;
   }

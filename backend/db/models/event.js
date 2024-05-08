@@ -63,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         isIn: {
-          args: [['Concert', 'Theater']],
+          args: [['R&B','Rock', 'Pop', 'Blues', 'Jazz']],
           msg: "Type must be either Concert or Theater"
         },
         notNull: {

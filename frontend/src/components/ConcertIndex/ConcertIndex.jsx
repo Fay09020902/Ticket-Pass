@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useDispatch, useSelector} from 'react-redux';
 import { getEvents } from '../../store/event';
 import ConcertFilter from './ConcertFilter';
@@ -9,7 +9,13 @@ function ConcertIndex() {
     const dispatch = useDispatch();
     const allConcerts = useSelector(state => state.events.events);
     const [distinctLocations, setDistinctLocations] = useState([]);
-    const [filteredConcerts, setFilteredConcerts] = useState(allConcerts);
+    const [distinctTypes, setDistinctTypes] = useState([])
+    // const [filteredConcerts, setFilteredConcerts] = useState(allConcerts);
+    const [filterSettings, setFilterSettings] = useState({
+        location: '',
+        type: ''
+    });
+
     // console.log("concertIndex render")
     // console.log("filtered Concerts: ", filteredConcerts)
     useEffect(() => {
@@ -17,30 +23,32 @@ function ConcertIndex() {
     }, [dispatch]);
 
     useEffect(() => {
-        // Get distinct locations
         setDistinctLocations([...new Set(Object.values(allConcerts).map(c => c.city))]);
+        setDistinctTypes([...new Set(Object.values(allConcerts).map(c => c.type))])
     }, [allConcerts]);
 
-    const handleLocationChange = (selectedLocation) => {
-        if (selectedLocation === 'all') {
-            setFilteredConcerts(allConcerts);
-        } else {
-            const filtered = Object.values(allConcerts).filter(concert => concert.city === selectedLocation);
-            setFilteredConcerts(filtered);
-        }
+    const handleFilterChange = (selectedLocation, selectedType) => {
+        // console.log("handleFilterChange runs")
+        setFilterSettings({"location":selectedLocation, "type": selectedType})
     };
+
+    const filteredConcerts = useMemo(() => {
+        // console.log("current filterSettings: ", filterSettings)
+        const rsl =  Object.values(allConcerts).filter(concert =>
+            (filterSettings.location ? concert.city === filterSettings.location : true) &&
+            (filterSettings.type ? concert.type === filterSettings.type : true)
+        );
+        // console.log("filtered result: ", rsl)
+        return rsl
+    }, [filterSettings, allConcerts]);
 
     return (
         <div>
             <div>
-                <ConcertFilter onLocationChange={handleLocationChange} locations={distinctLocations} />
+                <ConcertFilter onFilterChange={handleFilterChange} locations={distinctLocations} types={distinctTypes}/>
             </div>
             <div className="concert-index">
-                    {Object.values(filteredConcerts).length > 0 ? (
-                        <ConcertList concerts={filteredConcerts} />
-                    ) : (
-                        <ConcertList concerts={allConcerts} />
-                    )}
+                <ConcertList concerts={filteredConcerts} />
             </div>
         </div>
     );
