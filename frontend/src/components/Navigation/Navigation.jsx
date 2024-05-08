@@ -31,11 +31,12 @@ function Navigation({ isLoaded }) {
   );
 
   return (
-    <ul>
+    <ul className='nav'>
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
       {isLoaded && sessionLinks}
+      <h2>Concert Tickets</h2>
     </ul>
   );
 }
