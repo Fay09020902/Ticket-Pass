@@ -1,5 +1,3 @@
-import { Dispatch } from "react"
-import { csrfFetch } from "./csrf"
 
 // taken from forms practice and modified
 export const LOAD_EVENTS = 'events/LOAD_EVENTS'
@@ -39,17 +37,18 @@ export const loadEvents = (events) => ({
       throw res
     }
   }
-  export const getEventDetails = (eventId) => async (dispatch) => {
-    const res = await fetch(`/api/events/${eventId}`);
-    const data = await res.json();
-    res.data = data;
-    if (res.ok) {
-      dispatch(detailEvent(data));
-      return data
-    } else {
-      throw res;
-    }
-  };
+  
+  // export const getEventDetails = (eventId) => async (dispatch) => {
+  //   const res = await fetch(`/api/events/${eventId}`);
+  //   const data = await res.json();
+  //   res.data = data;
+  //   if (res.ok) {
+  //     dispatch(detailEvent(data));
+  //     return data
+  //   } else {
+  //     throw res;
+  //   }
+  // };
 
   const eventReducer = (
     state = { events: {}, currEvent: {}},
