@@ -37,7 +37,7 @@ export const loadEvents = (events) => ({
       throw res
     }
   }
-  
+
   // export const getEventDetails = (eventId) => async (dispatch) => {
   //   const res = await fetch(`/api/events/${eventId}`);
   //   const data = await res.json();
@@ -51,19 +51,20 @@ export const loadEvents = (events) => ({
   // };
 
   const eventReducer = (
-    state = { events: {}, currEvent: {}},
+    state = { events: {}, currEvent: {} },
     action
-  ) => {
+) => {
     switch (action.type) {
-        case LOAD_EVENTS:
+        case LOAD_EVENTS: {
             const eventState = {};
             action.events.forEach(e => {
-                eventState[e.id] = e
-            })
-            return {...state, events: eventState}
+                eventState[e.id] = e;
+            });
+            return {...state, events: eventState};
+        }
         default:
-            return state
+            return state;
     }
-  }
+};
 
-  export default eventReducer;
+export default eventReducer;
