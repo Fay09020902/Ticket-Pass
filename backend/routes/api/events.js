@@ -461,7 +461,7 @@ router.get("/", async (req, res, next) => {
 
     // Fetch all events from the database
     const events = await Event.findAll();
-    
+
     // Respond with the list of events
     return res.status(200).json(events);
 

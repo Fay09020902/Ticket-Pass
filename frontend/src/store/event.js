@@ -77,7 +77,7 @@ export const loadEvents = (events) => ({
             return {...state, events: eventState};
         }
         case CREATE_EVENT: {
-          newState = {...state}
+          const newState = {...state}
           newState.events[action.event.id] = {...action.event}
           return newState
         }
