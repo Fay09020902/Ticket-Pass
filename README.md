@@ -1,5 +1,5 @@
 Schema:
-![Alt text](TicketPass.png)
+![Alt text](ticketschema.png)
 
 [Render.com]: https://ticket-pass.onrender.com
 

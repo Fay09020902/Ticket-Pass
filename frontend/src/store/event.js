@@ -1,3 +1,4 @@
+import { csrfFetch } from "./csrf";
 
 // taken from forms practice and modified
 export const LOAD_EVENTS = 'events/LOAD_EVENTS'
@@ -38,6 +39,19 @@ export const loadEvents = (events) => ({
     }
   }
 
+  export const addEventThunk = (event) => async dispatch => {
+    const response = await csrfFetch('/api/events', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(event)
+    });
+    if (response.ok) {
+      const form = await response.json();
+      dispatch(createEvent(form));
+      return form;
+    }
+  }
+
   // export const getEventDetails = (eventId) => async (dispatch) => {
   //   const res = await fetch(`/api/events/${eventId}`);
   //   const data = await res.json();
@@ -61,6 +75,11 @@ export const loadEvents = (events) => ({
                 eventState[e.id] = e;
             });
             return {...state, events: eventState};
+        }
+        case CREATE_EVENT: {
+          newState = {...state}
+          newState.events[action.event.id] = {...action.event}
+          return newState
         }
         default:
             return state;

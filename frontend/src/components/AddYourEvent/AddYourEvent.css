@@ -1,0 +1,120 @@
+
+.adding-restaurant-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 20px;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+    background-image: url('/bgrestaurant.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.unlocknewrevenue {
+    margin-bottom: 200px;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 200px;
+}
+
+.unlocknewrevenue h1 {
+    font-size: 2rem;
+    color: #ffffff;
+}
+
+.unlocknewrevenue h4 {
+    font-size: 1.2rem;
+    color: #ffffff;
+}
+
+.getstarted {
+    width: 100%;
+    max-width: 450px;
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.getstarted h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.getstarted h4 {
+    font-size: 1rem;
+    color: #777;
+}
+
+
+.newRestaurantForm {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+}
+
+.newRestaurantForm div {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.checkmarks> div{
+    display: flex;
+    flex-direction: row;
+}
+.newRestaurantForm label {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.newRestaurantForm input[type='text'] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+.newRestaurantForm input[type='text']:focus {
+    border-color: #00aaff;
+    outline: none;
+}
+
+.newRestaurantForm input[type='checkbox'] {
+    margin-left: 10px;
+}
+
+.newRestaurantForm> .sbmtbtn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.newRestaurantForm button {
+    background-color: #00aaff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.newRestaurantForm button:hover {
+    background-color: #0088cc;
+}
+
+
+.create_restaurants_errors {
+    color: red
+}
