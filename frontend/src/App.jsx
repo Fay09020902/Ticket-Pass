@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Navigation from './components/Navigation/Navigation';
 import AddYourEvent from './components/AddYourEvent/AddYourEvent';
+import EventDetailPage from './components/EventDetailPage/EventDetailPage'
 import ConcertIndex from './components/ConcertIndex/ConcertIndex';
 import * as sessionActions from './store/session';
 
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: '/events/new',
         element: <AddYourEvent />
+      },
+      {
+        path: '/events/:eventId',
+        element: <EventDetailPage />
       }
     ]
   }

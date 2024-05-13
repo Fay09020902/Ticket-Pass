@@ -187,7 +187,7 @@ router.get(
             err.status = 404;
             return next(err);
         }
-        const {Reviews, Owner, SpotImages, ...rest} = curEvent.toJSON()
+        // const {Comments, Owner, SpotImages, ...rest} = curEvent.toJSON()
         return res.json(curEvent)
     });
 

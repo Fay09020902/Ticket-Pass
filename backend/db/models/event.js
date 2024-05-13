@@ -64,6 +64,16 @@ module.exports = (sequelize, DataTypes) => {
         },
       }
     },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Description cannot be empty"
+        },
+      }
+    },
     type: {
       type: DataTypes.STRING,
       allowNull: false,

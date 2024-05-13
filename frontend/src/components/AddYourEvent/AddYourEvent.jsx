@@ -9,6 +9,7 @@ const AddYourEvent = () => {
     // const navigate = useNavigate();
     const [name, setName] = useState('');
     const [artist, setArtist] = useState('');
+    const [description, setDescription] = useState('');
     const [type, setType] = useState('');
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
@@ -26,6 +27,7 @@ const AddYourEvent = () => {
         const newEvent = {
             name,
             artist,
+            description,
             type,
             address,
             city,
@@ -36,16 +38,6 @@ const AddYourEvent = () => {
             price,
             ticketavailability
         }
-
-        // return dispatch(addEventThunk(newEvent))
-        //        .catch(
-        //         async (res) => {
-        //             const data = await res.json()
-        //             if(data && data.errors) {
-        //                 setErrors(data.errors)
-        //             }
-        //         }
-        //        )
 
         try {
             const response = await dispatch(addEventThunk(newEvent));
@@ -85,6 +77,13 @@ const AddYourEvent = () => {
                         <input type="text" value={artist} onChange={e => setArtist(e.target.value)} />
                         <div className='create_events_errors'>
                         {errors.artist && <p>{errors.artist}</p>}
+                        </div>
+                    </div>
+                    <div>
+                        <label htmlFor="description">Description</label>
+                        <input type="text" value={description} onChange={e => setDescription(e.target.value)} />
+                        <div className='create_events_errors'>
+                        {errors.description && <p>{errors.description}</p>}
                         </div>
                     </div>
                     <div>

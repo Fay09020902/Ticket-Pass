@@ -1,3 +1,13 @@
+.nav-container {
+    display: flex;
+    flex-direction: column;
+    background-image: url('https://uk.tmconst.com/production-10-67-0-7709933/images/categories/10002.jpg?auto=webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    line-height: 60px;
+    list-style-type: none;
+  }
+
 .profile-dropdown {
     top: 40px; /* Adjust this value as needed */
     background-color: white;
@@ -14,14 +24,28 @@
   }
 
   .nav {
-    background-image: url('https://uk.tmconst.com/production-10-67-0-7709933/images/categories/10002.jpg?auto=webp');
-    background-size: cover; /* Adjust as needed */
-    background-repeat: no-repeat; /* Adjust as needed */
-    line-height: 60px;
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
   }
 
-  .nav h2 {
+  .nav-container h2 {
     font-size: 36px;
     color: rgb(255, 255, 255);
+    margin-left: 40px;
   }
 
+  .navlinks {
+    text-decoration: none;
+  }
+
+  ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 40px;
+    padding-inline-start: 40px;
+    unicode-bidi: isolate;
+}
