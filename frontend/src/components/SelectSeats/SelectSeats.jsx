@@ -1,23 +1,22 @@
 import { useSelector, useDispatch} from "react-redux";
-import { useEffect, useState } from 'react';
-import './PurchaseTicketPage.css'
+import { useEffect } from 'react';
+import './SelectSeats.css'
 import {loadSeats, selectSeat, deselectSeat} from '../../store/seats'
 
 
 
-function PurchaseTicketPage() {
+function SelectSeats() {
     const dispatch = useDispatch();
     const curEvent = useSelector(state => state.events.currEvent);
     const seats = useSelector(state => state.seats.seats)
-    const selectedSeats = useSelector(state => state.seats.selectedSeats)
+    // const selectedSeats = useSelector(state => state.seats.selectedSeats)
 
-
-    const handleSelectSeat = (id, isSelected) => {
+    const handleSelectSeat = (id, isSelected, price) => {
       if (isSelected) {
-        dispatch(deselectSeat(id))
+        dispatch(deselectSeat(id, price))
       }
       else {
-        dispatch(selectSeat(id))
+        dispatch(selectSeat(id, price))
       }
     };
 
@@ -48,7 +47,7 @@ function PurchaseTicketPage() {
         <h2>PurchaseTicketPage</h2>
         {seats && (<div className='seat-map'>
             {Object.values(seats).map(seat => (
-                            <li onClick={() => handleSelectSeat(seat.id, seat.isSelected)} key={seat.id} className={seat.isSelected ? 'selected' : ''} >
+                            <li onClick={() => handleSelectSeat(seat.id, seat.isSelected, curEvent.price)} key={seat.id} className={seat.isSelected ? 'selected' : ''} >
                               <p>{seat.id}</p> <p>{curEvent.price}</p>
                             </li>
                           ))}
@@ -59,4 +58,4 @@ function PurchaseTicketPage() {
 }
 
 
-export default PurchaseTicketPage;
+export default SelectSeats;

@@ -20,15 +20,15 @@ export const loadSeats = seats => ({
 });
 
 // Action to select a seat
-export const selectSeat = seatId => ({
+export const selectSeat = (seatId, price) => ({
     type: 'SELECT_SEAT',
-    payload: seatId
+    payload: {seatId, price}
 });
 
 // Action to deselect a seat
-export const deselectSeat = seatId => ({
+export const deselectSeat = (seatId, price)  => ({
     type: 'DESELECT_SEAT',
-    payload: seatId
+    payload: {seatId, price}
 });
 
 export const available = (seatId, isAvailable) => ({
@@ -41,7 +41,7 @@ const seatsReducer = (
         seats: {},
         selectedSeats: [],  // Array of IDs of selected seats
         seatAvailability: {},  // Object with seat IDs as keys and availability as values
-        errors: null
+        subTotal: 0
     },
     action
 ) => {
@@ -52,33 +52,37 @@ const seatsReducer = (
                 seats: action.payload
             };
         case 'SELECT_SEAT':
-            const updatedSeats  = { ...state.seats };
-            if(!updatedSeats[action.payload].isSelected) {
-                updatedSeats[action.payload] = {
-                    ...updatedSeats[action.payload],
+            const updatedSeatsSelect = { ...state.seats };
+            if (!updatedSeatsSelect[action.payload.seatId].isSelected) {
+                updatedSeatsSelect[action.payload.seatId] = {
+                    ...updatedSeatsSelect[action.payload.seatId],
                     isSelected: true
                 };
                 return {
                     ...state,
-                    seats: updatedSeats,
-                    selectedSeats: [...state.selectedSeats, action.payload]
+                    seats: updatedSeatsSelect,
+                    selectedSeats: [...state.selectedSeats, action.payload.seatId],
+                    subTotal: state.subTotal + action.payload.price
                 };
             }
-			return state;
+            return state;
+
         case 'DESELECT_SEAT':
-            const deselectedSeats = { ...state.seats };
-            if (deselectedSeats[action.payload].isSelected) {
-                deselectedSeats[action.payload] = {
-                    ...deselectedSeats[action.payload],
+            const updatedSeatsDeselect = { ...state.seats };
+            if (updatedSeatsDeselect[action.payload.seatId].isSelected) {
+                updatedSeatsDeselect[action.payload.seatId] = {
+                    ...updatedSeatsDeselect[action.payload.seatId],
                     isSelected: false
                 };
                 return {
                     ...state,
-                    seats: deselectedSeats,
-                    selectedSeats: state.selectedSeats.filter(id => id !== action.payload)
+                    seats: updatedSeatsDeselect,
+                    selectedSeats: state.selectedSeats.filter(id => id !== action.payload.seatId),
+                    subTotal: state.subTotal - action.payload.price
                 };
             }
             return state;
+
         case 'SET_AVAILABILITY':
             return {
                 ...state,
@@ -87,6 +91,7 @@ const seatsReducer = (
                     [action.payload.seatId]: action.payload.isAvailable
                 }
             };
+
         default:
             return state;
     }
