@@ -46,13 +46,14 @@ const seatsReducer = (
     action
 ) => {
     switch (action.type) {
-        case 'LOAD_SEATS':
+        case 'LOAD_SEATS':{
             return {
                 ...state,
                 seats: action.payload
-            };
+            }
+        }
         case 'SELECT_SEAT':
-            const updatedSeatsSelect = { ...state.seats };
+           { const updatedSeatsSelect = { ...state.seats };
             if (!updatedSeatsSelect[action.payload.seatId].isSelected) {
                 updatedSeatsSelect[action.payload.seatId] = {
                     ...updatedSeatsSelect[action.payload.seatId],
@@ -66,9 +67,9 @@ const seatsReducer = (
                 };
             }
             return state;
-
+}
         case 'DESELECT_SEAT':
-            const updatedSeatsDeselect = { ...state.seats };
+            {const updatedSeatsDeselect = { ...state.seats };
             if (updatedSeatsDeselect[action.payload.seatId].isSelected) {
                 updatedSeatsDeselect[action.payload.seatId] = {
                     ...updatedSeatsDeselect[action.payload.seatId],
@@ -81,16 +82,16 @@ const seatsReducer = (
                     subTotal: state.subTotal - action.payload.price
                 };
             }
-            return state;
+            return state;}
 
         case 'SET_AVAILABILITY':
-            return {
+            {return {
                 ...state,
                 seatAvailability: {
                     ...state.seatAvailability,
                     [action.payload.seatId]: action.payload.isAvailable
                 }
-            };
+            }}
 
         default:
             return state;

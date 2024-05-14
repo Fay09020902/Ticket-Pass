@@ -43,8 +43,8 @@ function SelectSeats() {
 
 
     return (
-        <div>
-        <h2>PurchaseTicketPage</h2>
+        <div className="selectseat_container">
+        <div className="seatselect_title">Select Seats</div>
         {seats && (<div className='seat-map'>
             {Object.values(seats).map(seat => (
                             <li onClick={() => handleSelectSeat(seat.id, seat.isSelected, curEvent.price)} key={seat.id} className={seat.isSelected ? 'selected' : ''} >
