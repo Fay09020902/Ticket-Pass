@@ -3,16 +3,18 @@ export const DESELECT_SEAT = 'seats/DESELECT_SEAT'
 export const LOAD_SEATS = 'seats/LOAD_SEATS'
 
 
-
-// export const fetchSeats = () => async dispatch => {
-//     try {
-//         const response = await fetch('/api/seats');
-//         const data = await response.json();
-//         dispatch({ type: 'FETCH_SEATS_SUCCESS', payload: data });
-//     } catch (error) {
-//         dispatch({ type: 'FETCH_SEATS_ERROR', payload: error });
-//     }
-// };
+export const fetchSeats = (eventId) => async (dispatch) => {
+    const res = await fetch(`/api/events/${eventId}/seats`);
+    const data = await res.json();
+    res.data = data;
+    // console.log("seats data: ", data)
+    if (res.ok) {
+      dispatch(loadSeats(data));
+      return data
+    } else {
+      throw new Error(data.message);
+    }
+  };
 
 export const loadSeats = seats => ({
     type: 'LOAD_SEATS',
