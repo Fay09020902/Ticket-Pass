@@ -65,7 +65,7 @@ export const loadEvents = (events) => ({
       dispatch(detailEvent(data));
       return data
     } else {
-      throw res;
+      throw new Error(data.message);
     }
   };
 
