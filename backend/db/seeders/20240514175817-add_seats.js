@@ -1,4 +1,5 @@
 'use strict';
+const { Seat } = require('../models')
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -27,12 +28,7 @@ module.exports = {
     const seats = seats1.concat(seats2);
 
     // Bulk insert generated seats into the database
-    try {
-      await queryInterface.bulkInsert('Seats', seats);
-    } catch (error) {
-      console.error('Error during bulk insert of seats:', error);
-      throw error; // Rethrow to catch the error at a higher level if needed
-    }
+    await Seat.bulkCreate(seats, { validate: true })
   },
 
   async down(queryInterface, Sequelize) {
