@@ -42,11 +42,11 @@ const AddYourEvent = () => {
         try {
             const response = await dispatch(addEventThunk(newEvent));
             if (response && response.data) {
-                console.log("create event succeed")
+                // console.log("create event succeed")
             }
         } catch (res) {
             const data = await res.json();
-            console.log(data)
+            // console.log(data)
             if (data && data.errors) {
                 setErrors(data.errors);
             }

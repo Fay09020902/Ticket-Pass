@@ -26,8 +26,6 @@ module.exports = {
 
     const seats = seats1.concat(seats2);
 
-    console.log('Generated Seats:', seats);
-
     // Bulk insert generated seats into the database
     try {
       await queryInterface.bulkInsert('Seats', seats);
