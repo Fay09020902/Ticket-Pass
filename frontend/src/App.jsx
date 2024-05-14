@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Navigation from './components/Navigation/Navigation';
 import AddYourEvent from './components/AddYourEvent/AddYourEvent';
 import EventDetailPage from './components/EventDetailPage/EventDetailPage'
+import PurchaseTicketPage from './components/PurchaseTicket/PurchaseTicketPage'
 import ConcertIndex from './components/ConcertIndex/ConcertIndex';
 import * as sessionActions from './store/session';
 
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: '/events/:eventId',
         element: <EventDetailPage />
+      },
+      {
+        path: '/events/:eventId/tickets',
+        element: <PurchaseTicketPage />
       }
     ]
   }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector} from "react-redux";
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import {getEventDetails} from '../../store/event'
 import './EventDetailPage.css'
 
@@ -75,6 +75,7 @@ function EventDetailPage() {
                     ))}
             </div>)
             }
+            <NavLink to={`/events/${eventId}/tickets`} className='ticketLink'>Tickets</NavLink>
         </div>
     )
 }
