@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Ticket.belongsTo(models.Event, { foreignKey: 'eventId' });
       Ticket.belongsTo(models.User, { foreignKey: 'userId' });
+      Ticket.belongsTo(models.Seat, { foreignKey: 'seatId' });
     }
   }
   Ticket.init({
@@ -18,10 +19,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    quantity: {
+    seatId: {
       type: DataTypes.INTEGER,
       allowNull: false
-    }
+    },
   }, {
     sequelize,
     modelName: 'Ticket',
