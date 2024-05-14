@@ -1,5 +1,11 @@
 'use strict';
 const { Seat } = require('../models')
+const bcrypt = require("bcryptjs");
+
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -33,7 +39,9 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     // Delete all seats for these event IDs
-    await queryInterface.bulkDelete('Seats', {
+    options.tableName = 'Seats';
+    const Op = Sequelize.Op;
+    await queryInterface.bulkDelete(options, {
       eventId: { [Sequelize.Op.in]: [1, 2, 3, 4, 5, 6, 7, 8] }
     });
   }
