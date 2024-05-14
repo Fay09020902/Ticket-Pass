@@ -1,0 +1,83 @@
+.event-detail-container {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.title-type {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.title-type h1 {
+    color: #333;
+    font-size: 28px;
+}
+
+.title-type p {
+    color: #666;
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+/* Navigation styles */
+.EventDetails_nav {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ccc;
+}
+
+.EventDetails__anchor {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #0056b3;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.EventDetails__anchor:hover {
+    background-color: #f8f8f8;
+    color: #002d72;
+}
+
+/* Section styles */
+#EventDetails_event, #EventDetails_about, #EventDetails_comments {
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+h3 {
+    color: #333;
+    margin-top: 20px;
+}
+
+p, small {
+    color: #666;
+    line-height: 1.5;
+}
+
+/* Pricing and other details */
+.price {
+    font-size: 18px;
+    color: #008000; /* Green color for price */
+    font-weight: bold;
+}
+
+/* Tickets availability */
+.tickets-available {
+    color: #d32f2f;
+}
+
+
+.EventDetails__anchor--active {
+    color: goldenrod;
+    background-color: #f0f0f0;
+}

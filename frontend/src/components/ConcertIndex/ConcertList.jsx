@@ -1,10 +1,11 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function ConcertList({concerts}) {
 
     return (
         <div className="concert-list">
             {Object.values(concerts).map(concert => (
+                  <NavLink to={`/events/${concert.id}`}  key={concert.id} className="image-detail-link">
                 <div key={concert.id} className="concert-card">
                     <img src={concert.img_url} alt={concert.name} />
                     <div className="concert-info">
@@ -15,13 +16,13 @@ function ConcertList({concerts}) {
                         <p><strong>Time:</strong> {concert.time}</p>
                         <p><strong>Venue:</strong> {concert.address}, {concert.city}</p>
                         <p><strong>Price:</strong> ${concert.price.toFixed(2)}</p>
-                        {concert.ticketavailability ? (
-                        <Link to={`/concerts/${concert.id}`} className="btn">Buy Tickets</Link>
+                        {concert.ticketavailability ? (<div></div>
                         ) : (
                         <p className="sold-out">Sold Out</p>
                         )}
                     </div>
                 </div>
+                </NavLink>
             ))}
         </div>
     )

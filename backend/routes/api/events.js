@@ -5,7 +5,7 @@ const { handleValidationErrors, validateQuery } = require('../../utils/validatio
 const { Op } = require('sequelize')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Event, Comment, Ticket, sequelize } = require('../../db/models');
+const { User, Event, Comment, Ticket, Seat, sequelize } = require('../../db/models');
 const e = require('express');
 
 const router = express.Router();
@@ -187,7 +187,7 @@ router.get(
             err.status = 404;
             return next(err);
         }
-        const {Reviews, Owner, SpotImages, ...rest} = curEvent.toJSON()
+        // const {Comments, Owner, SpotImages, ...rest} = curEvent.toJSON()
         return res.json(curEvent)
     });
 
@@ -388,32 +388,30 @@ router.delete(
 
 
 
-// //Get all Reviews by a Spot's id
-// router.get(
-//     "/:spotId/reviews",
-//     async (req, res, next) => {
-//         const {spotId} = req.params
-//         const spot = await Spot.findByPk(spotId)
-//         if (!spot) {
-//             const err = new Error("Spot couldn't be found");
-//             err.status = 404;
-//             return next(err);
-//         };
-//         const reviews = await Review.findAll({
-//             where: {
-//                 spotId
-//             },
-//             include: [
-//                 {model: ReviewImage,
-//                 attributes: ["id", "url"]},
-//                 {
-//                     model: User,
-//                     attributes: ["id", "firstName", "lastName"]
-//                 }
-//             ]
-//         })
-//         return res.json({Reviews: reviews});
-//     });
+//Get all Seats by a Event's id
+router.get(
+    "/:eventId/seats",
+    async (req, res, next) => {
+        const {eventId} = req.params
+        const event = await Event.findByPk(eventId)
+        if (!event) {
+            const err = new Error("Event couldn't be found");
+            err.status = 404;
+            return next(err);
+        };
+        const seats = await Seat.findAll({
+            where: {
+                eventId
+            }
+        })
+
+        const seatsObject = seats.reduce((obj, seat) => {
+            obj[seat.id] = seat.toJSON();  // Convert Sequelize model instance to JSON
+            return obj;
+        }, {});
+
+        return res.json(seatsObject);
+    });
 
 // //Get all bookings by a Spot's id
 // router.get(
@@ -461,7 +459,7 @@ router.get("/", async (req, res, next) => {
 
     // Fetch all events from the database
     const events = await Event.findAll();
-    
+
     // Respond with the list of events
     return res.status(200).json(events);
 

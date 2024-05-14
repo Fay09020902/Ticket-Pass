@@ -9,7 +9,7 @@ function ConcertFilter({ onFilterChange, locations, types}) {
     useEffect(() => {
         // console.log("on filter change runs")
         onFilterChange(location, type);
-    }, [location, type, onFilterChange]);
+    }, [location, type]);
 
     const handleLocationChange = (e) => {
         setLocation(e.target.value);

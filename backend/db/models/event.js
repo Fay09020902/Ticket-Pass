@@ -23,6 +23,15 @@ module.exports = (sequelize, DataTypes) => {
           hooks: true
         }
       );
+      Event.hasMany(
+        models.Seat,
+        {
+          foreignKey:"eventId",
+          onDelete: 'CASCADE',
+          hooks: true
+        }
+
+      );
       Event.belongsTo(
         models.User,
         {
@@ -57,6 +66,22 @@ module.exports = (sequelize, DataTypes) => {
     artist: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Artist cannot be empty"
+        },
+      }
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Description cannot be empty"
+        },
+      }
     },
     type: {
       type: DataTypes.STRING,
@@ -64,7 +89,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isIn: {
           args: [['R&B','Rock', 'Pop', 'Blues', 'Jazz']],
-          msg: "Type must be either Concert or Theater"
+          msg: "Type must be one of R&B, Rock, Pop, Blues, Jazz"
         },
         notNull: {
           args: true,

@@ -14,7 +14,7 @@ function SportIndex() {
         dispatch(loadSpotsThunk())
     }, [dispatch])
 
-    if (!Object.values(allSpots).length) return <div>No Spots</div>;
+    if (!Object.values(allSpots).length) return <div>No Events</div>;
 
     return (
         <div className="index">

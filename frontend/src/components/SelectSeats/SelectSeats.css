@@ -1,0 +1,53 @@
+.seat-map {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    padding: 20px;
+    margin: auto;
+    max-width: 500px;
+}
+
+.seatselect_title {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.seat-map li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+    border: 2px solid #ddd;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.seat-map li:hover {
+    background-color: #e9e9e9;
+    transform: translateY(-2px);
+}
+
+.seat-map li.selected {
+    background-color: #4CAF50;
+    color: white;
+    border-color: #388E3C;
+}
+
+
+.selectseat_container button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+}
+
+.seat-map.unavailable {
+    background-color: #f44336; /* Red for unavailable */
+    cursor: not-allowed;
+}

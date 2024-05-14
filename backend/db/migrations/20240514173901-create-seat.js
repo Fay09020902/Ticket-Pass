@@ -1,12 +1,13 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
+
 let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
 }
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Tickets', {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable('Seats', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -22,23 +23,17 @@ module.exports = {
         },
         onDelete: 'CASCADE'
       },
-      userId: {
+      row: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
-          model: 'Users',
-          key: 'id'
-        },
-        onDelete: 'CASCADE'
       },
-      seatId: {
+      number: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
-          model: 'Seats',
-          key: 'id'
-        },
-        onDelete: 'CASCADE'
+      },
+      status: {
+        type: Sequelize.BOOLEAN, //sold=>false
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
@@ -52,7 +47,7 @@ module.exports = {
       }
     }, options);
   },
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Tickets');
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('Seats');
   }
 };

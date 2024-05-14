@@ -13,6 +13,14 @@ module.exports = (sequelize, DataTypes) => {
         }
       );
       User.hasMany(
+        models.Event,
+        {
+          foreignKey:"userId",
+          onDelete: 'CASCADE',
+          hooks: true
+        }
+      );
+      User.hasMany(
         models.Comment,
         {
           foreignKey:"userId",
