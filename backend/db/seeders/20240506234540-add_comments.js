@@ -1,5 +1,11 @@
 'use strict';
 const { Comment } = require('../models');
+const bcrypt = require("bcryptjs");
+
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
 
 const commentData = [
   {
@@ -25,6 +31,10 @@ module.exports = {
     await Comment.bulkCreate(commentData);
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Comments', null, {});
+    options.tableName = 'Comments';
+    const Op = Sequelize.Op;
+    return queryInterface.bulkDelete(options, {
+      text: { [Op.in]: ['Really good', 'Awesome performance!', 'Great event!'] }
+    }, {});
   }
 };
