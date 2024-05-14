@@ -1,6 +1,11 @@
 'use strict';
 const { Event } = require('../models')
+const bcrypt = require("bcryptjs");
 
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
 
 const concertEvents = [
   {
@@ -131,6 +136,10 @@ module.exports = {
 
   async down (queryInterface, Sequelize) {
     // Remove all concert events from the Events table
-    await queryInterface.bulkDelete('Events', null, {});
+    options.tableName = 'Events';
+    const Op = Sequelize.Op;
+    return queryInterface.bulkDelete(options, {
+      artist: { [Op.in]: ['Foo Fighters', 'Taylor Swift', 'CLAY', 'Caelan Cardello', 'Red Hot Chili Peppers', 'Billie Eilish', 'John Legend', 'Tryst'] }
+    }, {});
   }
 };
