@@ -1,6 +1,7 @@
 export const SELECT_SEAT = 'seats/SELECT_SEAT'
 export const DESELECT_SEAT = 'seats/DESELECT_SEAT'
 export const LOAD_SEATS = 'seats/LOAD_SEATS'
+import { csrfFetch } from "./csrf";
 
 export const fetchSeats = (eventId) => async (dispatch) => {
     const res = await fetch(`/api/events/${eventId}/seats`);
@@ -11,23 +12,6 @@ export const fetchSeats = (eventId) => async (dispatch) => {
       return data
     }
 }
-
-export const updateSeatStatus = (seatId) => async (dispatch) => {
-    const payload = { isSelected };
-    const response = await csrfFetch(`/api/seats/${seatId}/update-selection`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-    });
-    if (response.ok) {
-        const seat = await response.json();
-        return seat;
-    } else {
-        const error = await response.json();
-        console.log(error)
-        throw new Error(error.message);
-    }
-};
 
 
 export const updateSeatAvailability = (selectedSeats) => async (dispatch) => {

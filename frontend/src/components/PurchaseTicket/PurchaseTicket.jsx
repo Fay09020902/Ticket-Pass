@@ -20,7 +20,7 @@ export default function PurchaseTicket() {
 			    alert("purchase succeed")
 			}
 		  } catch(e){
-			console.log("errrr ", e)
+			alert("Please login to purchase")
 		  }
 	}
 

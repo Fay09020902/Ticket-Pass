@@ -24,7 +24,7 @@ function SelectSeats() {
           }
         }
       } catch(e){
-        console.log("errrr ", e)
+        alert("Please login to purchase")
       }
     };
 
