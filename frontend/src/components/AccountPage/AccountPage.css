@@ -1,0 +1,133 @@
+.account-page-container {
+    display: flex;
+    height: 100%;
+}
+
+.sidebar {
+    width: 300px; /* Adjust as needed */
+    background-color: #f0f0f0;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.tab {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.tab:hover {
+    background-color: #ddd;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+
+.myRestaurants {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.updatemanage-button {
+    text-align: center;
+}
+
+.myitem {
+    width: 100%;
+    margin: 10px;
+}
+
+.myrestaurant-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+
+@media (min-width: 480px) {
+    .myitem {
+      width: 50%; /* Two columns on screens wider than 480px */
+
+    }
+  }
+
+  @media (min-width: 768px) {
+    .myitem {
+      width: 33.33%; /* Three columns on screens wider than 768px */
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .myitem {
+      width: 23%; /* Four columns on screens wider than 1200px */
+    }
+  }
+
+
+  .accountInfo-container {
+    border: 1px solid #e2e2e2;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.myrestaurant-container {
+    border: 1px solid #e2e2e2;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.accountInfo-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.accountInfo-section {
+    margin-bottom: 20px;
+}
+
+.accountInfo-label {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.accountInfo-value {
+    font-size: 16px;
+}
+
+.delete-update-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .button-link,
+  .button-remove {
+    font-size: 14px;
+    text-decoration: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #f5f5f5;
+    color: #333;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 8px 16px;
+  }
+
+  .button-link:hover,
+  .button-remove:hover {
+    background-color: #ddd;
+  }

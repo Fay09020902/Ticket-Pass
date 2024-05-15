@@ -47,7 +47,7 @@ function SelectSeats() {
                             </li>
                           ))}
         </div>)}
-        <NavLink to={`/tickets/${eventId}/checkout`} className='ticketLink'>Buy Now</NavLink>
+        <NavLink to={`/tickets/${eventId}/checkout`} className='buy-now-button'>Buy Now</NavLink>
         </div>
     )
 }

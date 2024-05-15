@@ -1,21 +1,32 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./PurchaseTicket.css"
 import {updateSeatAvailability, deselectSeat} from "../../store/seats"
+import {addTicketsThunk} from '../../store/ticket'
 
 export default function PurchaseTicket() {
     const dispatch = useDispatch();
     const amount = useSelector(state => state.seats.subTotal);
     const curEvent = useSelector(state => state.events.currEvent);
     const selectedSeats = useSelector(state => state.seats.selectedSeats);
-
+    const curUser = useSelector(state => state.session.user)
     const handlePlaceOrder = async () => {
         try {
             const seatsUpdated = await dispatch(updateSeatAvailability(selectedSeats));
             if (seatsUpdated) {
-                selectedSeats.forEach(seatId => {
-                    dispatch(deselectSeat(seatId, curEvent.price));
-                });
-                alert("Purchase succeeded");
+                const purchaseResult = await dispatch(addTicketsThunk(
+                    {
+                        eventId: curEvent.id,
+                        userId: curUser.id,
+                        seats: selectedSeats}
+                ))
+                if (purchaseResult) {
+                    selectedSeats.forEach(seatId => {
+                        dispatch(deselectSeat(seatId, curEvent.price));
+                    });
+                    alert("Purchase succeeded");
+                } else {
+                    throw new Error("Failed to finalize ticket purchase.");
+                }
             }
         } catch (e) {
             alert("Please login to purchase");

@@ -5,11 +5,13 @@ import { legacy_createStore as createStore} from 'redux'
 import sessionReducer from './session';
 import eventReducer from './event';
 import seatsReducer from './seats';
+import ticketsReducer from './ticket';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   events: eventReducer,
   seats: seatsReducer,
+  tickets: ticketsReducer,
 });
 
 let enhancer;

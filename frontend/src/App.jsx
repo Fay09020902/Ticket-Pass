@@ -7,6 +7,7 @@ import EventDetailPage from './components/EventDetailPage/EventDetailPage'
 import SelectSeats from './components/SelectSeats/SelectSeats'
 import PurchaseTicket from './components/PurchaseTicket/PurchaseTicket';
 import ConcertIndex from './components/ConcertIndex/ConcertIndex';
+import AccountPage from './components/AccountPage/AccountPage'
 import * as sessionActions from './store/session';
 
 function Layout() {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: '/tickets/:eventId/checkout',
         element: <PurchaseTicket />
+      },
+      {
+        path: '/accounts',
+        element: <AccountPage />
       }
     ]
   }
