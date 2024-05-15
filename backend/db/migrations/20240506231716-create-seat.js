@@ -34,6 +34,10 @@ module.exports = {
         type: Sequelize.BOOLEAN, //sold=>false
         allowNull: false,
       },
+      isSelected: {
+        type: Sequelize.BOOLEAN, //notselected=>false
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

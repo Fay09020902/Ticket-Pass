@@ -19,6 +19,7 @@ module.exports = {
               eventId: eventId,
               row: row,
               number: number,
+              isSelected: false,
               status: true,  // Assuming 'true' means available
             });
           }

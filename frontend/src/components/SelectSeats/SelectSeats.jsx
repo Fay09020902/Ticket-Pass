@@ -1,8 +1,8 @@
 import { useSelector, useDispatch} from "react-redux";
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, NavLink } from 'react-router-dom';
 import './SelectSeats.css'
-import {fetchSeats, selectSeat, deselectSeat} from '../../store/seats'
+import {updateSeatSelection, fetchSeats, selectSeat, deselectSeat} from '../../store/seats'
 
 
 
@@ -11,14 +11,20 @@ function SelectSeats() {
     const {eventId} = useParams();
     const curEvent = useSelector(state => state.events.currEvent);
     const seats = useSelector(state => state.seats.seats)
-    // const selectedSeats = useSelector(state => state.seats.selectedSeats)
 
-    const handleSelectSeat = (id, isSelected, price) => {
-      if (isSelected) {
-        dispatch(deselectSeat(id, price))
-      }
-      else {
-        dispatch(selectSeat(id, price))
+    const handleSelectSeat = async (id, isSelected, price) => {
+      try {
+        const seat = await dispatch(updateSeatSelection( id, isSelected ));
+        if(seat) {
+          if (isSelected) {
+            dispatch(deselectSeat(id, price))
+          }
+          else {
+            dispatch(selectSeat(id, price))
+          }
+        }
+      } catch(e){
+        alert("Please login to purchase")
       }
     };
 
@@ -41,7 +47,7 @@ function SelectSeats() {
                             </li>
                           ))}
         </div>)}
-        <button>Buy now</button>
+        <NavLink to={`/tickets/${eventId}/checkout`} className='ticketLink'>Buy Now</NavLink>
         </div>
     )
 }
