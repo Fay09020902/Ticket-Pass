@@ -12,7 +12,7 @@ const router = express.Router();
 
 
 
-router.put('/:seatId/update-selection', async (req, res, next) => {
+router.put('/:seatId/update-selection', requireAuth, async (req, res, next) => {
   const { seatId } = req.params;
   const { isSelected } = req.body;
 
@@ -29,7 +29,7 @@ router.put('/:seatId/update-selection', async (req, res, next) => {
 });
 
 
-router.put('/update-seats', async (req, res, next) => {
+router.put('/update-seats', requireAuth, async (req, res, next) => {
   const { selectedSeats } = req.body; // Ensure this matches your frontend's JSON structure
 
   try {
