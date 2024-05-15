@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
+    isSelected: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
     status: {
       type: DataTypes.BOOLEAN,
       allowNull: false

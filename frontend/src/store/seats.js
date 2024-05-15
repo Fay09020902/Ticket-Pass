@@ -2,19 +2,65 @@ export const SELECT_SEAT = 'seats/SELECT_SEAT'
 export const DESELECT_SEAT = 'seats/DESELECT_SEAT'
 export const LOAD_SEATS = 'seats/LOAD_SEATS'
 
-
 export const fetchSeats = (eventId) => async (dispatch) => {
     const res = await fetch(`/api/events/${eventId}/seats`);
     const data = await res.json();
     res.data = data;
-    // console.log("seats data: ", data)
     if (res.ok) {
       dispatch(loadSeats(data));
       return data
-    } else {
-      throw new Error(data.message);
     }
-  };
+}
+
+export const updateSeatStatus = (seatId) => async (dispatch) => {
+    const payload = { isSelected };
+    const response = await csrfFetch(`/api/seats/${seatId}/update-selection`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    });
+    if (response.ok) {
+        const seat = await response.json();
+        return seat;
+    } else {
+        const error = await response.json();
+        console.log(error)
+        throw new Error(error.message);
+    }
+};
+
+
+export const updateSeatAvailability = (selectedSeats) => async (dispatch) => {
+    const response = await csrfFetch(`/api/seats/update-seats`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({selectedSeats})
+    });
+    if (response.ok) {
+        const seats = await response.json();
+        return seats;
+    } else {
+        const error = await response.json();
+        throw new Error(error.message);
+    }
+};
+
+export const updateSeatSelection = (seatId, isSelected) => async (dispatch) => {
+    const payload = { isSelected };
+    const response = await csrfFetch(`/api/seats/${seatId}/update-selection`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    });
+    if (response.ok) {
+        const seat = await response.json();
+        return seat;
+    } else {
+        const error = await response.json();
+        throw new Error(error.message);
+    }
+};
+
 
 export const loadSeats = seats => ({
     type: 'LOAD_SEATS',
