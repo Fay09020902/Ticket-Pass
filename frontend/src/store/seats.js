@@ -14,7 +14,7 @@ export const fetchSeats = (eventId) => async (dispatch) => {
 }
 
 
-export const updateSeatAvailability = (selectedSeats) => async (dispatch) => {
+export const updateSeatAvailability = (selectedSeats) => async () => {
     const response = await csrfFetch(`/api/seats/update-seats`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -29,7 +29,7 @@ export const updateSeatAvailability = (selectedSeats) => async (dispatch) => {
     }
 };
 
-export const updateSeatSelection = (seatId, isSelected) => async (dispatch) => {
+export const updateSeatSelection = (seatId, isSelected) => async () => {
     const payload = { isSelected };
     const response = await csrfFetch(`/api/seats/${seatId}/update-selection`, {
         method: 'PUT',
