@@ -31,12 +31,6 @@
 }
 
 
-.myRestaurants {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
 .updatemanage-button {
     text-align: center;
 }
@@ -44,12 +38,6 @@
 .myitem {
     width: 100%;
     margin: 10px;
-}
-
-.myrestaurant-header {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
 }
 
 
@@ -131,3 +119,27 @@
   .button-remove:hover {
     background-color: #ddd;
   }
+
+  .myTickets {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.ticket {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    width: 80%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.ticket h3 {
+    color: #333;
+}
+
+.ticket p {
+    color: #666;
+    font-size: 14px;
+}

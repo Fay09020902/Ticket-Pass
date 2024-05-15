@@ -16,31 +16,29 @@ const router = express.Router();
 // GET request to retrieve all tickets owned by the current user
 router.get("/current", requireAuth, async (req, res, next) => {
     const { user } = req;
-    console.log("user", user)
     const tickets = await Ticket.findAll({
         where: { userId: user.id },
-        include: {
-            model: Event,
-            attributes: ['name', 'date', 'time', 'city', 'address']
-        }
+        include: [
+            { model: Event, attributes: ['name', 'date', 'time', 'city', 'address'] },
+            { model: Seat, attributes: ['row', 'number'] }
+        ]
     });
 
     const updatedTickets = tickets.map(ticket => {
-        const { Event, ...restTicket } = ticket.toJSON();
+        const { Event, Seat, ...restTicket } = ticket.toJSON();
         return {
             ...restTicket,
+            row: Seat.row,
+            number: Seat.number,
             eventName: Event.name,
+            eventArtist: Event.Artist,
             eventDate: Event.date,
             eventTime: Event.time,
             eventCity: Event.city,
             eventAddress: Event.address
         };
     });
-    const ticketsObject = updatedTickets.reduce((obj, ticket) => {
-        obj[ticket.id] = {...ticket}
-        return obj;
-    }, {});
-    return res.json(ticketsObject);
+    return res.json(updatedTickets);
 });
 
 

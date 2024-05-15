@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import SideBar from './SideBar';
-import AccountInfo from './AccountInfo';
 import MyTickets from './MyTickets';
+import MyEvents from './MyEvents';
 import './AccountPage.css';
 
 const AccountPage = () => {
@@ -18,7 +18,8 @@ const AccountPage = () => {
             </div>
             <div className="main-content">
                 {selectedTab === 'account' && <div>Account</div>}
-                {selectedTab === 'myRestaurants' && <MyTickets />}
+                {selectedTab === 'myTickets' && <MyTickets />}
+                {selectedTab === 'myEvents' && <MyEvents />}
             </div>
         </div>
     );

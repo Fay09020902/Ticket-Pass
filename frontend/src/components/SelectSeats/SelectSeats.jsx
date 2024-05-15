@@ -11,6 +11,7 @@ function SelectSeats() {
     const {eventId} = useParams();
     const curEvent = useSelector(state => state.events.currEvent);
     const seats = useSelector(state => state.seats.seats)
+    const selectedSeats = useSelector(state => state.seats.selectedSeats)
 
     const handleSelectSeat = async (id, isSelected, price) => {
       try {
@@ -47,7 +48,11 @@ function SelectSeats() {
                             </li>
                           ))}
         </div>)}
-        <NavLink to={`/tickets/${eventId}/checkout`} className='buy-now-button'>Buy Now</NavLink>
+        {selectedSeats && selectedSeats.length > 0 ? (
+              <NavLink to={`/tickets/${eventId}/checkout`} className='buy-now-button'>Buy Now</NavLink>
+            ) : (
+              <button className='buy-now-button disabled' disabled>Buy Now</button>
+            )}
         </div>
     )
 }

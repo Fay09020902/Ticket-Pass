@@ -81,9 +81,28 @@ const validateReviews = [
 //Create a event
 router.post("/", requireAuth, async (req, res, next) => {
     const { user } = req;
+    const seats = [];
+    const generateSeatsForEvents = (rows, cols, eventIds) => {
+        eventIds.forEach(eventId => {
+          for (let row = 1; row <= rows; row++) {
+            for (let number = 1; number <= cols; number++) {
+              seats.push({
+                eventId: eventId,
+                row: row,
+                number: number,
+                isSelected: false,
+                status: true,
+              });
+            }
+          }
+        });
+        return seats;
+      };
+    const {event, seatConfig}= req.body
     const {
         name,
         artist,
+        description,
         type,
         address,
         city,
@@ -93,13 +112,14 @@ router.post("/", requireAuth, async (req, res, next) => {
         country,
         img_url,
         ticketavailability
-    } = req.body;
+    } = event;
 
     // Create the event using the Sequelize model
     const newEvent = await Event.create({
         name,
         "userId": user.id,
         artist,
+        description,
         type,
         address,
         city,
@@ -111,55 +131,28 @@ router.post("/", requireAuth, async (req, res, next) => {
         ticketavailability
     });
 
+    const newSeats = generateSeatsForEvents(seatConfig.rows, seatConfig.seatsPerRow, [newEvent.id])
+    await Seat.bulkCreate(newSeats);
+
     // Respond with the newly created event
     return res.status(201).json(newEvent);
 });
 
 
 
-// //Get all Spots owned by the Current User
-// router.get(
-//     "/current",
-//     requireAuth,
-//     async (req, res, next) => {
-//         const {user} = req
-//         //console.log("userid is", user.id)
-//         const spots = await Spot.findAll(
-//             {
-//                 where: {ownerId: user.id},
-//                 include:  {
-//                     model: SpotImage,
-//                     attributes: ["url", "preview"],
-//                 }
-//             }
-//         )
-//         console.log("spots in get curetns spots", spots)
-//         let previewImage;
-//         const updatedSpots = spots.map(spot => {
-//             const {SpotImages, ...rest} = spot.toJSON()
-//             if(SpotImages.length){
-//                 SpotImages.forEach(spotimage => {
-//                     if(spotimage.preview) {
-//                         previewImage = spotimage.url
-//                     }
-//                     else {
-//                         previewImage = null
-//                     }
-//                 })
-//             }
-//             else{
-//                 previewImage = null
-//             }
-//             return {
-//                 ...rest,
-//                 previewImage
-//             }
-//          })
-
-//         return res.json({
-//             Spots: updatedSpots
-//           });
-//     });
+//Get all Events owned by the Current User
+router.get(
+    "/current",
+    requireAuth,
+    async (req, res, next) => {
+        const {user} = req
+        const events = await Event.findAll(
+            {
+                where: {userId: user.id},
+            }
+        )
+        return res.status(201).json(events);
+    });
 
 //Get details of a Event from an id
 router.get(

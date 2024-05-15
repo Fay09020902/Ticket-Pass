@@ -3,9 +3,9 @@ export const CREATE_TICKETS = 'tickets/CREATE_TICKETS'
 import { csrfFetch } from "./csrf";
 
 export const loadCurTickets = (tickets) => ({
-    type: LOAD_CURRENT_TICKETS,
-    payload: tickets,
-  });
+  type: LOAD_CURRENT_TICKETS,
+  tickets,  //tickets is an object like the JSON structure
+});
 
   export const createTickets = (tickets) => ({
     type: CREATE_TICKETS,
@@ -14,16 +14,12 @@ export const loadCurTickets = (tickets) => ({
 
   export const loadCurTicketsThunk = () => async (dispatch) => {
     const res = await fetch('/api/tickets/current');
-    const data = await res.json();
-    res.data = data;
-    // {tickets:7:{id: 7, eventId: 1, userId: 1, seatId: 12, createdAt: '2024-05-15T06:36:20.191Z', …}
-    console.log(data)
     if (res.ok) {
-      dispatch(loadCurTickets(data));
-      return data
+        const data = await res.json();
+        dispatch(loadCurTickets(data));
+        return data;
     }
-  }
-
+};
 
   export const addTicketsThunk = ({eventId, userId, seats}) => async () => {
     const response = await csrfFetch('/api/tickets', {
@@ -36,26 +32,19 @@ export const loadCurTickets = (tickets) => ({
       return tickets;
     }
   }
-
-  const ticketsReducer = (
-    state = {
-        tickets: {}
-    },
-    action
-) => {
+  const initialState = {}
+  const ticketReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'LOAD_CURRENT_TICKETS': {
-          return {
-            ...state,
-            tickets: {
-                ...state.tickets,
-                ...action.payload
-            }
-        };
+      case LOAD_CURRENT_TICKETS: {
+        const newState = Object.assign({}, state);
+        action.tickets.forEach(t => {
+        newState[t.id] = t}
+            )
+        return newState;
         }
-        default:
-            return state;
+      default:
+        return state;
     }
 };
 
-export default ticketsReducer;
+export default ticketReducer;

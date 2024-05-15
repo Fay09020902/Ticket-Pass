@@ -44,11 +44,11 @@ export const loadEvents = (events) => ({
     }
   }
 
-  export const addEventThunk = (event) => async dispatch => {
+  export const addEventThunk = (event, seatConfig) => async dispatch => {
     const response = await csrfFetch('/api/events', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(event)
+      body: JSON.stringify({event, seatConfig})
     });
     if (response.ok) {
       const form = await response.json();

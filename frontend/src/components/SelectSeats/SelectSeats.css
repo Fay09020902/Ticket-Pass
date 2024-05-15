@@ -79,3 +79,8 @@
 .buy-now-button {
     background-color: #4CAF50; /* Consistent green theme for action items */
 }
+
+.buy-now-button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

@@ -18,12 +18,14 @@ const AddYourEvent = () => {
     const [price, setPrice] = useState('')
     const [img_url, setImg_URL] = useState('');
     const [country, setCountry] = useState('');
-    const [ticketavailability, setTicketavailability] = useState(true);
+    const [rows, setRows] = useState(5);
+    const [seatsPerRow, setSeatsPerRow] = useState(5);
     const [errors, setErrors] = useState({});
 
     const dispatch = useDispatch();
     const addNewEvent = async (e) => {
         e.preventDefault();
+        const seatConfig = {rows, seatsPerRow}
         const newEvent = {
             name,
             artist,
@@ -36,17 +38,17 @@ const AddYourEvent = () => {
             time,
             date,
             price,
-            ticketavailability
+            "ticketavailability": true
         }
 
         try {
-            const response = await dispatch(addEventThunk(newEvent));
+            const response = await dispatch(addEventThunk(newEvent, seatConfig));
             if (response && response.data) {
                 // console.log("create event succeed")
             }
         } catch (res) {
             const data = await res.json();
-            // console.log(data)
+            console.log("error ", data)
             if (data && data.errors) {
                 setErrors(data.errors);
             }
@@ -142,15 +144,19 @@ const AddYourEvent = () => {
                             {errors.date && <p>{errors.date}</p>}
                         </div>
                     </div>
-                    <div className='create_events_errors'>
-                        {{errors} && <p>{errors.title}</p>}
+                    <div>
+                        <label htmlFor="rows">Number of Rows</label>
+                        <input type="number" id="rows" value={rows} onChange={e => setRows(e.target.value)} />
                     </div>
                     <div>
-                            <label htmlFor="ticketavailability">ticketavailability</label>
-                            <input type="checkbox" checked={ticketavailability} onChange={e => setTicketavailability(e.target.checked)} />
+                        <label htmlFor="seatsPerRow">Seats Per Row</label>
+                        <input type="number" id="seatsPerRow" value={seatsPerRow} onChange={e => setSeatsPerRow(e.target.value)} />
                     </div>
                     <div className='sbmtbtn'>
                         <button>Submit</button>
+                    </div>
+                    <div className='create_events_errors'>
+                        {errors && <p>{errors.title}</p>}
                     </div>
                 </form>
             </div>

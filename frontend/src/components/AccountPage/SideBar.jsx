@@ -1,11 +1,14 @@
 const SideBar = ({handleTabSelect}) => {
     return (
-        <div className="sidebar">
+        <div>
             <button className="tab" onClick={() => handleTabSelect('account')}>
             Account Info
             </button>
-            <button className="tab" onClick={() => handleTabSelect('myRestaurants')}>
-            My Restaurants
+            <button className="tab" onClick={() => handleTabSelect('myTickets')}>
+            My Tickets
+            </button>
+            <button className="tab" onClick={() => handleTabSelect('myEvents')}>
+            My Events
             </button>
     </div>
     )

@@ -100,6 +100,12 @@ module.exports = (sequelize, DataTypes) => {
     address: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: "Address cannot be null"
+        }
+      }
     },
     city: {
       type: DataTypes.STRING,
@@ -108,16 +114,28 @@ module.exports = (sequelize, DataTypes) => {
     time: {
       type: DataTypes.TIME,
       allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "time cannot be empty"
+        },
+      }
     },
     date: {
       type: DataTypes.DATE,
       allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Date cannot be empty"
+        },
+      }
     },
     price: {
       type: DataTypes.DECIMAL,
       allowNull: false,
       validate: {
-        notNull: {
+        notEmpty: {
           args: true,
           msg: "Price cannot be null"
         }
