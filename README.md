@@ -23,7 +23,9 @@ Stories are defined as bellow:
 1. As a user, I want to be able to leave comments and feedback on events I've attended so that I can share my experiences with others.
 2. As a user, I want to be able to view comments left by other users on events so that I can get an idea of what to expect.
 
-
+## Seats
+As a user, I want to be able to select specific seats for an event so that I can choose my preferred viewing experience.
+This involves displaying a seat map and allowing users to select seats based on their preferences
 
 # MVP
 
@@ -45,3 +47,8 @@ Stories are defined as bellow:
 ## User Comments:
 1. Comments section on event details page where users can leave comments and feedback.
 2. Display of comments left by other users on the event details page.
+
+## Seat: 
+1. Display an interactive seat map for each event venue.
+2. Allow users to click on available seats on the map to select them.
+3. After selecting seats, users should be able to proceed directly to the checkout page, where they can review their selections and see the total cost.
