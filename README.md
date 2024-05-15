@@ -36,8 +36,11 @@ This involves displaying a seat map and allowing users to select seats based on 
 
 ## Event Discovery:
 1. Homepage displaying a list of events with basic information such as name, date, and location.
-2. Filters and sorting options to browse events by type, location, and date.
-3. Search functionality to find events by name or keyword.
+2. Users should be able to create a event.
+3. Users should be able to update their event(s)
+4. Users should be able to delete their events(s).
+5. Filters and sorting options to browse events by type, location, and date.(later)
+6. Search functionality to find events by name or keyword.(later)
 
 ## Ticket Booking:
 1. Event details page displaying information about the selected event, including ticket availability and pricing.
