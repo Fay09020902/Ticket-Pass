@@ -30,7 +30,7 @@ function SelectSeats() {
 
     useEffect(() => {
       dispatch(fetchSeats(eventId));
-    }, [dispatch]);
+    }, [dispatch, eventId]);
 
 
     return (
