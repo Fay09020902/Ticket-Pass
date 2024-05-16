@@ -115,29 +115,36 @@ router.put(
     });
 
 // Delete a ticket
-router.delete("/:ticketId", requireAuth, async (req, res, next) => {
+router.delete("/:ticketId", async (req, res, next) => {
     const { ticketId } = req.params;
     const { user } = req;
 
 
-    const ticket = await Ticket.findByPk(ticketId);
-    console.log("User ID:", user.id); 
+   const ticket = await Ticket.findByPk(ticketId, {
+        include: [{
+            model: Seat
+        }]
+    });
 
     if (!ticket) {
         const err = new Error("Ticket couldn't be found");
         err.status = 404;
         return next(err);
     }
-    console.log("Attempting to delete ticket:", ticketId, "User attempting:", user.id, "Ticket owner:", ticket.userId);
     // Only the owner of the ticket is authorized to delete
     if (ticket.userId !== user.id) {
-        const err = new Error("Forbidden");
+        const err = new Error('Forbidden');
         err.status = 403;
         return next(err);
     }
+    
+    //make the seat to be available status changed from false to true
+    if (ticket.Seat) {
+        await ticket.Seat.update({ status: true });
+    }
 
     await ticket.destroy();
-    return res.status(200).json({
+    return res.json({
         "message": "Successfully deleted"
     });
 });

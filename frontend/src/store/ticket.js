@@ -1,5 +1,6 @@
 export const LOAD_CURRENT_TICKETS = 'tickets/LOAD_CURRENT_TICKETS';
-export const CREATE_TICKETS = 'tickets/CREATE_TICKETS'
+export const CREATE_TICKETS = 'tickets/CREATE_TICKETS';
+export const DELETE_TICKET= 'tickets/DELETE_TICKET'
 import { csrfFetch } from "./csrf";
 
 export const loadCurTickets = (tickets) => ({
@@ -10,6 +11,11 @@ export const loadCurTickets = (tickets) => ({
   export const createTickets = (tickets) => ({
     type: CREATE_TICKETS,
     payload: tickets,
+  });
+
+  export const deleteTicket = (ticketId) => ({
+    type: DELETE_TICKET,
+    ticketId,
   });
 
   export const loadCurTicketsThunk = () => async (dispatch) => {
@@ -32,6 +38,23 @@ export const loadCurTickets = (tickets) => ({
       return tickets;
     }
   }
+
+
+  export const deleteTicketThunk = (ticketId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/tickets/${ticketId}`, {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(deleteTicket(ticketId));
+      return data;
+    } else {
+      const error = await response.json();
+      return error;
+    }
+  };
+
   const initialState = {}
   const ticketReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -42,6 +65,11 @@ export const loadCurTickets = (tickets) => ({
             )
         return newState;
         }
+      case DELETE_TICKET:{
+        const allTickets = { ...state };
+        delete allTickets[action.ticketId];
+        return allTickets;
+      }
       default:
         return state;
     }

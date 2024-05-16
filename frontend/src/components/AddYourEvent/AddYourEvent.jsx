@@ -4,9 +4,10 @@ import { useDispatch } from 'react-redux';
 import { addEventThunk } from '../../store/event';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
+import { useNavigate } from 'react-router-dom';
 
 const AddYourEvent = () => {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const [name, setName] = useState('');
     const [artist, setArtist] = useState('');
     const [description, setDescription] = useState('');
@@ -43,8 +44,9 @@ const AddYourEvent = () => {
 
         try {
             const response = await dispatch(addEventThunk(newEvent, seatConfig));
-            if (response && response.data) {
-                // console.log("create event succeed")
+            if (response) {
+                alert('Event created successfully');
+                navigate(`/events/${response.id}`);
             }
         } catch (res) {
             const data = await res.json();

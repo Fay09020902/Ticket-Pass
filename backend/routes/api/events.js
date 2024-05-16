@@ -242,7 +242,7 @@ router.put(
             err.status = 403;
             return next(err);
           }
-          
+
         const updatedEvent = await event.update(req.body);
         return res.json(updatedEvent)
     });

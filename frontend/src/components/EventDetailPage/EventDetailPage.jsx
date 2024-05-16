@@ -53,7 +53,7 @@ function EventDetailPage() {
                     <p>Date: {curEvent.date}</p>
                     <p>Time: {curEvent.time}</p>
                     <p className="price">Price: ${curEvent.price}</p>
-                    <p className="tickets-available">Tickets Available: {curEvent.ticketavailability ? 'Yes' : 'No'}</p>
+                    {/* <p className="tickets-available">Tickets Available: {curEvent.ticketavailability ? 'Yes' : 'No'}</p> */}
                     <h3 className="hosted-by">Hosted by: {curEvent.User?.firstName} {curEvent.User?.lastName}</h3>
                 </div>
                 )

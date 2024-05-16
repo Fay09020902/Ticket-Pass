@@ -16,10 +16,6 @@ function ConcertList({concerts}) {
                         <p><strong>Time:</strong> {concert.time}</p>
                         <p><strong>Venue:</strong> {concert.address}, {concert.city}</p>
                         <p><strong>Price:</strong> ${concert.price}</p>
-                        {concert.ticketavailability ? (<div></div>
-                        ) : (
-                        <p className="sold-out">Sold Out</p>
-                        )}
                     </div>
                 </div>
                 </NavLink>

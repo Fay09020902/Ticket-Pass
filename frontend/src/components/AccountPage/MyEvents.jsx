@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 const MyEvents = () => {
     const dispatch = useDispatch();
+    // const navigate = useNavigate();
     const user = useSelector(state => state.session.user);
     const allCurEvents = useSelector(state => state.events.events);
     const [error, setError] = useState("");
@@ -22,7 +23,7 @@ const MyEvents = () => {
             } else {
                 setError("Failed to delete event.");
             }
-    }
+        }
     }
 
 

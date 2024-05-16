@@ -62,8 +62,12 @@ export const loadEvents = (events) => ({
     });
     if (response.ok) {
       const form = await response.json();
-      dispatch(createEvent(form));
+      await dispatch(createEvent(form));
+      console.log("create suuscceed form: ", form)
       return form;
+    } else {
+      const errorMessages = await response.json();
+      return { "errors": errorMessages }
     }
   }
 
@@ -88,6 +92,7 @@ export const loadEvents = (events) => ({
     if (response.ok) {
       const data = await response.json();
       dispatch(updateEvent(data));
+      return data
     }
     else {
       const errorMessages = await response.json();

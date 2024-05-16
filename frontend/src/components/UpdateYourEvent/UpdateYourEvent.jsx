@@ -5,9 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateEventThunk, getEventDetails } from '../../store/event';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
+import { useNavigate } from 'react-router-dom';
 
 const UpdateYourEvent = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { eventId } = useParams();
     const curEvent = useSelector(state => state.events.currEvent);
 
@@ -65,13 +67,12 @@ const UpdateYourEvent = () => {
             "ticketavailability": true
         }
 
-        try {
-            const response = await dispatch(updateEventThunk(updatedEvent, eventId));
-            if (response && response.data) {
-                // console.log("create event succeed")
-            }
-        } catch (res) {
-            const data = await res.json();
+
+        const response = await dispatch(updateEventThunk(updatedEvent, eventId));
+        if (response) {
+            navigate(`/events/${eventId}`);
+        } else {
+            const data = await response.json();
             console.log("error ", data)
             if (data && data.errors) {
                 setErrors(data.errors);
