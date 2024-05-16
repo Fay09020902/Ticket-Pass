@@ -29,7 +29,7 @@ const MyTickets = () => {
     }
 
     if (Object.keys(allCurTickets).length === 0) {
-        return <div className="no-tickets">No tickets available</div>;
+        return <div className="no-tickets">No Tickets Available</div>;
     }
 
     return (

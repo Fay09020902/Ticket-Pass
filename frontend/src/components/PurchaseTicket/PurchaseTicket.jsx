@@ -2,9 +2,11 @@ import { useDispatch, useSelector } from "react-redux";
 import "./PurchaseTicket.css"
 import {updateSeatAvailability, deselectSeat} from "../../store/seats"
 import {addTicketsThunk} from '../../store/ticket'
+import { useNavigate } from 'react-router-dom';
 
 export default function PurchaseTicket() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const amount = useSelector(state => state.seats.subTotal);
     const curEvent = useSelector(state => state.events.currEvent);
     const selectedSeats = useSelector(state => state.seats.selectedSeats);
@@ -24,6 +26,7 @@ export default function PurchaseTicket() {
                         dispatch(deselectSeat(seatId, curEvent.price));
                     });
                     alert("Purchase succeeded");
+                    navigate(`/`);
                 } else {
                     throw new Error("Failed to finalize ticket purchase.");
                 }

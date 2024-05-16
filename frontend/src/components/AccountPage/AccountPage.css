@@ -194,7 +194,7 @@ button:hover {
   text-align: center;
 }
 
-.loading, .no-events {
+.loading, .no-events .no-tickets {
   text-align: center;
   font-size: 18px;
   color: #666;

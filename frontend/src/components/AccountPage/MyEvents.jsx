@@ -13,8 +13,8 @@ const MyEvents = () => {
     const handleDelete = async (eventId) => {
         try{
             const response =await dispatch(deleteEventThunk(eventId))
-            if (response && response.data) {
-                // console.log("create event succeed")
+            if (response) {
+                alert('Event deleted successfully');
             }
         } catch (res) {
             const data = await res.json();

@@ -96,7 +96,6 @@
     background-color: #0088cc;
 }
 
-
-.create_events_errors {
-    color: red
+.create_events_errors p {
+    color: red;
 }
