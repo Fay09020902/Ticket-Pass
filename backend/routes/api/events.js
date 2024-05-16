@@ -7,6 +7,7 @@ const { Op } = require('sequelize')
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User, Event, Comment, Ticket, Seat, sequelize } = require('../../db/models');
 const e = require('express');
+const seat = require('../../db/models/seat');
 
 const router = express.Router();
 
@@ -149,8 +150,15 @@ router.get(
         const events = await Event.findAll(
             {
                 where: {userId: user.id},
+                include: {
+                    model: Seat
+                }
             }
         )
+        // const eventsObject = events.reduce((obj, event) => {
+        //     obj[event.id] = event.toJSON();  // Convert Sequelize model instance to JSON
+        //     return obj;
+        // }, {});
         return res.status(201).json(events);
     });
 
@@ -215,7 +223,7 @@ router.get(
 //              });
 
 
-//edit a event
+//update a event
 router.put(
     "/:eventId",
     requireAuth,
@@ -234,6 +242,7 @@ router.put(
             err.status = 403;
             return next(err);
           }
+          
         const updatedEvent = await event.update(req.body);
         return res.json(updatedEvent)
     });
@@ -257,6 +266,16 @@ router.delete(
             err.status = 403;
             return next(err);
           }
+
+        //check if there any tickets sold
+        const tickets = await Ticket.findAll({where: {eventId}})
+        if(tickets.length > 0) {
+            const err = new Error("Cannot delete event with tickets sold");
+            err.status = 400;
+            return next(err)
+        }
+
+        // Proceed to delete if no tickets are sold
         await event.destroy();
         return res.json({
             "message": "Successfully deleted"

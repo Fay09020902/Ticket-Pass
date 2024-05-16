@@ -30,6 +30,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
             ...restTicket,
             row: Seat.row,
             number: Seat.number,
+            seatId: Seat.id,
             eventName: Event.name,
             eventArtist: Event.Artist,
             eventDate: Event.date,
@@ -76,7 +77,42 @@ router.post(
 );
 
 // Update a ticket
+router.put(
+    "/:ticketId",
+    requireAuth,
+    async (req, res, next) => {
+        const {ticketId} = req.params
+        const {user} = req
+        const ticket = await Ticket.findByPk(ticketId, {
+            include: [{
+                model: Event,
+                attributes: ['date']
+            }]
+        });
+        if (!ticket) {
+            const err = new Error("Ticket couldn't be found");
+            err.status = 404;
+            return next(err);
+        }
+        //Only the owner of the ticket is authorized to edit
+        if (ticket.userId !== user.id) {
+            const err = new Error("Forbidden");
+            err.status = 403;
+            return next(err);
+          }
 
+        // Check if the event date allows for ticket modifications
+        const now = new Date();
+        const eventDate = new Date(ticket.Event.date);
+        if (eventDate <= now ) {
+            const err = new Error("Ticket updates are not allowed after the event start.");
+            err.status = 400;
+            return next(err);
+        }
+
+        const updatedTicket= await ticket.update(req.body);
+        return res.json(updatedTicket)
+    });
 
 // Delete a ticket
 router.delete("/:ticketId", requireAuth, async (req, res, next) => {
