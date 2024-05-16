@@ -16,7 +16,7 @@ Stories are defined as bellow:
 
 ## Ticket Booking:
 1. As a user, I want to view event details and ticket availability so that I can decide which events to attend.
-2. As a user, I want to be able to select the number of tickets I want and proceed to the booking process.
+2. As a user, I want to be able to select tickets I want and proceed to the booking process.
 3. As a user, I want to review the total cost of my tickets before making a payment.
 
 ## User Comments:
