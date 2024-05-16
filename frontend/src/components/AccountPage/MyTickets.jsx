@@ -1,12 +1,29 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { loadCurTicketsThunk } from "../../store/ticket";
-import { NavLink } from 'react-router-dom';
 
 const MyTickets = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user);
     const allCurTickets = useSelector(state => state.tickets);
+
+    // Updated to accept ticketId
+    const handleDelete = async (ticketId) => {
+        if (window.confirm('Are you sure you want to delete this ticket?')) {
+            const response = await fetch(`/api/tickets/${ticketId}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                alert('Ticket deleted successfully');
+                navigate("/");
+            } else {
+                alert('Failed to delete the ticket');
+            }
+        }
+    };
 
     useEffect(() => {
         if (user && user.id) {
@@ -19,7 +36,7 @@ const MyTickets = () => {
     }
 
     if (Object.keys(allCurTickets).length === 0) {
-        return <div className="no-sessions">No Session Tickets</div>;
+        return <div className="no-tickets">No tickets available</div>;
     }
 
     return (
@@ -33,13 +50,13 @@ const MyTickets = () => {
                     <p>City: {ticket.eventCity}</p>
                     <p>Address: {ticket.eventAddress}</p>
                     <p>Seat: id{ticket.seatId} row{ticket.row} column:{ticket.number}</p>
-                    <NavLink className="button-link" to={`/events/${ticket.eventId}/seats`}>
-                                Update Seats
-                  </NavLink>
+                    <button onClick={() => handleDelete(ticket.id)} className="delete-ticket-button">
+                        Delete Ticket
+                    </button>
                 </div>
             ))}
         </div>
     );
 };
 
-export default MyTickets
+export default MyTickets;

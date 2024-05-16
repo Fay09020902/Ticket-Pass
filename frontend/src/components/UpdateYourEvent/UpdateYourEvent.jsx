@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import './UpdateYourEvent.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateEventThunk, getEventDetails } from '../../store/event';
@@ -8,7 +8,6 @@ import LoginFormModal from '../LoginFormModal/LoginFormModal';
 
 const UpdateYourEvent = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { eventId } = useParams();
     const curEvent = useSelector(state => state.events.currEvent);
 

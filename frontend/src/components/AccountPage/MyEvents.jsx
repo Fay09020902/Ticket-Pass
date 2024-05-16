@@ -30,7 +30,7 @@ const MyEvents = () => {
         if (user && user.id) {
             dispatch(loadSessionEventsThunk(user.id));
         }
-    }, [dispatch, user?.id]);
+    }, [dispatch, user]);
 
     if (!allCurEvents) {
         return <div className="loading">Loading events...</div>;

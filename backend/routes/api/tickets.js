@@ -121,13 +121,14 @@ router.delete("/:ticketId", requireAuth, async (req, res, next) => {
 
 
     const ticket = await Ticket.findByPk(ticketId);
+    console.log("User ID:", user.id); 
 
     if (!ticket) {
         const err = new Error("Ticket couldn't be found");
         err.status = 404;
         return next(err);
     }
-
+    console.log("Attempting to delete ticket:", ticketId, "User attempting:", user.id, "Ticket owner:", ticket.userId);
     // Only the owner of the ticket is authorized to delete
     if (ticket.userId !== user.id) {
         const err = new Error("Forbidden");

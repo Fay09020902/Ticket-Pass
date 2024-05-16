@@ -130,10 +130,11 @@ export const loadEvents = (events) => ({
         case EVENT_DETAILS: {
           return { ...state, currEvent: action.event };
         }
-        case DELETE_EVENT:
+        case DELETE_EVENT: {
             const updatedEvents = { ...state.events };
             delete updatedEvents[action.eventId];
-            return { ...state, events: updatedEvents };;
+            return { ...state, events: updatedEvents };
+        }
         default:
             return state;
     }
