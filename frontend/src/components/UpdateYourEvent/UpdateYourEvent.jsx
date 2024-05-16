@@ -174,7 +174,12 @@ const UpdateYourEvent = () => {
                         <button>Submit</button>
                     </div>
                     <div className='create_events_errors'>
-                        {errors && <p>{errors.title}</p>}
+                        {errors && (
+                            <>
+                            <p>{errors?.title}</p>
+                            <p>{errors?.message}</p>
+                            </>
+                        )}
                     </div>
                 </form>
             </div>

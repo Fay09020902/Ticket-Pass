@@ -47,17 +47,20 @@ const MyEvents = () => {
             {error && <div className="error-message">{error}</div>}
             <div className="event-grid">
                 {Object.values(allCurEvents).map(event => (
-                    <div key={event.id} className="event-card">
-                        <h3>{event.name}</h3>
-                        <p>{event.artist}</p>
-                        <p>{event.type}</p>
-                        <p>{event.date} at {event.time}</p>
-                        <p>{event.city}, {event.country}</p>
-                        <button onClick={() => handleDelete(event.id)}>Delete Event</button>
-                        <NavLink className="button-link" to={`/events/${event.id}/edit`}>
-                                Update
-                        </NavLink>
-                    </div>
+                    <NavLink to={`/events/${event.id}`}  key={event.id} className="image-detail-link">
+                        <div key={event.id} className="event-card">
+                        <img src={event.img_url} alt={event.name} />
+                            <h3>{event.name}</h3>
+                            <p>{event.artist}</p>
+                            <p>{event.type}</p>
+                            <p>{event.date} at {event.time}</p>
+                            <p>{event.city}, {event.country}</p>
+                            <button onClick={() => handleDelete(event.id)}>Delete Event</button>
+                            <NavLink className="button-link" to={`/events/${event.id}/edit`}>
+                                    Update
+                            </NavLink>
+                        </div>
+                    </NavLink>
                 ))}
             </div>
         </div>

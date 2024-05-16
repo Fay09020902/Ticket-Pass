@@ -50,9 +50,8 @@ const AddYourEvent = () => {
             }
         } catch (res) {
             const data = await res.json();
-            console.log("error ", data)
-            if (data && data.errors) {
-                setErrors(data.errors);
+            if (data && data.message) {
+                setErrors(data);
             }
         }
     }
@@ -158,7 +157,11 @@ const AddYourEvent = () => {
                         <button>Submit</button>
                     </div>
                     <div className='create_events_errors'>
-                        {errors && <p>{errors.title}</p>}
+                        {errors && (
+                            <>
+                            <p>{errors?.message}</p>
+                            </>
+                        )}
                     </div>
                 </form>
             </div>
