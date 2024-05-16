@@ -46,8 +46,7 @@ This involves displaying a seat map and allowing users to select seats based on 
 1. User should be able to purchase a ticket by seleting event and choose seat.
 2. Details page that displays information for a ticket held by the current user.
 3. User should be able to delete a ticket if the event has not occurred.
-4. User could change ticket seat with the same event before the event.
-5. Checkout process where users can review their selected tickets and the total cost before proceeding to payment.
+4. Checkout process where users can review their selected tickets and the total cost before proceeding to payment.
 
 ## User Comments:
 1. Comments section on event details page where users can leave comments and feedback.
