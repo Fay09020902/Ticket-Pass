@@ -24,8 +24,9 @@ Stories are defined as bellow:
 2. As a user, I want to be able to view comments left by other users on events so that I can get an idea of what to expect.
 
 ## Seats
-As a user, I want to be able to select specific seats for an event so that I can choose my preferred viewing experience.
+1. As a user, I want to be able to select specific seats for an event so that I can choose my preferred viewing experience.
 This involves displaying a seat map and allowing users to select seats based on their preferences
+2.As a user, I want to be able to delete a ticket I have purchased
 
 # MVP
 
