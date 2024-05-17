@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loadCurTicketsThunk, deleteTicketThunk } from "../../store/ticket";
 import { NavLink } from 'react-router-dom';
+import { setCurrentSeat } from "../../store/seats";
 
 const MyTickets = () => {
     const dispatch = useDispatch();
@@ -47,7 +48,10 @@ const MyTickets = () => {
                     <button onClick={() => handleDelete(ticket.id)} className="delete-ticket-button">
                         Delete Ticket
                     </button>
-                    <NavLink className="button-link" to={`/events/${ticket.eventId}/tickets/${ticket.id}/seat`}>
+                    <NavLink className="button-link"
+                        to={`/events/${ticket.eventId}/tickets/${ticket.id}/seat`}
+                        onClick={() => dispatch(setCurrentSeat(ticket.seatId))}
+                    >
                        Update Seat
                     </NavLink>
                 </div>

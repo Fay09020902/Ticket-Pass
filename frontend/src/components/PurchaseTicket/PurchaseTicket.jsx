@@ -3,11 +3,13 @@ import "./PurchaseTicket.css"
 import {updateSeatAvailability, deselectSeat, clearSelectedSeats} from "../../store/seats"
 import {addTicketsThunk, updateTicketThunk} from '../../store/ticket'
 import { useNavigate,useParams } from 'react-router-dom';
+import { clearCurrentSeat } from "../../store/seats";
 
 export default function PurchaseTicket() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {ticketId} = useParams();
+    const originalSeatId = useSelector(state => state.seats.currentSeat);
     const amount = useSelector(state => state.seats.subTotal);
     const selectionChanged = useSelector(state => state.seats.selectionChanged);
     const curEvent = useSelector(state => state.events.currEvent);
@@ -21,7 +23,9 @@ export default function PurchaseTicket() {
                 //Update the original ticket with new seats
                 await dispatch(updateTicketThunk({ seatId: selectedSeats[0] }, ticketId));
                 //Make old seat available in database
-                await dispatch(updateSeatAvailability(selectedSeats, true));
+                await dispatch(updateSeatAvailability([originalSeatId], true))
+                // Clear the current seat
+                dispatch(clearCurrentSeat());
             }
             //Make new seats/seat sold in the database
             const seatsUpdated = await dispatch(updateSeatAvailability(selectedSeats, false));

@@ -2,6 +2,8 @@ export const SELECT_SEAT = 'seats/SELECT_SEAT'
 export const DESELECT_SEAT = 'seats/DESELECT_SEAT'
 export const LOAD_SEATS = 'seats/LOAD_SEATS'
 export const RESET_SUBTOTAL = 'seats/RESET_SUBTOTAL';
+export const SET_CURRENT_SEAT = 'seats/SET_CURRENT_SEAT';
+export const CLEAR_CURRENT_SEAT = 'seats/CLEAR_CURRENT_SEAT';
 export const SET_SELECTION_CHANGED = 'seats/SET_SELECTION_CHANGED';
 export const CLEAR_SELECTED_SEATS = 'seats/CLEAR_SELECTED_SEATS'
 import { csrfFetch } from "./csrf";
@@ -18,6 +20,7 @@ export const fetchSeats = (eventId) => async (dispatch) => {
 
 //purchase ticket, make status showing sold/unsold in database
 export const updateSeatAvailability = (selectedSeats, status) => async () => {
+    console.log(selectedSeats)
     const response = await csrfFetch(`/api/seats/update-seats`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -50,6 +53,14 @@ export const updateSeatSelection = (seatId, isSelected) => async () => {
 };
 
 
+export const setCurrentSeat = (seatId) => ({
+    type: SET_CURRENT_SEAT,
+    payload: seatId,
+  });
+
+export const clearCurrentSeat = () => ({
+type: CLEAR_CURRENT_SEAT,
+});
 
 export const clearSelectedSeats = () => ({
     type: 'CLEAR_SELECTED_SEATS'
@@ -96,6 +107,7 @@ const seatsReducer = (
         seatAvailability: {},  // Object with seat IDs as keys and availability as values
         subTotal: 0,
         selectionChanged: false,
+        currentSeat: null,
     },
     action
 ) => {
@@ -160,6 +172,14 @@ const seatsReducer = (
                 ...state,
                 selectionChanged: action.payload
             } }
+        case SET_CURRENT_SEAT:
+            {
+            return { ...state, currentSeat: action.payload };  // Set current seat
+            }
+        case CLEAR_CURRENT_SEAT:
+            {
+            return { ...state, currentSeat: null };
+            }
         default:
             return state;
     }
