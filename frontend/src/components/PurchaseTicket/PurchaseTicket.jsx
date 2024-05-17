@@ -1,38 +1,45 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./PurchaseTicket.css"
 import {updateSeatAvailability, deselectSeat, clearSelectedSeats} from "../../store/seats"
-import {addTicketsThunk, deleteTicketThunk} from '../../store/ticket'
-import { useNavigate, useParams } from 'react-router-dom';
+import {addTicketsThunk, updateTicketThunk} from '../../store/ticket'
+import { useNavigate,useParams } from 'react-router-dom';
 
 export default function PurchaseTicket() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const {ticketId} = useParams();
     const amount = useSelector(state => state.seats.subTotal);
     const selectionChanged = useSelector(state => state.seats.selectionChanged);
     const curEvent = useSelector(state => state.events.currEvent);
     const selectedSeats = useSelector(state => state.seats.selectedSeats);
     const curUser = useSelector(state => state.session.user)
+
     const handlePlaceOrder = async () => {
         try {
-            if (selectionChanged) {
-                //delete
-                await dispatch(deleteTicketThunk(curEvent.id));
+            //if it is update seat case
+            if (selectionChanged && ticketId) {
+                //Update the original ticket with new seats
+                await dispatch(updateTicketThunk({ seatId: selectedSeats[0] }, ticketId));
+                //Make old seat available in database
+                await dispatch(updateSeatAvailability(selectedSeats, true));
             }
-            const seatsUpdated = await dispatch(updateSeatAvailability(selectedSeats));
+            //Make new seats/seat sold in the database
+            const seatsUpdated = await dispatch(updateSeatAvailability(selectedSeats, false));
+
+            //Add the ticket in the ticket table with the sold seatId
             if (seatsUpdated) {
                 const purchaseResult = await dispatch(addTicketsThunk(
                     {
                         eventId: curEvent.id,
                         userId: curUser.id,
-                        seats: selectedSeats}
+                        seats: selectedSeats
+                    }
                 ))
                 if (purchaseResult) {
-                    // // Dispatch actions to deselect each selected seat
-                    // selectedSeats.forEach(seatId => {
-                    //     dispatch(deselectSeat(seatId, curEvent.price));
-                    // });
-                    // Clear all selected seats from state
+                    // Clear all selected seats from redux selectedSeats state
                     dispatch(clearSelectedSeats());
+
+                    //update isSelected to false in redux state of seats
                     selectedSeats.forEach(seatId => {
                         dispatch(deselectSeat(seatId, curEvent.price));
                     });
@@ -44,7 +51,7 @@ export default function PurchaseTicket() {
             }
         } catch (e) {
             console.log(e)
-            alert("Please login to purchase");
+            // alert("Please login to purchase");
         }
     };
 

@@ -46,7 +46,7 @@ function SelectSeats() {
               ))}
           </div>)}
           {selectedSeats.length > 0 ? (
-              <NavLink to={`/tickets/${eventId}/checkout`} className='buy-now-button'>Buy Now</NavLink>
+              <NavLink to={`/events/${eventId}/tickets/checkout`} className='buy-now-button'>Buy Now</NavLink>
           ) : (
               <button className='buy-now-button disabled' disabled>Buy Now</button>
           )}

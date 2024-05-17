@@ -28,10 +28,9 @@ router.put('/:seatId/update-selection', requireAuth, async (req, res, next) => {
   res.json(seat);
 });
 
-//purchase ticket, make status showing sold for seat
+//purchase ticket, make status showing sold/available for seat
 router.put('/update-seats', requireAuth, async (req, res, next) => {
-  const { selectedSeats } = req.body; // Ensure this matches your frontend's JSON structure
-
+  const { selectedSeats, status } = req.body;
   try {
     // Handle all updates simultaneously and wait for all to complete
     const updatedSeats = await Promise.all(selectedSeats.map(async (seatId) => {
@@ -39,7 +38,7 @@ router.put('/update-seats', requireAuth, async (req, res, next) => {
       if (!seat) {
         throw new Error(`Seat with ID ${seatId} could not be found`);
       }
-      seat.status = false;
+      seat.status = status;
       await seat.save();
       return seat;
     }));

@@ -71,8 +71,6 @@ router.post(
 // :
 // {id: 4, eventId: 3, userId: 2, seatId: 65, updatedAt: '2024-05-15T06:01:02.238Z', …}
 
-
-        console.log("new tcikets created: ", ticketsObject)
         return res.status(201).json(ticketsObject);
     }
 );
@@ -84,6 +82,8 @@ router.put(
     async (req, res, next) => {
         const {ticketId} = req.params
         const {user} = req
+        let { seatId  } = req.body;
+        
         const ticket = await Ticket.findByPk(ticketId, {
             include: [{
                 model: Event,
@@ -102,16 +102,16 @@ router.put(
             return next(err);
           }
 
-        // Check if the event date allows for ticket modifications
-        const now = new Date();
-        const eventDate = new Date(ticket.Event.date);
-        if (eventDate <= now ) {
-            const err = new Error("Ticket updates are not allowed after the event start.");
-            err.status = 400;
-            return next(err);
-        }
-
-        const updatedTicket= await ticket.update(req.body);
+        // // Check if the event date allows for ticket modifications
+        // const now = new Date();
+        // const eventDate = new Date(ticket.Event.date);
+        // if (eventDate <= now ) {
+        //     const err = new Error("Ticket updates are not allowed after the event start.");
+        //     err.status = 400;
+        //     return next(err);
+        // }
+        ticket.seatId = seatId
+        const updatedTicket= await ticket.save();
         return res.json(updatedTicket)
     });
 

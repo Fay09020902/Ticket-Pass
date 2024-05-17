@@ -9,7 +9,7 @@ import {setSelectionChanged, resetSubtotal, clearSelectedSeats, fetchSeats, sele
 
 function UpdateSeat() {
     const dispatch = useDispatch();
-    const {eventId } = useParams();
+    const {eventId, ticketId} = useParams();
     const curEvent = useSelector(state => state.events.currEvent);
     const seats = useSelector(state => state.seats.seats)
     const selectedSeats = useSelector(state => state.seats.selectedSeats)
@@ -52,7 +52,7 @@ function UpdateSeat() {
       dispatch(getEventDetails(eventId));
       dispatch(clearSelectedSeats());
       dispatch(resetSubtotal());
-          dispatch(fetchSeats(eventId));
+      dispatch(fetchSeats(eventId));
 
   }, [dispatch, eventId]);
 
@@ -72,7 +72,7 @@ function UpdateSeat() {
                           ))}
         </div>)}
         {selectedSeats && selectedSeats.length > 0 ? (
-              <NavLink to={`/tickets/${eventId}/checkout`} className='buy-now-button'>Update Now</NavLink>
+              <NavLink to={`/events/${eventId}/tickets/${ticketId}/checkout`} className='buy-now-button'>Update Now</NavLink>
             ) : (
               <button className='buy-now-button disabled' disabled>Update Now</button>
             )}

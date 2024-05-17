@@ -51,7 +51,7 @@ const router = createBrowserRouter([
         element: <SelectSeats />
       },
       {
-        path: '/tickets/:eventId/checkout',
+        path: '/events/:eventId/tickets/:ticketId?/checkout',
         element: <PurchaseTicket />
       },
       {
