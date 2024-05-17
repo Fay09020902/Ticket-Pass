@@ -11,7 +11,7 @@ const e = require('express');
 const router = express.Router();
 
 
-
+//make seats are selected or deselected
 router.put('/:seatId/update-selection', requireAuth, async (req, res, next) => {
   const { seatId } = req.params;
   const { isSelected } = req.body;
@@ -28,7 +28,7 @@ router.put('/:seatId/update-selection', requireAuth, async (req, res, next) => {
   res.json(seat);
 });
 
-
+//purchase ticket, make status showing sold for seat
 router.put('/update-seats', requireAuth, async (req, res, next) => {
   const { selectedSeats } = req.body; // Ensure this matches your frontend's JSON structure
 

@@ -19,8 +19,8 @@ router.get("/current", requireAuth, async (req, res, next) => {
     const tickets = await Ticket.findAll({
         where: { userId: user.id },
         include: [
-            { model: Event, attributes: ['name', 'date', 'time', 'city', 'address'] },
-            { model: Seat, attributes: ['row', 'number'] }
+            { model: Event, attributes: ['artist','id','name', 'date', 'time', 'city', 'address'] },
+            { model: Seat, attributes: ['row', 'number', 'id'] }
         ]
     });
 
@@ -31,8 +31,9 @@ router.get("/current", requireAuth, async (req, res, next) => {
             row: Seat.row,
             number: Seat.number,
             seatId: Seat.id,
+            eventId: Event.id,
             eventName: Event.name,
-            eventArtist: Event.Artist,
+            eventArtist: Event.artist,
             eventDate: Event.date,
             eventTime: Event.time,
             eventCity: Event.city,
@@ -137,7 +138,7 @@ router.delete("/:ticketId", async (req, res, next) => {
         err.status = 403;
         return next(err);
     }
-    
+
     //make the seat to be available status changed from false to true
     if (ticket.Seat) {
         await ticket.Seat.update({ status: true });

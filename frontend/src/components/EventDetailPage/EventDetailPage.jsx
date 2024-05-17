@@ -22,7 +22,6 @@ function EventDetailPage() {
             try {
                 await dispatch(getEventDetails(eventId));
             } catch (error) {
-                console.error("Error in fetchData:", error);
                 setError(error.toString());
             }
         };

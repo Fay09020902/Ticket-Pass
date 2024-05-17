@@ -9,6 +9,7 @@ import PurchaseTicket from './components/PurchaseTicket/PurchaseTicket';
 import ConcertIndex from './components/ConcertIndex/ConcertIndex';
 import AccountPage from './components/AccountPage/AccountPage'
 import UpdateYourEvent from './components/UpdateYourEvent/UpdateYourEvent';
+import UpdateSeat from './components/UpdateSeat/UpdateSeat';
 import * as sessionActions from './store/session';
 
 function Layout() {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: '/events/:eventId/edit',
         element: <UpdateYourEvent />
+      },
+      {
+        path: '/events/:eventId/tickets/:ticketId/seat',
+        element: <UpdateSeat />
       }
     ]
   }

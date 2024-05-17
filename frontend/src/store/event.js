@@ -48,7 +48,6 @@ export const loadEvents = (events) => ({
 
     if (response.ok) {
         const events = await response.json();
-        console.log("events session: ", events)
         const reloadEvents = await dispatch(loadEvents(events))
         return reloadEvents
     }

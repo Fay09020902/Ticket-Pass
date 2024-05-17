@@ -1,22 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./PurchaseTicket.css"
 import {updateSeatAvailability, deselectSeat, clearSelectedSeats} from "../../store/seats"
-import {addTicketsThunk, deleteTicketThunk} from '../../store/ticket'
-import { useNavigate, useParams } from 'react-router-dom';
+import {addTicketsThunk} from '../../store/ticket'
+import { useNavigate } from 'react-router-dom';
 
-export default function PurchaseTicket() {
+export default function UpdatePurchase() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const amount = useSelector(state => state.seats.subTotal);
-    const selectionChanged = useSelector(state => state.seats.selectionChanged);
     const curEvent = useSelector(state => state.events.currEvent);
     const selectedSeats = useSelector(state => state.seats.selectedSeats);
     const curUser = useSelector(state => state.session.user)
     const handlePlaceOrder = async () => {
         try {
-            if (selectionChanged) {
-                await dispatch(deleteTicketThunk(curEvent.id));
-            }
             const seatsUpdated = await dispatch(updateSeatAvailability(selectedSeats));
             if (seatsUpdated) {
                 const purchaseResult = await dispatch(addTicketsThunk(
@@ -42,7 +38,6 @@ export default function PurchaseTicket() {
                 }
             }
         } catch (e) {
-            console.log(e)
             alert("Please login to purchase");
         }
     };
