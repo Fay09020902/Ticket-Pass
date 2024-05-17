@@ -62,8 +62,9 @@ export const loadSeats = seats => ({
     payload: seats
 });
 
-export const setSelectionChanged = () => ({
-    type: SET_SELECTION_CHANGED
+export const setSelectionChanged = (v) => ({
+    type: SET_SELECTION_CHANGED,
+    payload:v
 });
 
 // Action to select a seat and update seat store status of selected column
@@ -182,7 +183,7 @@ const seatsReducer = (
         case SET_SELECTION_CHANGED:
 {            return {
                 ...state,
-                selectionChanged: true
+                selectionChanged: action.payload
             } }
         default:
             return state;

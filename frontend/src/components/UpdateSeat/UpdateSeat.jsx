@@ -48,7 +48,7 @@ function UpdateSeat() {
     // };
 
     useEffect(() => {
-      dispatch(setSelectionChanged())
+      dispatch(setSelectionChanged(true))
       dispatch(getEventDetails(eventId));
       dispatch(clearSelectedSeats());
       dispatch(resetSubtotal());

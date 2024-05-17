@@ -15,6 +15,7 @@ export default function PurchaseTicket() {
     const handlePlaceOrder = async () => {
         try {
             if (selectionChanged) {
+                //delete
                 await dispatch(deleteTicketThunk(curEvent.id));
             }
             const seatsUpdated = await dispatch(updateSeatAvailability(selectedSeats));
