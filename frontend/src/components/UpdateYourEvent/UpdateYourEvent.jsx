@@ -1,13 +1,23 @@
-import { useState } from 'react'
-import './AddYourEvent.css'
-import { useDispatch } from 'react-redux';
-import { addEventThunk } from '../../store/event';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import './UpdateYourEvent.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateEventThunk, getEventDetails } from '../../store/event';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import { useNavigate } from 'react-router-dom';
 
-const AddYourEvent = () => {
+const UpdateYourEvent = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { eventId } = useParams();
+    const curEvent = useSelector(state => state.events.currEvent);
+
+
+    useEffect(() => {
+        dispatch(getEventDetails(eventId));
+    }, [dispatch, eventId]);
+
     const [name, setName] = useState('');
     const [artist, setArtist] = useState('');
     const [description, setDescription] = useState('');
@@ -19,15 +29,30 @@ const AddYourEvent = () => {
     const [price, setPrice] = useState('')
     const [img_url, setImg_URL] = useState('');
     const [country, setCountry] = useState('');
-    const [rows, setRows] = useState(5);
-    const [seatsPerRow, setSeatsPerRow] = useState(5);
     const [errors, setErrors] = useState({});
 
-    const dispatch = useDispatch();
-    const addNewEvent = async (e) => {
+
+    useEffect(() => {
+        if (Object.keys(curEvent).length > 0) {
+            setName(curEvent.name);
+            setArtist(curEvent.artist)
+            setType(curEvent.type);
+            setDescription(curEvent.description);
+            setAddress(curEvent.address);
+            setCity(curEvent.city);
+            setCountry(curEvent.country);
+            setDate(curEvent.date),
+            setTime(curEvent.time),
+            setPrice(curEvent.price),
+            setImg_URL(curEvent.img_url)
+        }
+    }, [curEvent]);
+
+
+    const updateEvent = async (e) => {
         e.preventDefault();
-        const seatConfig = {rows, seatsPerRow}
-        const newEvent = {
+        // const seatConfig = {rows, seatsPerRow}
+        const updatedEvent = {
             name,
             artist,
             description,
@@ -43,25 +68,24 @@ const AddYourEvent = () => {
         }
 
         try {
-            const response = await dispatch(addEventThunk(newEvent, seatConfig));
+            const response = await dispatch(updateEventThunk(updatedEvent, eventId));
             if (response) {
-                alert('Event created successfully');
-                navigate(`/events/${response.id}`);
+            navigate(`/events/${eventId}`);
             }
-        } catch (res) {
+        }
+        catch (res) {
             const data = await res.json();
             if (data && data.errors) {
                 setErrors(data.errors);
-            } else {
-                setErrors(data.title)
             }
         }
     }
 
+
     return (
         <div className='adding-event-container'>
             <div className="getstarted">
-                <h2>Get started</h2>
+                <h2>Update Your Event</h2>
                 <h4>
                     <span>Already have an account? </span>
                     <OpenModalButton
@@ -69,7 +93,7 @@ const AddYourEvent = () => {
                         modalComponent={<LoginFormModal />}
                         />
                 </h4>
-                <form className="newEventForm" onSubmit={addNewEvent}>
+                <form className="newEventForm" onSubmit={updateEvent}>
                     <div>
                         <label htmlFor="name">Event Name</label>
                         <input type="text" value={name} onChange={e => setName(e.target.value)} />
@@ -147,20 +171,13 @@ const AddYourEvent = () => {
                             {errors.date && <p>{errors.date}</p>}
                         </div>
                     </div>
-                    <div>
-                        <label htmlFor="rows">Number of Rows</label>
-                        <input type="number" id="rows" value={rows} onChange={e => setRows(e.target.value)} />
-                    </div>
-                    <div>
-                        <label htmlFor="seatsPerRow">Seats Per Row</label>
-                        <input type="number" id="seatsPerRow" value={seatsPerRow} onChange={e => setSeatsPerRow(e.target.value)} />
-                    </div>
                     <div className='sbmtbtn'>
                         <button>Submit</button>
                     </div>
                     <div className='create_events_errors'>
                         {errors && (
                             <>
+                            <p>{errors?.title}</p>
                             <p>{errors?.message}</p>
                             </>
                         )}
@@ -171,4 +188,4 @@ const AddYourEvent = () => {
     )
 }
 
-export default AddYourEvent
+export default UpdateYourEvent

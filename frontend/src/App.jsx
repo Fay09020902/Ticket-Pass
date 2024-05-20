@@ -7,6 +7,9 @@ import EventDetailPage from './components/EventDetailPage/EventDetailPage'
 import SelectSeats from './components/SelectSeats/SelectSeats'
 import PurchaseTicket from './components/PurchaseTicket/PurchaseTicket';
 import ConcertIndex from './components/ConcertIndex/ConcertIndex';
+import AccountPage from './components/AccountPage/AccountPage'
+import UpdateYourEvent from './components/UpdateYourEvent/UpdateYourEvent';
+import UpdateSeat from './components/UpdateSeat/UpdateSeat';
 import * as sessionActions from './store/session';
 
 function Layout() {
@@ -48,8 +51,20 @@ const router = createBrowserRouter([
         element: <SelectSeats />
       },
       {
-        path: '/tickets/:eventId/checkout',
+        path: '/events/:eventId/tickets/:ticketId?/checkout',
         element: <PurchaseTicket />
+      },
+      {
+        path: '/accounts',
+        element: <AccountPage />
+      },
+      {
+        path: '/events/:eventId/edit',
+        element: <UpdateYourEvent />
+      },
+      {
+        path: '/events/:eventId/tickets/:ticketId/seat',
+        element: <UpdateSeat />
       }
     ]
   }

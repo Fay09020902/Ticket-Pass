@@ -11,7 +11,7 @@ const e = require('express');
 const router = express.Router();
 
 
-
+//make seats are selected or deselected
 router.put('/:seatId/update-selection', requireAuth, async (req, res, next) => {
   const { seatId } = req.params;
   const { isSelected } = req.body;
@@ -28,18 +28,19 @@ router.put('/:seatId/update-selection', requireAuth, async (req, res, next) => {
   res.json(seat);
 });
 
-
+//purchase ticket, make status showing sold/available for seat
 router.put('/update-seats', requireAuth, async (req, res, next) => {
-  const { selectedSeats } = req.body; // Ensure this matches your frontend's JSON structure
-
+  const { selectedSeats, status } = req.body;
   try {
     // Handle all updates simultaneously and wait for all to complete
     const updatedSeats = await Promise.all(selectedSeats.map(async (seatId) => {
       const seat = await Seat.findByPk(seatId);
       if (!seat) {
-        throw new Error(`Seat with ID ${seatId} could not be found`);
+        const err = new Error("Seat couldn't be found");
+        err.status = 404;
+        return next(err);
       }
-      seat.status = false;
+      seat.status = status;
       await seat.save();
       return seat;
     }));

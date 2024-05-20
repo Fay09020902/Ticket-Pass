@@ -7,6 +7,7 @@ const { Op } = require('sequelize')
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User, Event, Comment, Ticket, Seat, sequelize } = require('../../db/models');
 const e = require('express');
+const seat = require('../../db/models/seat');
 
 const router = express.Router();
 
@@ -81,9 +82,28 @@ const validateReviews = [
 //Create a event
 router.post("/", requireAuth, async (req, res, next) => {
     const { user } = req;
+    const seats = [];
+    const generateSeatsForEvents = (rows, cols, eventIds) => {
+        eventIds.forEach(eventId => {
+          for (let row = 1; row <= rows; row++) {
+            for (let number = 1; number <= cols; number++) {
+              seats.push({
+                eventId: eventId,
+                row: row,
+                number: number,
+                isSelected: false,
+                status: true,
+              });
+            }
+          }
+        });
+        return seats;
+      };
+    const {event, seatConfig}= req.body
     const {
         name,
         artist,
+        description,
         type,
         address,
         city,
@@ -93,13 +113,23 @@ router.post("/", requireAuth, async (req, res, next) => {
         country,
         img_url,
         ticketavailability
-    } = req.body;
+    } = event;
+
+    //Can't create past time event
+    const eventDateTime = new Date(`${date}T${time}`);
+    const currentDate = new Date();
+    if (eventDateTime < currentDate) {
+        const err = new Error("Event date must be in the future.")
+        err.status = 404;
+        return next(err);
+    }
 
     // Create the event using the Sequelize model
     const newEvent = await Event.create({
         name,
         "userId": user.id,
         artist,
+        description,
         type,
         address,
         city,
@@ -111,55 +141,35 @@ router.post("/", requireAuth, async (req, res, next) => {
         ticketavailability
     });
 
+    const newSeats = generateSeatsForEvents(seatConfig.rows, seatConfig.seatsPerRow, [newEvent.id])
+    await Seat.bulkCreate(newSeats);
+
     // Respond with the newly created event
     return res.status(201).json(newEvent);
 });
 
 
 
-// //Get all Spots owned by the Current User
-// router.get(
-//     "/current",
-//     requireAuth,
-//     async (req, res, next) => {
-//         const {user} = req
-//         //console.log("userid is", user.id)
-//         const spots = await Spot.findAll(
-//             {
-//                 where: {ownerId: user.id},
-//                 include:  {
-//                     model: SpotImage,
-//                     attributes: ["url", "preview"],
-//                 }
-//             }
-//         )
-//         console.log("spots in get curetns spots", spots)
-//         let previewImage;
-//         const updatedSpots = spots.map(spot => {
-//             const {SpotImages, ...rest} = spot.toJSON()
-//             if(SpotImages.length){
-//                 SpotImages.forEach(spotimage => {
-//                     if(spotimage.preview) {
-//                         previewImage = spotimage.url
-//                     }
-//                     else {
-//                         previewImage = null
-//                     }
-//                 })
-//             }
-//             else{
-//                 previewImage = null
-//             }
-//             return {
-//                 ...rest,
-//                 previewImage
-//             }
-//          })
-
-//         return res.json({
-//             Spots: updatedSpots
-//           });
-//     });
+//Get all Events owned by the Current User
+router.get(
+    "/current",
+    requireAuth,
+    async (req, res, next) => {
+        const {user} = req
+        const events = await Event.findAll(
+            {
+                where: {userId: user.id},
+                include: {
+                    model: Seat
+                }
+            }
+        )
+        // const eventsObject = events.reduce((obj, event) => {
+        //     obj[event.id] = event.toJSON();  // Convert Sequelize model instance to JSON
+        //     return obj;
+        // }, {});
+        return res.status(201).json(events);
+    });
 
 //Get details of a Event from an id
 router.get(
@@ -187,7 +197,6 @@ router.get(
             err.status = 404;
             return next(err);
         }
-        // const {Comments, Owner, SpotImages, ...rest} = curEvent.toJSON()
         return res.json(curEvent)
     });
 
@@ -222,7 +231,7 @@ router.get(
 //              });
 
 
-//edit a event
+//update a event
 router.put(
     "/:eventId",
     requireAuth,
@@ -241,6 +250,17 @@ router.put(
             err.status = 403;
             return next(err);
           }
+
+        // //Can't update to past time event
+        // const eventDateTime = new Date(`${event.date}T${event.time}`);
+        // const currentDate = new Date();
+        // if (eventDateTime < currentDate) {
+        //     const err = new Error("Event date must be in the future.")
+        //     err.status = 404;
+        //     return next(err);
+        // }
+
+
         const updatedEvent = await event.update(req.body);
         return res.json(updatedEvent)
     });
@@ -264,6 +284,25 @@ router.delete(
             err.status = 403;
             return next(err);
           }
+
+        //check if there any tickets sold
+        const tickets = await Ticket.findAll({where: {eventId}})
+        if(tickets.length > 0) {
+            const err = new Error("Cannot delete event with tickets sold");
+            err.status = 400;
+            return next(err)
+        }
+
+        // Check if the event date is in the past
+        const currentDate = new Date();
+        const eventDate = new Date(event.date);
+        if (eventDate < currentDate) {
+            const err = new Error("Cannot delete an event that has already occurred");
+            err.status = 400;
+            return next(err);
+        }
+
+        // Proceed to delete if no tickets are sold
         await event.destroy();
         return res.json({
             "message": "Successfully deleted"
