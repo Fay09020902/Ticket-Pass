@@ -20,7 +20,6 @@ export const fetchSeats = (eventId) => async (dispatch) => {
 
 //purchase ticket, make status showing sold/unsold in database
 export const updateSeatAvailability = (selectedSeats, status) => async () => {
-    console.log(selectedSeats)
     const response = await csrfFetch(`/api/seats/update-seats`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -119,18 +118,19 @@ const seatsReducer = (
             }
         }
         case 'SELECT_SEAT':
-           { const updatedSeatsSelect = { ...state.seats };
+           {
+            const updatedSeatsSelect = { ...state.seats };
             if (!updatedSeatsSelect[action.payload.seatId].isSelected) {
                 updatedSeatsSelect[action.payload.seatId] = {
                     ...updatedSeatsSelect[action.payload.seatId],
                     isSelected: true
                 }
+            }
             return {
                 ...state,
                 seats: updatedSeatsSelect,
                 selectedSeats: [...state.selectedSeats, action.payload.seatId],
                 subTotal: state.subTotal + action.payload.price
-            };
             }
            }
         case 'DESELECT_SEAT':

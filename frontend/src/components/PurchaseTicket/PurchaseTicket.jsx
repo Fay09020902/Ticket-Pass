@@ -34,7 +34,7 @@ export default function PurchaseTicket() {
 
                 // Add the ticket in the ticket table with the sold seatId
                 if (seatsUpdated) {
-                    const purchaseResult = await dispatch(addTicketsThunk(
+                    await dispatch(addTicketsThunk(
                         {
                             eventId: curEvent.id,
                             userId: curUser.id,
