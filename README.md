@@ -18,6 +18,9 @@ Stories are defined as bellow:
 1. As a user, I want to view event details and ticket availability so that I can decide which events to attend.
 2. As a user, I want to be able to select tickets I want and proceed to the booking process.
 3. As a user, I want to review the total cost of my tickets before making a payment.
+4. As a user, I want to delete ticket after purchasing.
+5. As a user, I want to update my ticket seat after purchasing.
+
 
 ## User Comments:
 1. As a user, I want to be able to leave comments and feedback on events I've attended so that I can share my experiences with others.
@@ -25,8 +28,9 @@ Stories are defined as bellow:
 
 ## Seats
 1. As a user, I want to be able to select specific seats for an event so that I can choose my preferred viewing experience.
-This involves displaying a seat map and allowing users to select seats based on their preferences
-2. As a user, I want to be able to delete a ticket I have purchased
+This involves displaying a seat map and allowing users to select seats based on their preferences and change my selection.
+2. As a user, I want to see available seats and their status (available, selected, sold).
+
 
 # MVP
 
@@ -48,6 +52,7 @@ This involves displaying a seat map and allowing users to select seats based on 
 2. Details page that displays information for a ticket held by the current user.
 3. User should be able to delete a ticket.
 4. Checkout process where users can review their selected tickets and the total cost before proceeding to payment.
+5. Allow users to update their seat selection after purchasing.
 
 ## User Comments:
 1. Comments section on event details page where users can leave comments and feedback.
