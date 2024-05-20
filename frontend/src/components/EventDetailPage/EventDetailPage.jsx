@@ -74,6 +74,7 @@ function EventDetailPage() {
                     ))}
             </div>)
             }
+            <div></div>
             <NavLink to={`/events/${eventId}/seats`} className='ticketLink'>Find Tickets</NavLink>
         </div>
     )

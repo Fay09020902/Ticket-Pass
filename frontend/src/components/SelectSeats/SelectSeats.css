@@ -84,3 +84,46 @@
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+/* Legend styling */
+.seat-legend {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.seat-legend-item {
+    display: flex;
+    align-items: center;
+}
+
+.seat-legend-box {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.seat-legend-box.current-seat {
+    background-color: #add8e6; /* Light blue */
+    border: 1px solid #1e90ff;
+}
+
+.seat-legend-box.selected {
+    background-color: #4CAF50; /* Green */
+    border: 1px solid #32cd32;
+}
+
+.seat-legend-box.unavailable {
+    background-color: #f44336; /* Red */
+    border: 1px solid #dc143c;
+}
+
+.seat-legend-box.original-seat {
+    background-color: #ffa500; /* Orange */
+    border: 1px solid #ff8c00;
+}
+
+.seat-legend-box.available {
+    background-color: #f0f0f0; /* Default */
+    border: 1px solid #ccc;
+}

@@ -124,16 +124,15 @@ const seatsReducer = (
                 updatedSeatsSelect[action.payload.seatId] = {
                     ...updatedSeatsSelect[action.payload.seatId],
                     isSelected: true
-                };
-                return {
-                    ...state,
-                    seats: updatedSeatsSelect,
-                    selectedSeats: [...state.selectedSeats, action.payload.seatId],
-                    subTotal: state.subTotal + action.payload.price
-                };
+                }
+            return {
+                ...state,
+                seats: updatedSeatsSelect,
+                selectedSeats: [...state.selectedSeats, action.payload.seatId],
+                subTotal: state.subTotal + action.payload.price
+            };
             }
-            return state;
-            }
+           }
         case 'DESELECT_SEAT':
             {const updatedSeatsDeselect = { ...state.seats };
             if (updatedSeatsDeselect[action.payload.seatId].isSelected) {
@@ -141,14 +140,15 @@ const seatsReducer = (
                     ...updatedSeatsDeselect[action.payload.seatId],
                     isSelected: false
                 };
-                return {
-                    ...state,
-                    seats: updatedSeatsDeselect,
-                    selectedSeats: state.selectedSeats.filter(id => id !== action.payload.seatId),
-                    subTotal: state.subTotal - action.payload.price
-                };
             }
-            return state;}
+                //console.log(state.selectedSeats.filter(id => id !== action.payload.seatId))
+            return {
+                ...state,
+                seats: updatedSeatsDeselect,
+                selectedSeats: state.selectedSeats.filter(id => id !== action.payload.seatId),
+                subTotal: state.subTotal - action.payload.price
+            }
+        }
         case 'CLEAR_SELECTED_SEATS':{
             return { ...state, selectedSeats: [] };
         }

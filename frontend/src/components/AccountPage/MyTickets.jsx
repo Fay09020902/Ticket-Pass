@@ -44,11 +44,11 @@ const MyTickets = () => {
                     <p>Time: {ticket.eventTime}</p>
                     <p>City: {ticket.eventCity}</p>
                     <p>Address: {ticket.eventAddress}</p>
-                    <p>Seat: id{ticket.seatId} row{ticket.row} column:{ticket.number}</p>
+                    <p className="seat-details">Seat: ID {ticket.seatId} ROW {ticket.row} COLUMN {ticket.number}</p>
                     <button onClick={() => handleDelete(ticket.id)} className="delete-ticket-button">
                         Delete Ticket
                     </button>
-                    <NavLink className="button-link"
+                    <NavLink className="update-seat-button"
                         to={`/events/${ticket.eventId}/tickets/${ticket.id}/seat`}
                         onClick={() => dispatch(setCurrentSeat(ticket.seatId))}
                     >

@@ -1,35 +1,45 @@
-
-  .concert-list {
+.concert-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     gap: 40px;
-  }
+}
 
-  .concert-card {
+.concert-card {
     border: 1px solid #ccc;
     border-radius: 8px;
     overflow: hidden;
-  }
+    transition: transform 0.2s; /* Optional: Adds a subtle hover effect */
+}
 
-  .concert-card img {
+.concert-card:hover {
+    transform: scale(1.02); /* Optional: Scales the card slightly on hover */
+}
+
+.concert-card img {
     width: 100%;
     height: 200px;
     object-fit: cover;
-  }
+}
 
-  .concert-info {
+.concert-info {
     padding: 20px;
-  }
+}
 
-  .concert-info h3 {
+.concert-info h3 {
     margin: 0 0 10px;
-  }
+}
 
-  .concert-info p {
+.concert-info p {
     margin: 5px 0;
-  }
+    text-decoration: none; /* Ensure no text decoration for p tags */
+}
 
-  .btn {
+.concert-info p a {
+    text-decoration: none;
+    color: inherit; /* Optional: Ensures the link color matches the surrounding text */
+}
+
+.btn {
     display: inline-block;
     padding: 8px 20px;
     background-color: #007bff;
@@ -37,19 +47,19 @@
     text-decoration: none;
     border-radius: 10px;
     transition: background-color 0.3s;
-  }
+}
 
-  .btn:hover {
+.btn:hover {
     background-color: #0056b3;
-  }
+}
 
-  .sold-out {
+.sold-out {
     color: red;
     font-weight: bold;
-  }
+}
 
-  .concert-filters {
-    display: flex; /* This will align the buttons on the same line */
+.concert-filters {
+    display: flex;
     gap: 10px;
     margin: 20px;
-  }
+}

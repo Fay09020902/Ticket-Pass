@@ -1,61 +1,64 @@
 import { useDispatch, useSelector } from "react-redux";
-import "./PurchaseTicket.css"
-import {updateSeatAvailability, deselectSeat, clearSelectedSeats} from "../../store/seats"
-import {addTicketsThunk, updateTicketThunk} from '../../store/ticket'
-import { useNavigate,useParams } from 'react-router-dom';
+import "./PurchaseTicket.css";
+import { updateSeatAvailability, deselectSeat, clearSelectedSeats } from "../../store/seats";
+import { addTicketsThunk, updateTicketThunk } from '../../store/ticket';
+import { useNavigate, useParams } from 'react-router-dom';
 import { clearCurrentSeat } from "../../store/seats";
 
 export default function PurchaseTicket() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {ticketId} = useParams();
+    const { ticketId } = useParams();
     const originalSeatId = useSelector(state => state.seats.currentSeat);
     const amount = useSelector(state => state.seats.subTotal);
     const selectionChanged = useSelector(state => state.seats.selectionChanged);
     const curEvent = useSelector(state => state.events.currEvent);
     const selectedSeats = useSelector(state => state.seats.selectedSeats);
-    const curUser = useSelector(state => state.session.user)
+    const curUser = useSelector(state => state.session.user);
 
     const handlePlaceOrder = async () => {
         try {
-            //if it is update seat case
+            let seatsUpdated;
             if (selectionChanged && ticketId) {
-                //Update the original ticket with new seats
+                // Update the original ticket with new seats
                 await dispatch(updateTicketThunk({ seatId: selectedSeats[0] }, ticketId));
-                //Make old seat available in database
-                await dispatch(updateSeatAvailability([originalSeatId], true))
+                // Make old seat available in database
+                await dispatch(updateSeatAvailability([originalSeatId], true));
+                // Make the new seat unavaiabel(sold) in seat table in the database
+                seatsUpdated = await dispatch(updateSeatAvailability(selectedSeats, false));
                 // Clear the current seat
                 dispatch(clearCurrentSeat());
-            }
-            //Make new seats/seat sold in the database
-            const seatsUpdated = await dispatch(updateSeatAvailability(selectedSeats, false));
+            } else {
+                // Make new seats sold in the database
+                seatsUpdated = await dispatch(updateSeatAvailability(selectedSeats, false));
 
-            //Add the ticket in the ticket table with the sold seatId
-            if (seatsUpdated) {
-                const purchaseResult = await dispatch(addTicketsThunk(
-                    {
-                        eventId: curEvent.id,
-                        userId: curUser.id,
-                        seats: selectedSeats
-                    }
-                ))
-                if (purchaseResult) {
-                    // Clear all selected seats from redux selectedSeats state
-                    dispatch(clearSelectedSeats());
-
-                    //update isSelected to false in redux state of seats
-                    selectedSeats.forEach(seatId => {
-                        dispatch(deselectSeat(seatId, curEvent.price));
-                    });
-                    alert("Purchase succeeded");
-                    navigate(`/`);
-                } else {
-                    throw new Error("Failed to finalize ticket purchase.");
+                // Add the ticket in the ticket table with the sold seatId
+                if (seatsUpdated) {
+                    const purchaseResult = await dispatch(addTicketsThunk(
+                        {
+                            eventId: curEvent.id,
+                            userId: curUser.id,
+                            seats: selectedSeats
+                        }
+                    ));
                 }
             }
+
+            // Clear all selected seats from redux selectedSeats state
+            dispatch(clearSelectedSeats());
+
+            // Update isSelected to false in redux state of seats
+            selectedSeats.forEach(seatId => {
+                dispatch(deselectSeat(seatId, curEvent.price));
+            });
+            alert("Purchase succeeded");
+            navigate(`/`);
         } catch (e) {
-            console.log(e)
-            // alert("Please login to purchase");
+            if (e.message) {
+                alert(`${e.message}`);
+            } else {
+                alert("Please login to purchase");
+            }
         }
     };
 

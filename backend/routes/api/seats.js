@@ -36,7 +36,9 @@ router.put('/update-seats', requireAuth, async (req, res, next) => {
     const updatedSeats = await Promise.all(selectedSeats.map(async (seatId) => {
       const seat = await Seat.findByPk(seatId);
       if (!seat) {
-        throw new Error(`Seat with ID ${seatId} could not be found`);
+        const err = new Error("Seat couldn't be found");
+        err.status = 404;
+        return next(err);
       }
       seat.status = status;
       await seat.save();

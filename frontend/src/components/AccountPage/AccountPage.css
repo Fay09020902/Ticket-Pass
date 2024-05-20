@@ -96,12 +96,6 @@
     font-size: 16px;
 }
 
-.delete-update-button {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
   .button-link,
   .button-remove {
     font-size: 14px;
@@ -198,4 +192,28 @@ button:hover {
   text-align: center;
   font-size: 18px;
   color: #666;
+}
+
+.seat-details {
+  font-weight: bold;
+  color: #444;
+  background-color: #f9f9f9;
+}
+
+
+.delete-ticket-button, .update-seat-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  background-color: #ddd;
+  color: #444;
+  text-decoration: none;
+}
+
+.update-seat-button:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
 }

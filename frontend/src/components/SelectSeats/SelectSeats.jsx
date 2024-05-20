@@ -34,6 +34,20 @@ function SelectSeats() {
   return (
       <div className="selectseat_container">
           <div className="seatselect_title">Select Seats</div>
+        <div className="seat-legend">
+        <div className="seat-legend-item">
+          <div className="seat-legend-box selected"></div>
+          <span>Selected Seat</span>
+        </div>
+        <div className="seat-legend-item">
+          <div className="seat-legend-box unavailable"></div>
+          <span>Unavailable Seat</span>
+        </div>
+        <div className="seat-legend-item">
+          <div className="seat-legend-box available"></div>
+          <span>Available Seat</span>
+        </div>
+      </div>
           {seats && (<div className='seat-map'>
               {Object.values(seats).map(seat => (
                   <li
@@ -41,7 +55,7 @@ function SelectSeats() {
                       key={seat.id}
                       className={`${seat.status ? '' : 'unavailable'} ${selectedSeats.includes(seat.id) ? 'selected' : ''}`}
                   >
-                      <p>{seat.id}</p> <p>{curEvent.price}</p>
+                      <p>{seat.id}</p> <p>${curEvent.price}</p>
                   </li>
               ))}
           </div>)}
