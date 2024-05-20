@@ -50,8 +50,10 @@ const AddYourEvent = () => {
             }
         } catch (res) {
             const data = await res.json();
-            if (data && data.message) {
-                setErrors(data);
+            if (data && data.errors) {
+                setErrors(data.errors);
+            } else {
+                setErrors(data.title)
             }
         }
     }

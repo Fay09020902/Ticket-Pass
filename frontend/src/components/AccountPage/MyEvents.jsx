@@ -55,8 +55,8 @@ const MyEvents = () => {
                             <p>{event.type}</p>
                             <p>{event.date} at {event.time}</p>
                             <p>{event.city}, {event.country}</p>
-                            <button onClick={() => handleDelete(event.id)}>Delete Event</button>
-                            <NavLink className="button-link" to={`/events/${event.id}/edit`}>
+                            <button onClick={() => handleDelete(event.id)} className="delete-ticket-button">Delete Event</button>
+                            <NavLink className="update-seat-button" to={`/events/${event.id}/edit`}>
                                     Update
                             </NavLink>
                         </div>

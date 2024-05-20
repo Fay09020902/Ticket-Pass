@@ -60,9 +60,9 @@ export const loadEvents = (events) => ({
       body: JSON.stringify({event, seatConfig})
     });
     if (response.ok) {
+      console.log("response ok for create event store")
       const form = await response.json();
       await dispatch(createEvent(form));
-      console.log("create suuscceed form: ", form)
       return form;
     } else {
       const errorMessages = await response.json();

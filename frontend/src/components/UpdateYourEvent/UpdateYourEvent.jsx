@@ -67,13 +67,14 @@ const UpdateYourEvent = () => {
             "ticketavailability": true
         }
 
-
-        const response = await dispatch(updateEventThunk(updatedEvent, eventId));
-        if (response) {
+        try {
+            const response = await dispatch(updateEventThunk(updatedEvent, eventId));
+            if (response) {
             navigate(`/events/${eventId}`);
-        } else {
-            const data = await response.json();
-            console.log("error ", data)
+            }
+        }
+        catch (res) {
+            const data = await res.json();
             if (data && data.errors) {
                 setErrors(data.errors);
             }
