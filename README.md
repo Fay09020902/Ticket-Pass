@@ -10,9 +10,11 @@ Stories are defined as bellow:
 1. As a new user, I want to be able to sign up for an account so that I can access the features of the app.
 2. As a user, I want to be able to log in to my existing account so that I can manage my events and tickets.
 
-## Event Discovery:
+## Event:
 1. As a user, I want to browse through a variety of events categorized by type, location, and date so that I can find events that interest me.
-2. As a user, I want to be able to search for specific events by name or keyword so that I can quickly find the ones I'm looking for.
+2. As an event organizer, I want to create a new concert event by providing details such as event name, description, type, location, date, and time so that users can view and attend the event.
+3. As an event organizer, I want to update the details of an existing event, including changing the event name, description, type, location, date, and time, so that the information remains accurate and up-to-date for users.
+4. As an event organizer, I want to delete an event that I no longer want to be listed.
 
 ## Ticket Booking:
 1. As a user, I want to view event details and ticket availability so that I can decide which events to attend.
@@ -39,7 +41,7 @@ This involves displaying a seat map and allowing users to select seats based on 
 2. Login page with fields for email and password.
 3. Authentication system to create and authenticate user accounts.
 
-## Event Discovery:
+## Event:
 1. Homepage displaying a list of events with basic information such as name, date, and location.
 2. Users should be able to create a event.
 3. Users should be able to update their event(s)
