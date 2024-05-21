@@ -14,7 +14,6 @@ const MyEvents = () => {
         if (window.confirm('Are you sure you want to delete this event?')) {
             try {
                 const response = await dispatch(deleteEventThunk(eventId));
-                console.log(response)
                 if (response.message === 'Successfully deleted') {
                     alert('Event deleted successfully');
                 } else {
