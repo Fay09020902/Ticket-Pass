@@ -6,7 +6,6 @@ import { getEventDetails } from "../../store/event";
 import {setSelectionChanged, resetSubtotal, clearSelectedSeats, fetchSeats, selectSeat, deselectSeat} from '../../store/seats'
 
 
-
 function UpdateSeat() {
     const dispatch = useDispatch();
     const {eventId, ticketId} = useParams();
@@ -46,6 +45,7 @@ function UpdateSeat() {
     //     alert("Please login to purchase");
     //   }
     // };
+
 
     useEffect(() => {
       dispatch(setSelectionChanged(true))

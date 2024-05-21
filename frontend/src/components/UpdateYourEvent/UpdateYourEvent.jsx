@@ -6,6 +6,12 @@ import { updateEventThunk, getEventDetails } from '../../store/event';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import { useNavigate } from 'react-router-dom';
+import {formatTime} from '../EventDetailPage/EventDetailPage'
+
+  const dateFormat = (date) => {
+    return date.split("T")[0];
+  };
+
 
 const UpdateYourEvent = () => {
     const dispatch = useDispatch();
@@ -41,7 +47,7 @@ const UpdateYourEvent = () => {
             setAddress(curEvent.address);
             setCity(curEvent.city);
             setCountry(curEvent.country);
-            setDate(curEvent.date),
+            setDate(dateFormat(curEvent.date));
             setTime(curEvent.time),
             setPrice(curEvent.price),
             setImg_URL(curEvent.img_url)
@@ -51,7 +57,6 @@ const UpdateYourEvent = () => {
 
     const updateEvent = async (e) => {
         e.preventDefault();
-        // const seatConfig = {rows, seatsPerRow}
         const updatedEvent = {
             name,
             artist,
@@ -61,8 +66,8 @@ const UpdateYourEvent = () => {
             city,
             country,
             img_url,
-            time,
-            date,
+            time: formatTime(time),
+            date: new Date(date),
             price,
             "ticketavailability": true
         }

@@ -98,19 +98,37 @@ export const loadEvents = (events) => ({
     }
   };
 
-  export const deleteEventThunk = (eventId) => async (dispatch) => {
-    const response = await csrfFetch(`/api/events/${eventId}`, {
-      method: "DELETE",
-    });
+  // export const deleteEventThunk = (eventId) => async (dispatch) => {
+  //   const response = await csrfFetch(`/api/events/${eventId}`, {
+  //     method: "DELETE",
+  //   });
 
-    if (response.ok) {
-      const data = await response.json();
-      dispatch(deleteEvent(eventId));
-      return data;
-    } else {
-      const error = await response.json();
-      return error;
-    }
+  //   if (response.ok) {
+  //     const data = await response.json();
+  //     dispatch(deleteEvent(eventId));
+  //     return data;
+  //   } else {
+  //     const error = await response.json();
+  //     console.log(error)
+  //     return error;
+  //   }
+  // };
+
+
+  export const deleteEventThunk = (eventId) => async (dispatch) => {
+      const response = await csrfFetch(`/api/events/${eventId}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        dispatch(deleteEvent(eventId));
+        return data
+      } else {
+        const error = await response.json();
+        console.log("error: ", error)
+        return error
+      }
   };
 
   const eventReducer = (
