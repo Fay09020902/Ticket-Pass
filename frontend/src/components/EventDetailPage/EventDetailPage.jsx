@@ -6,7 +6,6 @@ import './EventDetailPage.css'
 
 
 export const formatTime = (time) => {
-    console.log("time: ", time)
     const splitTime = time.split(":");
     if (Number(splitTime[0]) <= 12) {
       if (Number(splitTime[0]) === 12 && Number(splitTime[1]) === 0)
@@ -19,9 +18,6 @@ export const formatTime = (time) => {
     }
   };
 
-  export const formatDate = (date) => {
-    return date.split("T")[0];
-}
 
 function EventDetailPage() {
 
@@ -67,7 +63,7 @@ function EventDetailPage() {
             {section === 'EventDetails_event' && (
                 <div id='EventDetails_event'>
                     <p>Address: {curEvent.address}, {curEvent.city}, {curEvent.country}</p>
-                    <p>Date: {formatDate(curEvent.date)}</p>
+                    <p>Date: {curEvent.date}</p>
                     <p>Time: {curEvent.time}</p>
                     <p className="price">Price: ${curEvent.price}</p>
                     {/* <p className="tickets-available">Tickets Available: {curEvent.ticketavailability ? 'Yes' : 'No'}</p> */}
