@@ -160,8 +160,9 @@ const seatsReducer = (
                     [action.payload.seatId]: action.payload.isAvailable
                 }
             }}
-        case 'RESET_SUBTOTAL':
+        case RESET_SUBTOTAL:
             {
+                console.log('Resetting subtotal');
                 return {
                 ...state,
                 subTotal: 0

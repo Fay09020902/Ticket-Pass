@@ -138,6 +138,10 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {
           args: true,
           msg: "Price cannot be null"
+        },
+        isFloat: {
+          min: 0,
+          msg: "Price must be float"
         }
       }
     },

@@ -46,6 +46,7 @@ function UpdateSeat() {
     //     alert("Please login to purchase");
     //   }
     // };
+    
 
     useEffect(() => {
       dispatch(setSelectionChanged(true))

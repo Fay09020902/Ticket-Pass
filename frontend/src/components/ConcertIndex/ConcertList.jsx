@@ -5,7 +5,7 @@ function ConcertList({ concerts }) {
         <div className="concert-list">
             {Object.values(concerts).map(concert => (
                 <NavLink to={`/events/${concert.id}`} key={concert.id} className="image-detail-link">
-                    <div key={concert.id} className="concert-card">
+                    <div className="concert-card">
                         <img src={concert.img_url} alt={concert.name} />
                         <div className="concert-info">
                             <h3>{concert.name}</h3>

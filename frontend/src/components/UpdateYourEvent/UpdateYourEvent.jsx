@@ -7,6 +7,11 @@ import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import { useNavigate } from 'react-router-dom';
 
+  const dateFormat = (date) => {
+    return date.split("T")[0];
+  };
+
+
 const UpdateYourEvent = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -41,7 +46,7 @@ const UpdateYourEvent = () => {
             setAddress(curEvent.address);
             setCity(curEvent.city);
             setCountry(curEvent.country);
-            setDate(curEvent.date),
+            setDate(dateFormat(curEvent.date));
             setTime(curEvent.time),
             setPrice(curEvent.price),
             setImg_URL(curEvent.img_url)
@@ -62,7 +67,7 @@ const UpdateYourEvent = () => {
             country,
             img_url,
             time,
-            date,
+            date: new Date(date),
             price,
             "ticketavailability": true
         }

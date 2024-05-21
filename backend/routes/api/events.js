@@ -115,14 +115,14 @@ router.post("/", requireAuth, async (req, res, next) => {
         ticketavailability
     } = event;
 
-    //Can't create past time event
-    const eventDateTime = new Date(`${date}T${time}`);
-    const currentDate = new Date();
-    if (eventDateTime < currentDate) {
-        const err = new Error("Event date must be in the future.")
-        err.status = 404;
-        return next(err);
-    }
+    // //Can't create past time event
+    // const eventDateTime = new Date(`${date}T${time}`);
+    // const currentDate = new Date();
+    // if (eventDateTime < currentDate) {
+    //     const err = new Error("Event date must be in the future.")
+    //     err.status = 404;
+    //     return next(err);
+    // }
 
     // Create the event using the Sequelize model
     const newEvent = await Event.create({
@@ -289,18 +289,18 @@ router.delete(
         const tickets = await Ticket.findAll({where: {eventId}})
         if(tickets.length > 0) {
             const err = new Error("Cannot delete event with tickets sold");
-            err.status = 400;
+            err.status = 500;
             return next(err)
         }
 
-        // Check if the event date is in the past
-        const currentDate = new Date();
-        const eventDate = new Date(event.date);
-        if (eventDate < currentDate) {
-            const err = new Error("Cannot delete an event that has already occurred");
-            err.status = 400;
-            return next(err);
-        }
+        // // Check if the event date is in the past
+        // const currentDate = new Date();
+        // const eventDate = new Date(event.date);
+        // if (eventDate < currentDate) {
+        //     const err = new Error("Cannot delete an event that has already occurred");
+        //     err.status = 400;
+        //     return next(err);
+        // }
 
         // Proceed to delete if no tickets are sold
         await event.destroy();

@@ -11,20 +11,21 @@ const MyEvents = () => {
     const [error, setError] = useState("");
 
     const handleDelete = async (eventId) => {
-        try{
-            const response =await dispatch(deleteEventThunk(eventId))
-            if (response) {
-                alert('Event deleted successfully');
-            }
-        } catch (res) {
-            const data = await res.json();
-            if (data.message.includes("Cannot delete event with tickets sold")) {
-                setError("Cannot delete event with tickets sold.");
-            } else {
-                setError("Failed to delete event.");
+        if (window.confirm('Are you sure you want to delete this event?')) {
+            try {
+                const response = await dispatch(deleteEventThunk(eventId));
+                console.log(response)
+                if (response.message === 'Successfully deleted') {
+                    alert('Event deleted successfully');
+                } else {
+                    setError(response);
+                }
+            } catch (err) {
+                const data = await err.json();
+                alert(`{${data.message}}`)
             }
         }
-    }
+    };
 
 
     useEffect(() => {
@@ -44,23 +45,21 @@ const MyEvents = () => {
 
     return (
         <div className="myEvents">
-            {error && <div className="error-message">{error}</div>}
+            {error && <div className="error-message">{error.message}</div>}
             <div className="event-grid">
                 {Object.values(allCurEvents).map(event => (
-                    <NavLink to={`/events/${event.id}`}  key={event.id} className="image-detail-link">
-                        <div key={event.id} className="event-card">
-                        <img src={event.img_url} alt={event.name} />
+                    <div key={event.id} className="event-card">
+                        <NavLink to={`/events/${event.id}`} className="image-detail-link">
+                            <img src={event.img_url} alt={event.name} />
                             <h3>{event.name}</h3>
                             <p>{event.artist}</p>
                             <p>{event.type}</p>
                             <p>{event.date} at {event.time}</p>
                             <p>{event.city}, {event.country}</p>
-                            <button onClick={() => handleDelete(event.id)} className="delete-ticket-button">Delete Event</button>
-                            <NavLink className="update-seat-button" to={`/events/${event.id}/edit`}>
-                                    Update
-                            </NavLink>
-                        </div>
-                    </NavLink>
+                        </NavLink>
+                        <button onClick={() => handleDelete(event.id)} className="delete-ticket-button">Delete Event</button>
+                        <NavLink className="update-seat-button" to={`/events/${event.id}/edit`}>Update</NavLink>
+                    </div>
                 ))}
             </div>
         </div>

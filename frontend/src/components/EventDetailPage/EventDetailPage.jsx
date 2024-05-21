@@ -5,6 +5,42 @@ import {getEventDetails} from '../../store/event'
 import './EventDetailPage.css'
 
 
+const formatTime = (time) => {
+    const splitTime = time.split(":");
+    if (Number(splitTime[0]) <= 12) {
+      if (Number(splitTime[0]) === 12 && Number(splitTime[1]) === 0)
+        return `${time} AM`;
+      else if (Number(splitTime[0]) === 12) return `${time} PM`;
+      else return `${time} AM`;
+    } else {
+      const newTime = Number(splitTime[0]) - 12;
+      return `${newTime}:00 PM`;
+    }
+  };
+  
+  export const formatDate = (date) => {
+    const months = {
+        '01': 'January',
+        '02': 'February',
+        '03': 'March',
+        '04': 'April',
+        '05': 'May',
+        '06': 'June',
+        '07': 'July',
+        '08': 'August',
+        '09': 'September',
+        '10': 'October',
+        '11': 'November',
+        '12': 'December'
+    }
+    const splitOne = date.split('-')
+    const year = splitOne[0]
+    const month = splitOne[1]
+    let day = splitOne[2]
+    day = day.split('T')[0]
+    return `${months[month]} ${day}, ${year}`
+}
+
 function EventDetailPage() {
 
     const {eventId} = useParams();
@@ -49,8 +85,8 @@ function EventDetailPage() {
             {section === 'EventDetails_event' && (
                 <div id='EventDetails_event'>
                     <p>Address: {curEvent.address}, {curEvent.city}, {curEvent.country}</p>
-                    <p>Date: {curEvent.date}</p>
-                    <p>Time: {curEvent.time}</p>
+                    <p>Date: {formatDate(curEvent.date)}</p>
+                    <p>Time: {formatTime(curEvent.time)}</p>
                     <p className="price">Price: ${curEvent.price}</p>
                     {/* <p className="tickets-available">Tickets Available: {curEvent.ticketavailability ? 'Yes' : 'No'}</p> */}
                     <h3 className="hosted-by">Hosted by: {curEvent.User?.firstName} {curEvent.User?.lastName}</h3>
