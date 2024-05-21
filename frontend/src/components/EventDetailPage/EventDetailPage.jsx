@@ -5,7 +5,7 @@ import {getEventDetails} from '../../store/event'
 import './EventDetailPage.css'
 
 
-const formatTime = (time) => {
+export const formatTime = (time) => {
     const splitTime = time.split(":");
     if (Number(splitTime[0]) <= 12) {
       if (Number(splitTime[0]) === 12 && Number(splitTime[1]) === 0)
@@ -17,7 +17,7 @@ const formatTime = (time) => {
       return `${newTime}:00 PM`;
     }
   };
-  
+
   export const formatDate = (date) => {
     const months = {
         '01': 'January',
@@ -86,7 +86,7 @@ function EventDetailPage() {
                 <div id='EventDetails_event'>
                     <p>Address: {curEvent.address}, {curEvent.city}, {curEvent.country}</p>
                     <p>Date: {formatDate(curEvent.date)}</p>
-                    <p>Time: {formatTime(curEvent.time)}</p>
+                    <p>Time: {curEvent.time}</p>
                     <p className="price">Price: ${curEvent.price}</p>
                     {/* <p className="tickets-available">Tickets Available: {curEvent.ticketavailability ? 'Yes' : 'No'}</p> */}
                     <h3 className="hosted-by">Hosted by: {curEvent.User?.firstName} {curEvent.User?.lastName}</h3>

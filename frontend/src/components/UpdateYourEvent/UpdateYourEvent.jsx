@@ -6,6 +6,7 @@ import { updateEventThunk, getEventDetails } from '../../store/event';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import { useNavigate } from 'react-router-dom';
+import {formatTime} from '../EventDetailPage/EventDetailPage'
 
   const dateFormat = (date) => {
     return date.split("T")[0];
@@ -56,7 +57,6 @@ const UpdateYourEvent = () => {
 
     const updateEvent = async (e) => {
         e.preventDefault();
-        // const seatConfig = {rows, seatsPerRow}
         const updatedEvent = {
             name,
             artist,
@@ -66,7 +66,7 @@ const UpdateYourEvent = () => {
             city,
             country,
             img_url,
-            time,
+            time: formatTime(time),
             date: new Date(date),
             price,
             "ticketavailability": true
