@@ -6,6 +6,7 @@ import './EventDetailPage.css'
 
 
 export const formatTime = (time) => {
+    console.log("time: ", time)
     const splitTime = time.split(":");
     if (Number(splitTime[0]) <= 12) {
       if (Number(splitTime[0]) === 12 && Number(splitTime[1]) === 0)
@@ -14,31 +15,12 @@ export const formatTime = (time) => {
       else return `${time} AM`;
     } else {
       const newTime = Number(splitTime[0]) - 12;
-      return `${newTime}:00 PM`;
+      return `${time} PM`;
     }
   };
 
   export const formatDate = (date) => {
-    const months = {
-        '01': 'January',
-        '02': 'February',
-        '03': 'March',
-        '04': 'April',
-        '05': 'May',
-        '06': 'June',
-        '07': 'July',
-        '08': 'August',
-        '09': 'September',
-        '10': 'October',
-        '11': 'November',
-        '12': 'December'
-    }
-    const splitOne = date.split('-')
-    const year = splitOne[0]
-    const month = splitOne[1]
-    let day = splitOne[2]
-    day = day.split('T')[0]
-    return `${months[month]} ${day}, ${year}`
+    return date.split("T")[0];
 }
 
 function EventDetailPage() {
