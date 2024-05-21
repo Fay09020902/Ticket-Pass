@@ -14,7 +14,7 @@ export const formatTime = (time) => {
       else if (Number(splitTime[0]) === 12) return `${time} PM`;
       else return `${time} AM`;
     } else {
-      const newTime = Number(splitTime[0]) - 12;
+      const time = Number(splitTime[0]) - 12;
       return `${time} PM`;
     }
   };
