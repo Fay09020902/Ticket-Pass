@@ -26,7 +26,7 @@ const AddYourEvent = () => {
     const dispatch = useDispatch();
     const addNewEvent = async (e) => {
         e.preventDefault();
-        setErrors({}); 
+        setErrors({});
         const seatConfig = {rows, seatsPerRow}
         const newEvent = {
             name,
@@ -43,6 +43,10 @@ const AddYourEvent = () => {
             "ticketavailability": true
         }
         // console.log('Submitting new event:', newEvent); // Debug log
+        if (name && name.length > 100) {
+            setErrors({name: "Description needs less than 100 characters"})
+            return
+        }
 
         try {
             const response = await dispatch(addEventThunk(newEvent, seatConfig));

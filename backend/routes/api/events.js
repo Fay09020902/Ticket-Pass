@@ -126,8 +126,8 @@ router.post("/", requireAuth, async (req, res, next) => {
 
     // Create the event using the Sequelize model
     const newEvent = await Event.create({
-        name,
         "userId": user.id,
+        name,
         artist,
         description,
         type,

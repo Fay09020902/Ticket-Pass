@@ -45,10 +45,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: {
-          args: [5, 100],
-          msg: "Name must be between 5 and 100 characters"
-        },
         notEmpty: {
           args: true,
           msg: "Name cannot be empty"
