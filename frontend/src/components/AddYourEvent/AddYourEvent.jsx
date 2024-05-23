@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import './AddYourEvent.css'
+import { useState } from 'react';
+import './AddYourEvent.css';
 import { useDispatch } from 'react-redux';
 import { addEventThunk } from '../../store/event';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
@@ -8,61 +8,92 @@ import { useNavigate } from 'react-router-dom';
 
 const AddYourEvent = () => {
     const navigate = useNavigate();
-    const [name, setName] = useState('');
-    const [artist, setArtist] = useState('');
-    const [description, setDescription] = useState('');
-    const [type, setType] = useState('');
-    const [address, setAddress] = useState('');
-    const [city, setCity] = useState('');
-    const [date, setDate] = useState('')
-    const [time, setTime] = useState('');
-    const [price, setPrice] = useState('')
-    const [img_url, setImg_URL] = useState('');
-    const [country, setCountry] = useState('');
-    const [rows, setRows] = useState(5);
-    const [seatsPerRow, setSeatsPerRow] = useState(5);
-    const [errors, setErrors] = useState({});
-
     const dispatch = useDispatch();
+
+    const [formData, setFormData] = useState({
+        name: '',
+        artist: '',
+        description: '',
+        type: '',
+        address: '',
+        city: '',
+        date: '',
+        time: '',
+        price: '',
+        img_url: '',
+        country: ''
+    });
+
+    const [errors, setErrors] = useState({});
+    const eventTypes = ["R&B", "Rock", "Pop", "Blues", "Jazz"];
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+
+    const validateFormData = () => {
+        const { name, date, time } = formData;
+        const newErrors = {};
+
+        if (!name) newErrors.name = 'Event name is required';
+        else if (name.length > 100) newErrors.name = 'Event name must be less than 100 characters';
+
+        const eventDateTime = new Date(`${date}T${time}`);
+        const currentDate = new Date();
+        if (eventDateTime < currentDate) newErrors.date = 'Event date and time must be in the future';
+
+        return newErrors;
+    };
+
     const addNewEvent = async (e) => {
         e.preventDefault();
-        setErrors({});
-        const seatConfig = {rows, seatsPerRow}
+        setErrors({}); // Clear previous errors
+
+        const validationErrors = validateFormData();
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
+
+        const { name, artist, description, type, address, city, date, time, price, img_url, country } = formData;
+
+        if (!name || !artist || !description || !type || !address || !city || !date || !time || !price || !img_url || !country) {
+            setErrors({ message: 'Please fill in all fields' });
+            return;
+        }
+
+        const seatConfig = { rows: 5, seatsPerRow: 5 }; // Default values for seat configuration
         const newEvent = {
-            name,
-            artist,
-            description,
-            type,
-            address,
-            city,
-            country,
-            img_url,
+            ...formData,
             time,
-            date,
-            price,
+            date: new Date(date),
             "ticketavailability": true
-        }
-        // console.log('Submitting new event:', newEvent); // Debug log
-        if (name && name.length > 100) {
-            setErrors({name: "Description needs less than 100 characters"})
-            return
-        }
+        };
+
+        console.log('Submitting new event:', newEvent); // Debug log
 
         try {
             const response = await dispatch(addEventThunk(newEvent, seatConfig));
-            if (response) {
+            if (response && response.id) {
                 alert('Event created successfully');
                 navigate(`/events/${response.id}`);
-            }
-        } catch (res) {
-            const data = await res.json();
-            if (data && data.errors) {
-                setErrors(data.errors);
             } else {
-                setErrors(data.title)
+                throw new Error('Failed to create event');
+            }
+        } catch (error) {
+            console.error('Error creating event:', error); // Debug log
+            const errorData = error.response?.data || {};
+            if (errorData.errors) {
+                setErrors(errorData.errors);
+            } else {
+                setErrors({ message: errorData.message || 'An unknown error occurred' });
             }
         }
-    }
+    };
 
     return (
         <div className='adding-event-container'>
@@ -73,108 +104,102 @@ const AddYourEvent = () => {
                     <OpenModalButton
                         buttonText="Log In"
                         modalComponent={<LoginFormModal />}
-                        />
+                    />
                 </h4>
                 <form className="newEventForm" onSubmit={addNewEvent}>
                     <div>
                         <label htmlFor="name">Event Name</label>
-                        <input type="text" value={name} onChange={e => setName(e.target.value)} />
+                        <input type="text" name="name" value={formData.name} onChange={handleChange} />
                         <div className='create_events_errors'>
-                        {errors.name && <p>{errors.name}</p>}
+                            {errors.name && <p>{errors.name}</p>}
                         </div>
                     </div>
                     <div>
                         <label htmlFor="artist">Artist</label>
-                        <input type="text" value={artist} onChange={e => setArtist(e.target.value)} />
+                        <input type="text" name="artist" value={formData.artist} onChange={handleChange} />
                         <div className='create_events_errors'>
-                        {errors.artist && <p>{errors.artist}</p>}
+                            {errors.artist && <p>{errors.artist}</p>}
                         </div>
                     </div>
                     <div>
                         <label htmlFor="description">Description</label>
-                        <input type="text" value={description} onChange={e => setDescription(e.target.value)} />
+                        <textarea name="description" value={formData.description} onChange={handleChange} />
                         <div className='create_events_errors'>
-                        {errors.description && <p>{errors.description}</p>}
+                            {errors.description && <p>{errors.description}</p>}
                         </div>
                     </div>
                     <div>
                         <label htmlFor="EventType">Event Type</label>
-                        <input type="text" value={type} onChange={e => setType(e.target.value)} />
+                        <select name="type" value={formData.type} onChange={handleChange}>
+                            <option value="">Select Event Type</option>
+                            {eventTypes.map((eventType, index) => (
+                                <option key={index} value={eventType}>{eventType}</option>
+                            ))}
+                        </select>
                         <div className='create_events_errors'>
-                        {errors.type && <p>{errors.type}</p>}
+                            {errors.type && <p>{errors.type}</p>}
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="Address">Address</label>
-                        <input type="text" value={address} onChange={e => setAddress(e.target.value)} />
+                        <label htmlFor="address">Address</label>
+                        <input type="text" name="address" value={formData.address} onChange={handleChange} />
                         <div className='create_events_errors'>
-                        {errors.address && <p>{errors.address}</p>}
+                            {errors.address && <p>{errors.address}</p>}
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="City">City</label>
-                        <input type="text" value={city} onChange={e => setCity(e.target.value)} />
+                        <label htmlFor="city">City</label>
+                        <input type="text" name="city" value={formData.city} onChange={handleChange} />
                         <div className='create_events_errors'>
-                        {errors.city && <p>{errors.city}</p>}
+                            {errors.city && <p>{errors.city}</p>}
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="Country">Country</label>
-                        <input type="text" value={country} onChange={e => setCountry(e.target.value)} />
+                        <label htmlFor="country">Country</label>
+                        <input type="text" name="country" value={formData.country} onChange={handleChange} />
                         <div className='create_events_errors'>
                             {errors.country && <p>{errors.country}</p>}
                         </div>
                     </div>
                     <div>
                         <label htmlFor="price">Price</label>
-                        <input type="text" value={price} onChange={e => setPrice(e.target.value)} />
+                        <input type="number" name="price" value={formData.price} onChange={handleChange} step="0.1" />
                         <div className='create_events_errors'>
-                        {errors.price && <p>{errors.price}</p>}
+                            {errors.price && <p>{errors.price}</p>}
                         </div>
                     </div>
                     <div>
                         <label htmlFor="img_url">Image</label>
-                        <input type="text" value={img_url} onChange={e => setImg_URL(e.target.value)} />
+                        <input type="text" name="img_url" value={formData.img_url} onChange={handleChange} />
                         <div className='create_events_errors'>
                             {errors.img_url && <p>{errors.img_url}</p>}
                         </div>
                     </div>
                     <div>
                         <label htmlFor="time">Time</label>
-                        <input type="time" value={time} onChange={e => setTime(e.target.value)} />
+                        <input type="time" name="time" value={formData.time} onChange={handleChange} />
                         <div className='create_events_errors'>
                             {errors.time && <p>{errors.time}</p>}
                         </div>
                     </div>
                     <div>
                         <label htmlFor="date">Date</label>
-                        <input type="date" value={date} onChange={e => setDate(e.target.value)} />
+                        <input type="date" name="date" value={formData.date} onChange={handleChange} />
                         <div className='create_events_errors'>
                             {errors.date && <p>{errors.date}</p>}
                         </div>
-                    </div>
-                    <div>
-                        <label htmlFor="rows">Number of Rows</label>
-                        <input type="number" id="rows" value={rows} onChange={e => setRows(e.target.value)} />
-                    </div>
-                    <div>
-                        <label htmlFor="seatsPerRow">Seats Per Row</label>
-                        <input type="number" id="seatsPerRow" value={seatsPerRow} onChange={e => setSeatsPerRow(e.target.value)} />
                     </div>
                     <div className='sbmtbtn'>
                         <button>Submit</button>
                     </div>
                     <div className='create_events_errors'>
-                        {errors && (
-                            <>
-                            <p>{errors?.message}</p>
-                            </>
-                        )}
+                        {errors.message && <p>{errors.message}</p>}
                     </div>
                 </form>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default AddYourEvent
+export default AddYourEvent;
+
