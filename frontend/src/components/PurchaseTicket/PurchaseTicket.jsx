@@ -80,10 +80,12 @@ export default function PurchaseTicket() {
                             ))}
                         </ul>
                     </div>
+                    { !selectionChanged && (
                     <div className="total-summary">
                         <h2>Total Amount</h2>
                         <p>${amount.toFixed(2)}</p>
                     </div>
+                    )}
                     <button className="place-order-button" onClick={handlePlaceOrder}>
                         Place Order
                     </button>

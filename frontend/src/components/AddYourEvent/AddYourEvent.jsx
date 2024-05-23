@@ -111,13 +111,13 @@ const AddYourEvent = () => {
             } else {
                 throw new Error('Failed to create event');
             }
-        } catch (error) {
-            console.error('Error creating event:', error); // Debug log
-            const errorData = error.response?.data || {};
-            if (errorData.errors) {
-                setErrors(errorData.errors);
+        } catch (res) {
+            const data = await res.json();
+            // console.log(data)
+            if (data && data.errors) {
+                setErrors(data.errors);
             } else {
-                setErrors({ message: errorData.message || 'An unknown error occurred' });
+                setErrors({ message: data.title });
             }
         }
     };
