@@ -21,7 +21,9 @@ const AddYourEvent = () => {
         time: '',
         price: '',
         img_url: '',
-        country: ''
+        country: '',
+        rows: 5,
+        seatsPerRow: 5
     });
 
     const [errors, setErrors] = useState({});
@@ -36,7 +38,7 @@ const AddYourEvent = () => {
     };
 
     const validateFormData = () => {
-        const { name, date, time, artist, address, city, country, type } = formData;
+        const { name, date, time, artist, address, city, country, type, price, rows, seatsPerRow, img_url } = formData;
         const newErrors = {};
 
         if (!name) newErrors.name = 'Event name is required';
@@ -53,11 +55,25 @@ const AddYourEvent = () => {
 
         if (!country) newErrors.country = 'Country is required';
         else if (country.length > 100) newErrors.country = 'Country must be less than 100 characters';
-        if (!type) newErrors.type = 'Type is required';
-        
+
+        if (!type) newErrors.type = 'Event type is required';
+
+        if (!time) newErrors.time = 'Time is required';
+
         const eventDateTime = new Date(`${date}T${time}`);
         const currentDate = new Date();
         if (eventDateTime < currentDate) newErrors.date = 'Event date and time must be in the future';
+
+        if (!price) newErrors.price = 'Price is required';
+        else if (price < 1 || price > 600) newErrors.price = 'Price must be between 1 and 600';
+
+        if (!rows) newErrors.rows = 'Number of rows is required';
+        else if (rows < 1 || rows > 20) newErrors.rows = 'Number of rows must be between 1 and 20';
+
+        if (!seatsPerRow) newErrors.seatsPerRow = 'Number of seats per row is required';
+        else if (seatsPerRow < 1 || seatsPerRow > 20) newErrors.seatsPerRow = 'Number of seats per row must be between 1 and 20';
+
+        if (!img_url) newErrors.img_url = 'Image URL is required';
 
         return newErrors;
     };
@@ -72,14 +88,14 @@ const AddYourEvent = () => {
             return;
         }
 
-        const { name, artist, description, type, address, city, date, time, price, img_url, country } = formData;
+        const { name, artist, description, type, address, city, date, time, price, img_url, country, rows, seatsPerRow } = formData;
 
-        if (!name || !artist || !description || !type || !address || !city || !date || !time || !price || !img_url || !country) {
+        if (!name || !artist || !description || !type || !address || !city || !date || !time || !price || !img_url || !country || !rows || !seatsPerRow) {
             setErrors({ message: 'Please fill in all fields' });
             return;
         }
 
-        const seatConfig = { rows: 5, seatsPerRow: 5 }; // Default values for seat configuration
+        const seatConfig = { rows, seatsPerRow }; // Seat configuration
         const newEvent = {
             ...formData,
             time,
@@ -200,6 +216,20 @@ const AddYourEvent = () => {
                         <input type="date" name="date" value={formData.date} onChange={handleChange} />
                         <div className='create_events_errors'>
                             {errors.date && <p>{errors.date}</p>}
+                        </div>
+                    </div>
+                    <div>
+                        <label htmlFor="rows">Number of Rows</label>
+                        <input type="number" name="rows" value={formData.rows} onChange={handleChange} min="1" max="20" />
+                        <div className='create_events_errors'>
+                            {errors.rows && <p>{errors.rows}</p>}
+                        </div>
+                    </div>
+                    <div>
+                        <label htmlFor="seatsPerRow">Seats Per Row</label>
+                        <input type="number" name="seatsPerRow" value={formData.seatsPerRow} onChange={handleChange} min="1" max="20" />
+                        <div className='create_events_errors'>
+                            {errors.seatsPerRow && <p>{errors.seatsPerRow}</p>}
                         </div>
                     </div>
                     <div className='sbmtbtn'>
