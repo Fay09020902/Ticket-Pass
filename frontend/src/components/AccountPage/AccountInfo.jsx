@@ -1,7 +1,7 @@
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 const AccountInfo = () => {
-    const user = useSelector(state => state.session.user);
+    // const user = useSelector(state => state.session.user);
     return (
         <div className="accountInfo-container">
             <div className="accountInfo-header">Basic Info</div>
