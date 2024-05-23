@@ -36,12 +36,25 @@ const AddYourEvent = () => {
     };
 
     const validateFormData = () => {
-        const { name, date, time } = formData;
+        const { name, date, time, artist, address, city, country, type } = formData;
         const newErrors = {};
 
         if (!name) newErrors.name = 'Event name is required';
         else if (name.length > 100) newErrors.name = 'Event name must be less than 100 characters';
 
+        if (!artist) newErrors.artist = 'Artist is required';
+        else if (artist.length > 100) newErrors.artist = 'Artist must be less than 100 characters';
+
+        if (!address) newErrors.address = 'Address is required';
+        else if (address.length > 100) newErrors.address = 'Address must be less than 100 characters';
+
+        if (!city) newErrors.city = 'City is required';
+        else if (city.length > 100) newErrors.city = 'City must be less than 100 characters';
+
+        if (!country) newErrors.country = 'Country is required';
+        else if (country.length > 100) newErrors.country = 'Country must be less than 100 characters';
+        if (!type) newErrors.type = 'Type is required';
+        
         const eventDateTime = new Date(`${date}T${time}`);
         const currentDate = new Date();
         if (eventDateTime < currentDate) newErrors.date = 'Event date and time must be in the future';
@@ -202,4 +215,3 @@ const AddYourEvent = () => {
 };
 
 export default AddYourEvent;
-
