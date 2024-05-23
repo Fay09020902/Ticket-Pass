@@ -34,9 +34,11 @@ function Navigation({ isLoaded }) {
     <div className='nav-container'>
       <ul className='nav'>
         <li>
+        <NavLink to="/" className='navlinks'>
           <button>
-          <NavLink to="/" className='navlinks'>Home</NavLink>
+           Home
           </button>
+          </NavLink>
         </li>
         {isLoaded && sessionLinks}
       </ul>

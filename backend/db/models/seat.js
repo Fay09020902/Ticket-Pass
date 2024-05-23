@@ -15,10 +15,30 @@ module.exports = (sequelize, DataTypes) => {
     row: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        min: {
+          args: 1,
+          msg: 'Row number must be at least 1'
+        },
+        max: {
+          args: 20,
+          msg: 'Row number cannot be greater than 20'
+        }
+      }
     },
     number: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        min: {
+          args: 1,
+          msg: 'Seat number must be at least 1'
+        },
+        max: {
+          args: 20,
+          msg: 'Seat number cannot be greater than 20'
+        }
+      }
     },
     isSelected: {
       type: DataTypes.BOOLEAN,

@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import './UpdateYourEvent.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateEventThunk, getEventDetails } from '../../store/event';
-import OpenModalButton from '../OpenModalButton/OpenModalButton';
-import LoginFormModal from '../LoginFormModal/LoginFormModal';
+// import OpenModalButton from '../OpenModalButton/OpenModalButton';
+// import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import { useNavigate } from 'react-router-dom';
 import {formatTime} from '../EventDetailPage/EventDetailPage'
 
@@ -18,7 +18,7 @@ const UpdateYourEvent = () => {
     const navigate = useNavigate();
     const { eventId } = useParams();
     const curEvent = useSelector(state => state.events.currEvent);
-
+    const eventTypes = ["R&B", "Rock", "Pop", "Blues", "Jazz"];
 
     useEffect(() => {
         dispatch(getEventDetails(eventId));
@@ -36,6 +36,8 @@ const UpdateYourEvent = () => {
     const [img_url, setImg_URL] = useState('');
     const [country, setCountry] = useState('');
     const [errors, setErrors] = useState({});
+
+
 
 
     useEffect(() => {
@@ -57,6 +59,7 @@ const UpdateYourEvent = () => {
 
     const updateEvent = async (e) => {
         e.preventDefault();
+        setErrors({});
         const updatedEvent = {
             name,
             artist,
@@ -72,10 +75,18 @@ const UpdateYourEvent = () => {
             "ticketavailability": true
         }
 
+        // Validate date and time
+        const eventDateTime = new Date(`${date}T${time}`);
+        const currentDate = new Date();
+        if (eventDateTime < currentDate) {
+            setErrors({ date: 'Event date and time must be in the future.' });
+            return;
+        }
+
         try {
             const response = await dispatch(updateEventThunk(updatedEvent, eventId));
             if (response) {
-            navigate(`/events/${eventId}`);
+                navigate(`/events/${eventId}`);
             }
         }
         catch (res) {
@@ -91,13 +102,6 @@ const UpdateYourEvent = () => {
         <div className='adding-event-container'>
             <div className="getstarted">
                 <h2>Update Your Event</h2>
-                <h4>
-                    <span>Already have an account? </span>
-                    <OpenModalButton
-                        buttonText="Log In"
-                        modalComponent={<LoginFormModal />}
-                        />
-                </h4>
                 <form className="newEventForm" onSubmit={updateEvent}>
                     <div>
                         <label htmlFor="name">Event Name</label>
@@ -115,14 +119,19 @@ const UpdateYourEvent = () => {
                     </div>
                     <div>
                         <label htmlFor="description">Description</label>
-                        <input type="text" value={description} onChange={e => setDescription(e.target.value)} />
+                        <textarea value={description} onChange={e => setDescription(e.target.value)} />
                         <div className='create_events_errors'>
                         {errors.description && <p>{errors.description}</p>}
                         </div>
                     </div>
                     <div>
                         <label htmlFor="EventType">Event Type</label>
-                        <input type="text" value={type} onChange={e => setType(e.target.value)} />
+                        <select value={type} onChange={e => setType(e.target.value)}>
+                            <option value="">Select Event Type</option>
+                            {eventTypes.map((eventType, index) => (
+                                <option key={index} value={eventType}>{eventType}</option>
+                            ))}
+                        </select>
                         <div className='create_events_errors'>
                         {errors.type && <p>{errors.type}</p>}
                         </div>
@@ -150,7 +159,7 @@ const UpdateYourEvent = () => {
                     </div>
                     <div>
                         <label htmlFor="price">Price</label>
-                        <input type="text" value={price} onChange={e => setPrice(e.target.value)} />
+                        <input type="number" value={price} onChange={e => setPrice(e.target.value)} step="0.1"/>
                         <div className='create_events_errors'>
                         {errors.price && <p>{errors.price}</p>}
                         </div>

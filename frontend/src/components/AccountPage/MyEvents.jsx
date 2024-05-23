@@ -9,6 +9,7 @@ const MyEvents = () => {
     const user = useSelector(state => state.session.user);
     const allCurEvents = useSelector(state => state.events.events);
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(true);
 
     const handleDelete = async (eventId) => {
         if (window.confirm('Are you sure you want to delete this event?')) {
@@ -26,18 +27,20 @@ const MyEvents = () => {
         }
     };
 
-
     useEffect(() => {
         if (user && user.id) {
-            dispatch(loadSessionEventsThunk(user.id));
+            setLoading(true);
+            dispatch(loadSessionEventsThunk(user.id)).then(() => {
+                setLoading(false);
+            });
         }
     }, [dispatch, user]);
 
-    if (!allCurEvents) {
+    if (loading) {
         return <div className="loading">Loading events...</div>;
     }
 
-    if (Object.keys(allCurEvents).length === 0) {
+    if (!allCurEvents || Object.keys(allCurEvents).length === 0) {
         return <div className="no-events">No Session Events</div>;
     }
 

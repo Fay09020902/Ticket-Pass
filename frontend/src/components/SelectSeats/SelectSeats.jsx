@@ -2,7 +2,7 @@ import { useSelector, useDispatch} from "react-redux";
 import { useEffect } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
 import './SelectSeats.css'
-import {setSelectionChanged, fetchSeats, selectSeat, deselectSeat} from '../../store/seats'
+import {setSelectionChanged, resetSubtotal, clearSelectedSeats, fetchSeats, selectSeat, deselectSeat} from '../../store/seats'
 
 
 
@@ -28,6 +28,8 @@ function SelectSeats() {
 
   useEffect(() => {
     dispatch(setSelectionChanged(false))
+    dispatch(clearSelectedSeats());
+    dispatch(resetSubtotal());
     dispatch(fetchSeats(eventId));
   }, [dispatch, eventId]);
 

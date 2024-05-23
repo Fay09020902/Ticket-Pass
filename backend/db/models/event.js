@@ -140,8 +140,8 @@ module.exports = (sequelize, DataTypes) => {
           msg: "Price cannot be null"
         },
         isFloat: {
-          min: 0,
-          msg: "Price must be float"
+          args: { min: 0, max: 10000 },
+          msg: "Price must be a positive number and cannot exceed 10,000"
         }
       }
     },

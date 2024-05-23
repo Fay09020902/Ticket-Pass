@@ -17,7 +17,7 @@ const AccountPage = () => {
                 <SideBar handleTabSelect={handleTabSelect}/>
             </div>
             <div className="main-content">
-                {selectedTab === 'account' && <div>Account</div>}
+                {selectedTab === 'account' && <div>Feature is coming.</div>}
                 {selectedTab === 'myTickets' && <MyTickets />}
                 {selectedTab === 'myEvents' && <MyEvents />}
             </div>

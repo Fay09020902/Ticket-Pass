@@ -15,17 +15,21 @@ function ConcertIndex() {
         location: '',
         type: ''
     });
+    const [loading, setLoading] = useState(true);
 
-    // console.log("concertIndex render")
-    // console.log("filtered Concerts: ", filteredConcerts)
     useEffect(() => {
-        dispatch(getEvents());
+        setLoading(true);
+        dispatch(getEvents()).then(() => {
+        setLoading(false);
+        });
     }, [dispatch]);
 
     useEffect(() => {
-        setDistinctLocations([...new Set(Object.values(allConcerts).map(c => c.city))]);
-        setDistinctTypes([...new Set(Object.values(allConcerts).map(c => c.type))])
-    }, [allConcerts]);
+        if (!loading) {
+          setDistinctLocations([...new Set(Object.values(allConcerts).map(c => c.city))]);
+          setDistinctTypes([...new Set(Object.values(allConcerts).map(c => c.type))]);
+        }
+      }, [allConcerts, loading]);
 
     const handleFilterChange = (selectedLocation, selectedType) => {
         // console.log("handleFilterChange runs")
@@ -38,9 +42,12 @@ function ConcertIndex() {
             (filterSettings.location ? concert.city === filterSettings.location : true) &&
             (filterSettings.type ? concert.type === filterSettings.type : true)
         );
-        // console.log("filtered result: ", rsl)
         return rsl
     }, [filterSettings, allConcerts]);
+
+    if (loading) {
+        return <div className="loading">Loading...</div>;
+      }
 
     return (
         <div>
