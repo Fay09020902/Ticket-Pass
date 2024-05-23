@@ -45,10 +45,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: {
-          args: [5, 100],
-          msg: "Name must be between 5 and 100 characters"
-        },
         notEmpty: {
           args: true,
           msg: "Name cannot be empty"
@@ -101,15 +97,21 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: {
+        notEmpty: {
           args: true,
-          msg: "Address cannot be null"
-        }
+          msg: "Address cannot be empty"
+        },
       }
     },
     city: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "City cannot be empty"
+        },
+      }
     },
     time: {
       type: DataTypes.TIME,
@@ -145,7 +147,16 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    country: DataTypes.STRING,
+    country: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Country cannot be empty"
+        },
+      }
+    },
     img_url: {
       type: DataTypes.STRING,
       allowNull: false,
