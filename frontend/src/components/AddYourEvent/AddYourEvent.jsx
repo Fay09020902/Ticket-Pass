@@ -2,8 +2,6 @@ import { useState } from 'react';
 import './AddYourEvent.css';
 import { useDispatch } from 'react-redux';
 import { addEventThunk } from '../../store/event';
-import OpenModalButton from '../OpenModalButton/OpenModalButton';
-import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import { useNavigate } from 'react-router-dom';
 
 const AddYourEvent = () => {
@@ -128,13 +126,6 @@ const AddYourEvent = () => {
         <div className='adding-event-container'>
             <div className="getstarted">
                 <h2>Get started</h2>
-                <h4>
-                    <span>Already have an account? </span>
-                    <OpenModalButton
-                        buttonText="Log In"
-                        modalComponent={<LoginFormModal />}
-                    />
-                </h4>
                 <form className="newEventForm" onSubmit={addNewEvent}>
                     <div>
                         <label htmlFor="name">Event Name</label>
