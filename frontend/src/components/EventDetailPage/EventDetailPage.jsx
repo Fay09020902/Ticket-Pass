@@ -26,23 +26,29 @@ function EventDetailPage() {
     const curEvent = useSelector(state => state.events.currEvent);
     const [error, setError] = useState('')
     const [section, setSection] = useState('EventDetails_event')
+    const [loading, setLoading] = useState(true);
 
     const showSection = (sectionId) => {
         setSection(sectionId)
     };
 
+
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                await dispatch(getEventDetails(eventId));
-            } catch (error) {
-                setError(error.toString());
-            }
+          try {
+            await dispatch(getEventDetails(eventId));
+            setLoading(false);
+          } catch (error) {
+            setError(error.toString());
+            setLoading(false);
+          }
         };
         fetchData();
-    }, [dispatch, eventId]);
+      }, [dispatch, eventId]);
 
-
+    if (loading) {
+        return <div>Loading...</div>;
+      }
 
     if (error) {
         return <div>{error}</div>;
