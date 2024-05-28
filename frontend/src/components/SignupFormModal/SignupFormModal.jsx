@@ -46,7 +46,7 @@ function SignupFormModal() {
 
   return (
     <div className ='signup-container'>
-      <h1 className="LoginModal__header">Sign Up</h1>
+      <h1 className="SignUpModal__header">Sign Up</h1>
       <form  className='signup-form' onSubmit={handleSubmit}>
         <label>
           Email

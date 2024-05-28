@@ -26,13 +26,52 @@ div.second {
   }
 }
 
-.SignupForm__submit {
-  display: flex;
-  justify-content: space-between;
+.SignUpModal__header {
+	text-align: center;
+	margin-top: 20px;
 }
 
-.LoginModal .SignupForm__next {
-  display: flex;
-  justify-content: flex-end;
+
+.signup-container button {
+  background-color: #00aaff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
+.signup-container input {
+	display: flex;
+	flex-direction: column;
+	width: 25vw;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	padding: 10px;
+	margin-bottom: 20px;
+	transition: border-color 0.3s;
+}
+
+
+.signup-container input:focus {
+  border-color: var(--light-blue);
+  outline: none;
+}
+
+.signup-container label {
+	color: var(--dark-grey);
+	margin-bottom: 5px;
+}
+
+.signup-form p {
+	width: 25vw;
+	color: var(--accent);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.signup-form {
+	padding: 20px;
+}

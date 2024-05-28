@@ -33,8 +33,8 @@ function Navigation({ isLoaded }) {
   return (
     <div className='nav-container'>
       <ul className='nav'>
-        <li>
-        <NavLink to="/" className='navlinks'>
+        <li className='navlinks'>
+        <NavLink to="/" >
           <button>
            Home
           </button>
