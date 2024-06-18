@@ -5,9 +5,10 @@ const { handleValidationErrors, validateQuery } = require('../../utils/validatio
 const { Op } = require('sequelize')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Event, Comment, Ticket, Seat, sequelize } = require('../../db/models');
+const { User, Event, Post, Ticket, Seat, sequelize } = require('../../db/models');
 const e = require('express');
 const seat = require('../../db/models/seat');
+const { validatePost } = require("../../utils/validation");
 
 const router = express.Router();
 
@@ -183,7 +184,7 @@ router.get(
                             model: Ticket
                         },
                         {
-                            model: Comment,
+                            model: Post,
                             // attributes: ["id", "url", "preview"]
                         },
                         {
@@ -452,46 +453,6 @@ router.get(
         return res.json(seatsObject);
     });
 
-// //Get all bookings by a Spot's id
-// router.get(
-//     "/:spotId/bookings",
-//     requireAuth,
-//     async (req, res, next) => {
-//         const {spotId} = req.params
-//         const {user} = req
-//         const spot = await Spot.findByPk(spotId)
-//         if (!spot) {
-//             const err = new Error("Spot couldn't be found");
-//             err.status = 404;
-//             return next(err);
-//         };
-//         if (spot.ownerId === user.id) {
-//             const bookings = await Booking.findAll({
-//                 where: {
-//                     spotId
-//                 },
-//                 include: {
-//                     model: User,
-//                     attributes: ["id", "firstName", "lastName"]
-//                 },
-//                 //attributes: ["spotId", "startDate", "endDate"]
-//                 }
-//             )
-//             return res.json({Bookings: bookings});
-//         }
-//         else {
-//             const bookings = await Booking.findAll({
-//                 where: {
-//                     spotId
-//                 },
-//                 attributes: ["spotId", "startDate", "endDate"]
-//                 }
-//             )
-//             return res.json({Bookings: bookings});
-//         }
-//     });
-
-
 
 //Get all events and querying
 router.get("/", async (req, res, next) => {
@@ -503,5 +464,56 @@ router.get("/", async (req, res, next) => {
     return res.status(200).json(events);
 
 });
+
+
+
+// create a post for an event by its eventId
+router.post(
+    "/:eventId/posts",
+    requireAuth,
+    validatePost,
+    async (req, res, next) => {
+      const eventId = req.params.eventId;
+
+      // check if event exists and return error if it does not
+      const event = await Event.findByPk(eventId);
+      if (!event) {
+        res.status(404);
+        return res.json({
+          message: "Unable to find an Event with that ID",
+          statusCode: 404,
+        });
+
+      }
+      const { userId, title, body } = req.body;
+      const post = await Post.create({
+          userId,
+          eventId,
+          title,
+          body
+      });
+      // get the user info via the post's association, we already have event info from our first query/test
+      const user = await post.getUser();
+      const filteredPost = {};
+      filteredPost.id = post.id;
+      filteredPost.user = {
+          id: user.id,
+          username: user.username,
+      };
+      filteredPost.event = {
+          id: event.id,
+          name: event.name,
+      };
+      filteredPost.title = post.title;
+      filteredPost.body = post.body;
+      filteredPost.time = post.createdAt;
+
+      res.status(201);
+      return res.json({ ...filteredPost });
+    }
+  );
+
+
+
 
 module.exports = router;

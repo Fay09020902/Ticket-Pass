@@ -1,22 +1,23 @@
 .account-page-container {
     display: flex;
-    height: 100%;
+    height: 100vh;
 }
 
 .sidebar {
-    width: 300px; /* Adjust as needed */
-    background-color: #f0f0f0;
+    width: 300px;
     padding: 10px;
     box-sizing: border-box;
+    height: 100%;
+    margin: 10px;
 }
 
 .tab {
-    display: block;
+    display: inline;
     width: 100%;
     margin-bottom: 10px;
+    margin-right: 10px;
+    margin-top: 35px;
     padding: 10px;
-    background-color: #ccc;
-    border-radius: 5px;
     cursor: pointer;
 }
 
@@ -28,6 +29,7 @@
     flex: 1;
     padding: 20px;
     box-sizing: border-box;
+    border-left: 2px solid gray;
 }
 
 
@@ -117,13 +119,14 @@
   .myTickets {
     display: flex;
     flex-direction: column;
-    align-items: center;
     padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .ticket {
     border: 1px solid #ccc;
-    padding: 10px;
+    padding: 15px;
     margin: 10px;
     width: 80%;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -224,4 +227,101 @@ button:hover {
   height: 200px;
   object-fit: cover;
   object-position: center;
+}
+
+
+.post-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+/* Each individual post container */
+.user-post-upper {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.user-post-upper:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Event info section */
+.post-event-info {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.3s;
+}
+
+.post-event-info:hover {
+  background-color: #f0f0f0;
+}
+
+.post-event-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.post-event-name {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Post actions */
+.profile-post-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  gap: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.post-action {
+  cursor: pointer;
+  color: #007bff;
+  font-size: 0.9em;
+  transition: color 0.3s;
+}
+
+.post-action:hover {
+  color: #0056b3;
+}
+
+/* Main post content */
+.post-main {
+  padding: 10px;
+}
+
+.post-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 5px;
+}
+
+.post-body {
+  font-size: 1em;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.post-date {
+  font-size: 0.8em;
+  color: #999;
 }
