@@ -215,6 +215,13 @@ button:hover {
   color: #444;
   text-decoration: none;
 }
+.post-action button {
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  color: #007bff;
+  font-size: 14.5px;
+}
 
 .update-seat-button:hover {
   background-color: #45a049;
