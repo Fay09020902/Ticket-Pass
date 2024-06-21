@@ -113,7 +113,6 @@ export const createPost = (post) => async (dispatch) => {
   });
   if (res.ok) {
     const data = await res.json();
-    console.log("post data: ", data)
     dispatch(newPost(data));
     return data;
   }
@@ -122,7 +121,7 @@ export const createPost = (post) => async (dispatch) => {
 // update a post thunk
 export const updatePost = (post) => async (dispatch) => {
   const { postId, title, body } = post;
-  const res = await csrfFetch(`/api/my/posts/${postId}`, {
+  const res = await csrfFetch(`/api/posts/${postId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -139,9 +138,10 @@ export const updatePost = (post) => async (dispatch) => {
   }
   return res;
 };
+
 // delete post thunk
 export const removePost = (postId) => async (dispatch) => {
-  const res = await csrfFetch(`/api/my/posts/${postId}`, {
+  const res = await csrfFetch(`/api/posts/${postId}`, {
     method: "DELETE",
   });
   if (res.ok) {
@@ -175,14 +175,20 @@ const postsReducer = (
       newState.posts = { ...newState.posts, ...userPosts }; // Ensures the posts state is updated
       return newState;
     }
-    // case EDIT_POST:
-    //   {newState.current[action.post.id] = action.post;
-    //   newState.event[action.post.id] = action.post;
-    //   }
-    // case DELETE_POST:
-    //   {delete newState.current[action.postId];
-    //   delete newState.event[action.postId];
-    //   }
+    case EDIT_POST:
+      {
+        console.log("post data: ", action.post)
+        newState.current[action.post.id] = action.post;
+      newState.posts[action.post.id] = action.post;
+      return newState
+      }
+    case DELETE_POST:
+      {
+        delete newState.posts[action.postId];
+        delete newState.event[action.postId];
+        delete newState.current[action.postId];
+        return newState
+      }
     // case FOCUS_POST:
     //   {newState.focus = action.post;
     //   }

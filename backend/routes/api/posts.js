@@ -49,7 +49,7 @@ router.put(
         const post = await Post.findByPk(postId, {
             include: [{
                 model: Event,
-                attributes: ['date']
+                attributes: ["id", "name", "artist", "img_url"],
             }]
         });
         if (!post) {
@@ -67,7 +67,19 @@ router.put(
         post.body = body;
         post.title = title;
         const updatedPost= await post.save();
-        return res.json(updatedPost)
+
+        const normalizePost = {};
+        normalizePost.id = updatedPost.id;
+        normalizePost.user = {
+          id: user.id,
+          username: user.username,
+        };
+        normalizePost.event = updatedPost.Event;
+        normalizePost.title = updatedPost.title;
+        normalizePost.body = updatedPost.body;
+        normalizePost.time = updatedPost.createdAt;
+
+        return res.json(normalizePost)
     });
 
 // Delete a ticket

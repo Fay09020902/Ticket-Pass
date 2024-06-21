@@ -5,11 +5,13 @@ function ConcertList({ concerts }) {
     return (
         <div className="concert-list">
             {Object.values(concerts).map(concert => (
-                <NavLink to={`/events/${concert.id}`} key={concert.id} className="image-detail-link">
-                    <div className="concert-card">
+
+                    <div className="concert-card" key={concert.id}>
+                    <NavLink to={`/events/${concert.id}`}  className="image-detail-link">
                         <img src={concert.img_url} alt={concert.name} />
+                        </NavLink>
                         <div className="concert-info">
-                            <h3>{concert.name}</h3>
+                            <h3 className="concert-name">{concert.name}</h3>
                             <p><strong>Artist:</strong> {concert.artist}</p>
                             <p><strong>Type:</strong> {concert.type}</p>
                             <p><strong>Date:</strong> {concert.date}</p>
@@ -18,7 +20,6 @@ function ConcertList({ concerts }) {
                             <p><strong>Price:</strong> ${concert.price}</p>
                         </div>
                     </div>
-                </NavLink>
             ))}
         </div>
     );
