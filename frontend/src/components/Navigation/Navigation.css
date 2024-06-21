@@ -1,7 +1,7 @@
 .nav-container {
     display: flex;
     flex-direction: column;
-    background-image: url('https://uk.tmconst.com/production-10-79-0-8189795/images/categories/10001.jpg?auto=webp');
+    background-image: url('../../images/10001.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     line-height: 60px;
