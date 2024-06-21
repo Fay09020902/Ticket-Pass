@@ -23,10 +23,10 @@ function Layout() {
   }, [dispatch]);
 
   return (
-    <>
+    <div style={{height:'100%'}}>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && <Outlet />}
-    </>
+    </div>
   );
 }
 

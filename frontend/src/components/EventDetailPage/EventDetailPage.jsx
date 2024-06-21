@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector} from "react-redux";
 import { NavLink, useParams } from 'react-router-dom';
 import {getEventDetails} from '../../store/event'
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import NewPostModal from "../NewPostModal/NewPostModal";
 import './EventDetailPage.css'
 
 
@@ -25,7 +27,8 @@ function EventDetailPage() {
     const dispatch = useDispatch();
     const curEvent = useSelector(state => state.events.currEvent);
     const [error, setError] = useState('')
-    const [section, setSection] = useState('EventDetails_event')
+    const [section, setSection] = useState('EventDetails_event');
+    
     const [loading, setLoading] = useState(true);
 
     const showSection = (sectionId) => {
@@ -86,15 +89,22 @@ function EventDetailPage() {
             {section === 'EventDetails_comments' && (
                 <div id='EventDetails_comments'>
                     <h3>Comments:</h3>
-                    {curEvent.Comments?.map(comment => (
-                        <div key={comment.id}>
-                            <p>{comment.text}</p>
-                            <small>-- {comment.User?.name}</small>
+                    {curEvent.Posts?.map(post => (
+                        <div key={post.id}>
+                            <p>{curEvent.User?.firstName}</p>
+                            <p>{post.body}</p>
                         </div>
                     ))}
+                     <div>
+                    <p></p>
+                    <OpenModalButton
+                      buttonText="New Post"
+                      modalComponent={<NewPostModal eventId={curEvent.id}/>}
+                    />
+                    </div>
             </div>)
             }
-            <div></div>
+
             <NavLink to={`/events/${eventId}/seats`} className='ticketLink'>Find Tickets</NavLink>
         </div>
     )

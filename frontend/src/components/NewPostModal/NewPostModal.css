@@ -1,0 +1,66 @@
+.NewPostModal {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    padding-top: 10px;
+    overflow: hidden;
+    margin: 15px;
+}
+
+.NewPostModal input, .NewPostModal textarea {
+    display: block;
+    width: 100%; /* Adjusted to take full width of the modal */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s;
+}
+
+.NewPostModal input:focus, .NewPostModal textarea:focus {
+    border-color: var(--light-blue);
+    outline: none;
+}
+
+.NewPostModal label {
+    color: var(--dark-grey);
+    margin-bottom: 5px;
+}
+
+.NewPostModal__header {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.NewPostModal button {
+    background-color: #00aaff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.NewPostModal button:hover {
+    background-color: var(--dark-blue);
+}
+
+.NewPostModal .form-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.NewPostModal .field-error {
+    color: red;
+    padding: 5px; /* Ensure padding for visibility even when error is not present */
+    height: 20px; /* Consistent spacing for layout */
+}
+
+@media (max-width: 600px) {
+    .NewPostModal input, .NewPostModal textarea, .NewPostModal p {
+        width: 100%; /* Full width on smaller screens */
+    }
+}

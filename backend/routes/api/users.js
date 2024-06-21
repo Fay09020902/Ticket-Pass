@@ -2,9 +2,8 @@ const express = require('express')
 const bcrypt = require('bcryptjs');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, Post , Event} = require('../../db/models');
 const e = require('express');
 
 const router = express.Router();
@@ -85,5 +84,53 @@ router.post(
     }
   );
 
-
+// get the posts made by the user with the given userId
+router.get(
+  "/:userId/posts",
+  async (req, res, next) => {
+    const {user} = req
+    const userId = user.id
+    try {
+      //try getting the user's posts, with most recent post first
+      const user = await User.findByPk(userId, {
+        include: {
+          model: Post,
+          order: ["createdAt", "DESC"],
+          include: {
+            model: Event,
+            attributes: ["id", "name", "artist", "img_url"],
+          },
+        },
+      });
+      const userPosts = user.Posts;
+      const posts = [];
+      userPosts.forEach((postObj) => {
+        const post = {};
+        post.id = postObj.id;
+        post.user = {
+          id: user.id,
+          username: user.username,
+        };
+        post.event = postObj.Event;
+        post.title = postObj.title;
+        post.body = postObj.body;
+        post.time = postObj.createdAt;
+        posts.push(post);
+      });
+      res.status(200);
+      return res.json({ posts });
+    } catch (e) {
+      // res.status(404);
+      // console.log("e.", e)
+      // return res.json({
+      //   message: e,
+      //   statusCode: 404,
+      // });
+      // const data = await e.json();
+      return res.json({
+        message: e.message
+      })
+    }
+  }
+);
 module.exports = router;

@@ -5,7 +5,7 @@ const { handleValidationErrors, validateQuery } = require('../../utils/validatio
 const { Op } = require('sequelize')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Event, Comment, Ticket, Seat, sequelize } = require('../../db/models');
+const { Event, Ticket, Seat } = require('../../db/models');
 const e = require('express');
 
 const router = express.Router();
@@ -83,7 +83,7 @@ router.put(
         const {ticketId} = req.params
         const {user} = req
         let { seatId  } = req.body;
-        
+
         const ticket = await Ticket.findByPk(ticketId, {
             include: [{
                 model: Event,

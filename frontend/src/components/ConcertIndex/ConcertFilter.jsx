@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react';
 
-function ConcertFilter({ onFilterChange, locations, types}) {
-    const [location, setLocation] = useState('')
-    const [type, setType] = useState('')
-    // console.log("cuurent location ", location)
-    // console.log("current type ", type)
+function ConcertFilter({ onFilterChange, locations, types }) {
+    const [location, setLocation] = useState('');
+    const [type, setType] = useState('');
 
     useEffect(() => {
-        // console.log("on filter change runs")
         onFilterChange(location, type);
     }, [location, type]);
 
@@ -16,24 +13,22 @@ function ConcertFilter({ onFilterChange, locations, types}) {
     };
 
     const handleTypeChange = (e) => {
-        setType(e.target.value)
+        setType(e.target.value);
     };
 
     return (
         <section className="concert-filters">
-            <div className="location-filter">
-                <select id="location-select" onChange={handleLocationChange}>
+            <div className="filter-container">
+                <select id="location-select" value={location} onChange={handleLocationChange} className="filter-select">
                     <option value="">All Locations</option>
                     {locations.map(l => (
                         <option value={l} key={l}>{l}</option>
                     ))}
                 </select>
-            </div>
-            <div className="type-filter">
-                <select id="type-select" onChange={handleTypeChange}>
+                <select id="type-select" value={type} onChange={handleTypeChange} className="filter-select">
                     <option value="">All Concerts</option>
-                    {types.map(l => (
-                        <option value={l} key={l}>{l}</option>
+                    {types.map(t => (
+                        <option value={t} key={t}>{t}</option>
                     ))}
                 </select>
             </div>

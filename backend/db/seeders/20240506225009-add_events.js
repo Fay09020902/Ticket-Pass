@@ -49,7 +49,7 @@ const concertEvents = [
   date: new Date('2024-06-21'),
   price: 50.00,
   country: "USA",
-  img_url: "https://images.unsplash.com/photo-1692796226663-dd49d738f43c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cm9jayUyMGNvbmNlcnQlMjB0YXlsb3J8ZW58MHx8MHx8fDA%3D",
+  img_url: "https://i.ticketweb.com/i/00/12/28/10/23_Original.jpg?v=6",
   ticketavailability: true
   },
   {

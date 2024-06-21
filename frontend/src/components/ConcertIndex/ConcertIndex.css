@@ -1,23 +1,30 @@
 .concert-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: 40px;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+    padding: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: #f9f9f9;
 }
 
 .concert-card {
+    background: white;
     border: 1px solid #ccc;
     border-radius: 8px;
     overflow: hidden;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s; /* Optional: Adds a subtle hover effect */
 }
 
 .concert-card:hover {
-    transform: scale(1.02); /* Optional: Scales the card slightly on hover */
+    transform: scale(1.02);
 }
 
 .concert-card img {
     width: 100%;
-    height: 200px;
+    height: 300px;
     object-fit: cover;
 }
 
@@ -27,16 +34,21 @@
 
 .concert-info h3 {
     margin: 0 0 10px;
+    color: #333;
 }
 
 .concert-info p {
     margin: 5px 0;
+    color: #666;
     text-decoration: none; /* Ensure no text decoration for p tags */
 }
 
 .concert-info p a {
     text-decoration: none;
     color: inherit; /* Optional: Ensures the link color matches the surrounding text */
+}
+.concert-info p strong {
+    color: #000;
 }
 
 .btn {
@@ -58,8 +70,40 @@
     font-weight: bold;
 }
 
+
 .concert-filters {
     display: flex;
-    gap: 10px;
-    margin: 20px;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.filter-container {
+    display: flex;
+    gap:10px;
+    width: 80%;
+    justify-content: center;
+}
+
+.filter-select {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    color: #333;
+    background-color: #fff;
+    min-height: 40px;
+    min-width: 150px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M0 0l5 5 5-5H0z' fill='%23333'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: #007bff;
 }
