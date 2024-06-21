@@ -28,7 +28,6 @@ module.exports = (sequelize, DataTypes) => {
           hooks: true
         }
       );
-      User.hasMany(models.Reply, {foreignKey: "userId"});
     }
   };
 
