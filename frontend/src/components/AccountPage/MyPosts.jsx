@@ -65,7 +65,7 @@ const MyPosts = () => {
                     </div>
                     <div className="profile-post-actions">
                         <span className="post-action">
-                                <OpenModalButton
+                                <OpenModalButton className="update-post-button"
                             buttonText="Edit Post"
                             modalComponent={<UpdatePostModal postId={post.id}/>}
                 />
