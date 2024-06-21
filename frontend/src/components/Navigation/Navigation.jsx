@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
-import SignupFormModal from '../SignupFormModal/SignupFormModal';
+import SignupFormModal from '../SignupFormModal/SignupFormModal'
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
