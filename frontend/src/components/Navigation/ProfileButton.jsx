@@ -36,21 +36,25 @@ function ProfileButton({ user }) {
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
-    <>
-      <button onClick={toggleMenu}>
-        <Si4Chan />
+    <div className='profiledropdown'>
+      <button className="acountbutton" onClick={toggleMenu}>
+        <Si4Chan />  My Account
       </button>
       <ul className={ulClassName} ref={ulRef}>
-        <li>{user.username}</li>
-        <li>{user.firstName} {user.lastName}</li>
-        <li>{user.email}</li>
-        <NavLink
+        <div className="profile-header">
+          <p>Welcome back!</p>
+          <p>{user.firstName} {user.lastName}</p>
+        </div>
+        <li>
+          <NavLink
           to={`/accounts`}
           className="my-account"
           onClick={toggleMenu}
         >
-          <div>Manage Account</div>
+          Manage Account
         </NavLink>
+        </li>
+        <li>
         <NavLink
           to={"/events/new"}
           style={{ textDecoration: "none" }}
@@ -58,11 +62,12 @@ function ProfileButton({ user }) {
         >
           Add your Event
         </NavLink>
+        </li>
         <li>
           <button onClick={logout}>Log Out</button>
         </li>
       </ul>
-    </>
+    </div>
   );
 }
 

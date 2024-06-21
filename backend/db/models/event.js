@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       );
       Event.hasMany(
-        models.Comment,
+        models.Post,
         {
           foreignKey:"eventId",
           onDelete: 'CASCADE',

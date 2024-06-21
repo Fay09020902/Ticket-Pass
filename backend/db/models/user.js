@@ -21,13 +21,14 @@ module.exports = (sequelize, DataTypes) => {
         }
       );
       User.hasMany(
-        models.Comment,
+        models.Post,
         {
           foreignKey:"userId",
           onDelete: 'CASCADE',
           hooks: true
         }
       );
+      User.hasMany(models.Reply, {foreignKey: "userId"});
     }
   };
 

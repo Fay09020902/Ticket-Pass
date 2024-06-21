@@ -46,12 +46,31 @@
     color: #002d72;
 }
 
-/* Section styles */
-#EventDetails_event, #EventDetails_about, #EventDetails_comments {
-    padding: 20px;
+#EventDetails_comments {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     margin-top: 20px;
-    background-color: #f9f9f9;
-    border-radius: 5px;
+}
+
+#EventDetails_comments h3 {
+    margin-bottom: 10px;
+}
+
+#EventDetails_comments div {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+#EventDetails_comments div:last-child {
+    border-bottom: none;
+}
+
+#EventDetails_comments p {
+    margin: 5px 0;
+    color: #333;
+    font-size: 14px;
 }
 
 h3 {
@@ -99,4 +118,16 @@ p, small {
 
 .ticketLink:hover {
     transform: scale(1.05);
+}
+
+#EventDetails_event {
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#EventDetails_about {
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

@@ -6,12 +6,14 @@ import sessionReducer from './session';
 import eventReducer from './event';
 import seatsReducer from './seats';
 import ticketReducer from './ticket';
+import postsReducer from './post';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   events: eventReducer,
   seats: seatsReducer,
   tickets: ticketReducer,
+  posts: postsReducer,
 });
 
 let enhancer;

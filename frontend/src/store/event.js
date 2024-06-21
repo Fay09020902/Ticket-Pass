@@ -1,4 +1,5 @@
 import { csrfFetch } from "./csrf";
+import { NEW_POST } from "./post";
 
 // taken from forms practice and modified
 export const LOAD_EVENTS = 'events/LOAD_EVENTS'
@@ -30,6 +31,13 @@ export const loadEvents = (events) => ({
     type: DELETE_EVENT,
     eventId,
   });
+
+  // export function addPostToEvent(post) {
+  //   return {
+  //     type: NEW_POST,
+  //     post
+  //   };
+  // }
 
 
   export const getEvents = () => async dispatch => {
@@ -156,6 +164,16 @@ export const loadEvents = (events) => ({
             delete updatedEvents[action.eventId];
             return { ...state, events: updatedEvents };
         }
+        case NEW_POST: {
+          // console.log("new post action run in eventreducer")
+            return {
+            ...state,
+            currEvent: {
+              ...state.currEvent,
+              Posts: [...state.currEvent.Posts, action.post]
+            }
+          };
+      }
         default:
             return state;
     }
