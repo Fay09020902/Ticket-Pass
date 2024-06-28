@@ -52,7 +52,7 @@ export default function PurchaseTicket() {
                 dispatch(deselectSeat(seatId, curEvent.price));
             });
             alert("Purchase succeeded");
-            navigate(`/`);
+            navigate(`/accounts`);
         } catch (e) {
             if (e.message) {
                 alert(`${e.message}`);

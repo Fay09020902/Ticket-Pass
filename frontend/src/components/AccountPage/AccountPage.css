@@ -1,6 +1,5 @@
 .account-page-container {
     display: flex;
-    height: 100vh;
 }
 
 .sidebar {
@@ -184,7 +183,6 @@ button:hover {
 
 .error-message {
   color: #D8000C;
-  background-color: #FFD2D2;
   padding: 10px;
   border-radius: 5px;
   margin: 10px 0;
@@ -204,7 +202,20 @@ button:hover {
 }
 
 
-.delete-ticket-button, .update-seat-button {
+.update-seat-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  background-color: #ddd;
+  color: #444;
+  text-decoration: none;
+  margin: 3px;
+}
+
+.myTickets button {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -215,6 +226,20 @@ button:hover {
   color: #444;
   text-decoration: none;
 }
+
+.myEvents button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  background-color: #ddd;
+  color: #444;
+  text-decoration: none;
+}
+
+
 .post-action button {
   border: none;
   background-color: white;
