@@ -42,10 +42,6 @@
     transition: background-color 0.3s;
 }
 
-.LoginModal button:hover {
-    background-color: var(--dark-blue);
-}
-
 .LoginModal p {
 	width: 25vw;
 	color: var(--accent);
